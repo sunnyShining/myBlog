@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>sunny</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="blog">
+<meta property="og:type" content="website">
+<meta property="og:title" content="sunny">
+<meta property="og:url" content="http://yoursite.com/index.html">
+<meta property="og:site_name" content="sunny">
+<meta property="og:description" content="blog">
+<meta property="og:locale" content="zh">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="sunny">
+<meta name="twitter:description" content="blog">
+  
+    <link rel="alternate" href="/atom.xml" title="sunny" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">sunny</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">ALi</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="Flux RSS"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Rechercher"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main">
+  
+    <article id="post-offset" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/11/28/offset/" class="article-date">
+  <time datetime="2017-11-28T14:43:46.000Z" itemprop="datePublished">2017-11-28</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/11/28/offset/">js实现jquery的offset()方法(获取当前元素相对于文档的偏移量)</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>从我<a href="http://www.jianshu.com/p/e8965308d7e9" target="_blank" rel="noopener">简书</a>搬迁</p>
+<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>最近做项目，由于zepto使用的功能较少，想将zepto的功能用较少原生实现，其中有个实现zepto的offset()方法取到各种值的难为了我，我百度了下，大体网上千篇一律的这样写到</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">这篇文章主要介绍了js实现jquery的offset()方法,实例分析了jquery的offset()方法原理与采用javascript实现的技巧,具有一定参考借鉴价值,需要的朋友可以参考下</span><br><span class="line">本文实例讲述了js实现jquery的offset()方法。分享给大家供大家参考。具体分析如下：</span><br><span class="line">用过jQuery的offset()的同学都知道offset().top或offset().left很方便地取得元素相对于整个页面的偏移。</span><br><span class="line">而在js里，没有这样直接的方法，节点的属性offsetTop可以获得该节点相对于父节点的相对偏移，但不能直接获得其绝对偏移，我们可用节点逐层递归向上来相加offsetTop来获得绝对偏移。</span><br><span class="line">复制代码代码如下:</span><br><span class="line"><span class="keyword">function</span> getOffset(Node, offset) &#123;</span><br><span class="line">    <span class="keyword">if</span> (!offset) &#123;</span><br><span class="line">          offset = &#123;&#125;;</span><br><span class="line">          offset.top = 0; </span><br><span class="line">          offset.left = 0;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (Node == document.body) &#123;</span><br><span class="line">        //当该节点为body节点时，结束递归</span><br><span class="line">        <span class="built_in">return</span> offset;   </span><br><span class="line">    &#125;</span><br><span class="line">    offset.top += Node.offsetTop;</span><br><span class="line">	offset.left += Node.offsetLeft;</span><br><span class="line">    <span class="built_in">return</span> getOffset(Node.parentNode, offset); //向上累加offset里的值</span><br><span class="line">&#125;</span><br><span class="line">使用时，则如：</span><br><span class="line">复制代码代码如下:</span><br><span class="line">var a = document.getElementById(<span class="string">'a'</span>); // getOffset(a).top // getOffset(a).left</span><br><span class="line">希望本文所述对大家的javascript程序设计有所帮助。</span><br></pre></td></tr></table></figure>
+<p>我本着试试看的态度将这个方法炒了上去，打印出值结果与我需要的值相差甚远，为此我仔细翻了下源码，源码见下面链接<br><a href="http://blog.csdn.net/liangklfang/article/details/49229231" target="_blank" rel="noopener">源码</a><br>找到如下方法getBoundingClientRect，翻了下caniuse发现兼容性还好（本人移动端），故可以写成以下方式</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">// 获取当前元素相对于文档的偏移量</span><br><span class="line"><span class="built_in">let</span> getOffset = (elem) =&gt; &#123;</span><br><span class="line">    <span class="built_in">let</span> docElem = document.documentElement;</span><br><span class="line">    <span class="built_in">let</span> box = elem.getBoundingClientRect();</span><br><span class="line">    <span class="built_in">return</span> &#123;</span><br><span class="line">            top: box.top  +  docElem.scrollTop ,</span><br><span class="line">            left: box.left + docElem.scrollLeft</span><br><span class="line">     &#125;</span><br></pre></td></tr></table></figure>
+<p>如果要考虑兼容性，请仔细看zepto源码<br>另外上述</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> getOffset(Node, offset) &#123;</span><br><span class="line">    <span class="keyword">if</span> (!offset) &#123;</span><br><span class="line">          offset = &#123;&#125;;</span><br><span class="line">          offset.top = 0;</span><br><span class="line">          offset.left = 0;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (Node == document.body) &#123;</span><br><span class="line">        // 当该节点为body节点时，结束递归</span><br><span class="line">        <span class="built_in">return</span> offset;</span><br><span class="line">     &#125;</span><br><span class="line">    offset.top += Node.offsetTop;</span><br><span class="line">    offset.left += Node.offsetLeft;</span><br><span class="line">    <span class="built_in">return</span> getOffset(Node.parentNode, offset); // 向上累加offset里的值</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>改成</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> getOffset(Node, offset) &#123;</span><br><span class="line">    <span class="keyword">if</span> (!offset) &#123;</span><br><span class="line">          offset = &#123;&#125;;</span><br><span class="line">          offset.top = 0;</span><br><span class="line">          offset.left = 0;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (Node == document.body) &#123;</span><br><span class="line">        // 当该节点为body节点时，结束递归</span><br><span class="line">        <span class="built_in">return</span> offset;</span><br><span class="line">    &#125;</span><br><span class="line">    offset.top += Node.offsetTop;</span><br><span class="line">    offset.left += Node.offsetLeft;</span><br><span class="line">    <span class="built_in">return</span> getOffset(Node.offsetParent, offset); // 向上累加offset里的值</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>也可以实现</p>
+<audio src="http://yinyueshiting.baidu.com/data2/music/b36407dbb5aa6e3a4898668a96d54708/555874395/555874395.mp3?xcode=9a01670547f7452ea0cc505dc0621a48" controls="controls"></audio>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/11/28/offset/" data-id="cjajqgdvl0001qth2tu7fbrsy" class="article-share-link">Partager</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/11/27/hello-world/" class="article-date">
+  <time datetime="2017-11-27T14:35:24.000Z" itemprop="datePublished">2017-11-27</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/11/27/hello-world/">Hello World 非 Hello World</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>这是一个技术的博客地址，无奈在开始以后的技术博客前，先来篇心情博客，祭奠回忆的尘埃。</p>
+<h2 id="第一，我想告别我逝去的爱情。"><a href="#第一，我想告别我逝去的爱情。" class="headerlink" title="第一，我想告别我逝去的爱情。"></a>第一，我想告别我逝去的爱情。</h2><p>对于你，对于爱情，我有太多的话，我却没有太多的话，聚散如浮萍，不可勉强，祝好。</p>
+<h2 id="第二，我想和时间来个交流。"><a href="#第二，我想和时间来个交流。" class="headerlink" title="第二，我想和时间来个交流。"></a>第二，我想和时间来个交流。</h2><p>时间——一道转轮，寒来暑往，来往匆匆，不经意间已流过27个岁月。蓦然一个回首，已到中年，年少时太多的轻狂，太多的幼稚，都随风而去吧。</p>
+<p>年少时，我们无忧无虑，我们可以尽情挥霍我们的时间；年少时，不懂人情世故，轻信他人，以为上天很眷顾自己，到头来一场空；年少时，我傲慢，却缺少了傲慢的资本。</p>
+<p>或许最近的烦恼是因为人之所以烦恼太多，就是执着的太多，想要的太多，欲望只会摧毁你本就平稳的步伐，让你失去最初的自己。往事不可追，很多东西失去了就失去了，过分的执着只会让我迷失了自己。坚持自己的道路，不可因为过去而沮丧。</p>
+<p>亲爱的自己，不要害怕磨难，不要害怕孤单，努力，岂不美哉！</p>
+<p>深吸一口气，一呼一吸之间，一股凉意在我血液里不停的循环，驱走了几分燥热，带走了些许的落寞。</p>
+<p>我在渐渐老去，我需要开始我的旅行，未来可能有你的陪伴，也许只有我一个人，路还是要自己走，梦还是要自己实现。</p>
+<p>未来好好做件有意义的事，不好吗？</p>
+<p>我们最终都会被年华囫囵吞枣的吞下而后悔到天明，还是珍惜度过每一天，总会有些不一样。</p>
+<p>少年听雨歌楼上，红烛昏罗帐。壮年听雨客舟中，江阔云低，断雁叫西风。<br>而今听雨僧庐下，鬓已星星也。悲欢离合总无情，一任阶前点滴到天明。</p>
+<p>让我从这个Hello World开始，开始下一个Hello World。</p>
+<audio src="http://sc1.111ttt.com:8282/2015/1/01m/27/94272221273.m4a?#.mp3" controls="controls"></audio>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/11/27/hello-world/" data-id="cjajqgdve0000qth2nb2upz7s" class="article-share-link">Partager</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Articles récents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/11/28/offset/">js实现jquery的offset()方法(获取当前元素相对于文档的偏移量)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/11/27/hello-world/">Hello World 非 Hello World</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 sunny&lt;17765293970@163.com&gt;<br>
+      Propulsé by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>
