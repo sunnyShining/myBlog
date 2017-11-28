@@ -1,38 +1,35 @@
 ---
-title: Hello World
+title: Hello World 非 Hello World
+
 ---
-Welcome to [Hexo](https://hexo.io/)! This is your very first post. Check [documentation](https://hexo.io/docs/) for more info. If you get any problems when using Hexo, you can find the answer in [troubleshooting](https://hexo.io/docs/troubleshooting.html) or you can ask me on [GitHub](https://github.com/hexojs/hexo/issues).
 
-## Quick Start
+这是一个技术的博客地址，无奈在开始以后的技术博客前，先来篇心情博客，祭奠回忆的尘埃。
 
-### Create a new post
+## 第一，我想告别我逝去的爱情。
 
-``` bash
-$ hexo new "My New Post"
-```
+对于你，对于爱情，我有太多的话，我却没有太多的话，聚散如浮萍，不可勉强，祝好。
 
-More info: [Writing](https://hexo.io/docs/writing.html)
+## 第二，我想和时间来个交流。
 
-### Run server
+时间——一道转轮，寒来暑往，来往匆匆，不经意间已流过27个岁月。蓦然一个回首，已到中年，年少时太多的轻狂，太多的幼稚，都随风而去吧。
 
-``` bash
-$ hexo server
-```
+年少时，我们无忧无虑，我们可以尽情挥霍我们的时间；年少时，不懂人情世故，轻信他人，以为上天很眷顾自己，到头来一场空；年少时，我傲慢，却缺少了傲慢的资本。
 
-More info: [Server](https://hexo.io/docs/server.html)
+或许最近的烦恼是因为人之所以烦恼太多，就是执着的太多，想要的太多，欲望只会摧毁你本就平稳的步伐，让你失去最初的自己。往事不可追，很多东西失去了就失去了，过分的执着只会让我迷失了自己。坚持自己的道路，不可因为过去而沮丧。
 
-### Generate static files
+亲爱的自己，不要害怕磨难，不要害怕孤单，努力，岂不美哉！
 
-``` bash
-$ hexo generate
-```
+深吸一口气，一呼一吸之间，一股凉意在我血液里不停的循环，驱走了几分燥热，带走了些许的落寞。
 
-More info: [Generating](https://hexo.io/docs/generating.html)
+我在渐渐老去，我需要开始我的旅行，未来可能有你的陪伴，也许只有我一个人，路还是要自己走，梦还是要自己实现。
 
-### Deploy to remote sites
+未来好好做件有意义的事，不好吗？
 
-``` bash
-$ hexo deploy
-```
+我们最终都会被年华囫囵吞枣的吞下而后悔到天明，还是珍惜度过每一天，总会有些不一样。
 
-More info: [Deployment](https://hexo.io/docs/deployment.html)
+少年听雨歌楼上，红烛昏罗帐。壮年听雨客舟中，江阔云低，断雁叫西风。
+而今听雨僧庐下，鬓已星星也。悲欢离合总无情，一任阶前点滴到天明。
+
+让我从这个Hello World开始，开始下一个Hello World。
+
+<audio src="http://sc1.111ttt.com:8282/2015/1/01m/27/94272221273.m4a?#.mp3" controls="controls"></audio>
