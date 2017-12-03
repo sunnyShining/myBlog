@@ -6,17 +6,17 @@ tags:
 
 ## 背景
 
-react如何封装一个组件相信，一百度网上一大把，当我想通过message.error('错误')，这样的提示的时候，我们想拥有一个全局组件来调用，当我查阅资料时，并没有太多关于这个的讲解，所以想自己动手写一个。
+react如何封装一个组件？相信，一百度网上一大把，当我想通过message.error('错误')，这样的提示的时候，我们想拥有一个全局组件来调用，当我查阅资料时，并没有太多关于这个的讲解，所以想自己动手写一个。
 
 ## 思路
 
 我们可以通过
 ```bash
-    let div = document.createElement('div');
-    document.body.appendChild(div);
+let div = document.createElement('div');
+document.body.appendChild(div);
 ```
 创建一个div，插到body里，再通过ReactDOM，将属性和你要写的组件样子传入，如
-```
+```bash
 ReactDOM.render(React.createElement(Loading, props), div);
 ```
 最后在你不需要它的时候，摧毁它，如

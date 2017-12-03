@@ -90,5 +90,3 @@ function getOffset(Node, offset) {
 }
 ```
 也可以实现
-
-<audio src="http://yinyueshiting.baidu.com/data2/music/b36407dbb5aa6e3a4898668a96d54708/555874395/555874395.mp3?xcode=9a01670547f7452ea0cc505dc0621a48" controls="controls"></audio>
