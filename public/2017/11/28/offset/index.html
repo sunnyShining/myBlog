@@ -12,7 +12,7 @@
 <meta property="og:site_name" content="sunny">
 <meta property="og:description" content="从我简书搬迁 背景最近做项目，由于zepto使用的功能较少，想将zepto的功能用较少原生实现，其中有个实现zepto的offset()方法取到各种值的难为了我，我百度了下，大体网上千篇一律的这样写到 1234567891011121314151617181920212223这篇文章主要介绍了js实现jquery的offset()方法,实例分析了jquery的offset()方法原理与采用java">
 <meta property="og:locale" content="zh">
-<meta property="og:updated_time" content="2017-11-28T15:08:52.000Z">
+<meta property="og:updated_time" content="2017-12-03T03:16:29.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="js实现jquery的offset()方法(获取当前元素相对于文档的偏移量)">
 <meta name="twitter:description" content="从我简书搬迁 背景最近做项目，由于zepto使用的功能较少，想将zepto的功能用较少原生实现，其中有个实现zepto的offset()方法取到各种值的难为了我，我百度了下，大体网上千篇一律的这样写到 1234567891011121314151617181920212223这篇文章主要介绍了js实现jquery的offset()方法,实例分析了jquery的offset()方法原理与采用java">
@@ -100,11 +100,11 @@
 <p>改成</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> getOffset(Node, offset) &#123;</span><br><span class="line">    <span class="keyword">if</span> (!offset) &#123;</span><br><span class="line">          offset = &#123;&#125;;</span><br><span class="line">          offset.top = 0;</span><br><span class="line">          offset.left = 0;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (Node == document.body) &#123;</span><br><span class="line">        // 当该节点为body节点时，结束递归</span><br><span class="line">        <span class="built_in">return</span> offset;</span><br><span class="line">    &#125;</span><br><span class="line">    offset.top += Node.offsetTop;</span><br><span class="line">    offset.left += Node.offsetLeft;</span><br><span class="line">    <span class="built_in">return</span> getOffset(Node.offsetParent, offset); // 向上累加offset里的值</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>也可以实现</p>
-<audio src="http://yinyueshiting.baidu.com/data2/music/b36407dbb5aa6e3a4898668a96d54708/555874395/555874395.mp3?xcode=9a01670547f7452ea0cc505dc0621a48" controls="controls"></audio>
+
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://github.com/sunnyShining/myBlog/tree/master/public/2017/11/28/offset/" data-id="cjaq6041u0003idzqa2cs3nqv" class="article-share-link">Share</a>
+      <a data-url="https://github.com/sunnyShining/myBlog/tree/master/public/2017/11/28/offset/" data-id="cjaq8xzd300032rzqbxldt6vk" class="article-share-link">Share</a>
       
       
     </footer>
@@ -160,6 +160,10 @@
     <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2017/12/03/YeomanGenerator/">创建属于自己的Yeoman Generator</a>
+          </li>
         
           <li>
             <a href="/2017/12/03/vueLoading/">vue如何封装一个全局组件</a>

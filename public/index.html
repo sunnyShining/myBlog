@@ -69,6 +69,52 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-YeomanGenerator" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/12/03/YeomanGenerator/" class="article-date">
+  <time datetime="2017-12-03T03:22:36.000Z" itemprop="datePublished">2017-12-03</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/12/03/YeomanGenerator/">创建属于自己的Yeoman Generator</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>最近自己写了下自己项目的react的脚手架，以前一直采用种子文件进行复制，最近看到yo，想通过命令行自动去生成所需文件当然，对于Yeoman来说是大材小用，但小小的尝试也能基本掌握Yeoman的用法吧。</p>
+<h2 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h2><p><strong>1.下载安装yo和generator-generator</strong></p>
+<p>在做这个步骤之前，必须安装好node和npm，之后全局安装yo和generator-generator</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo npm install -g yo</span><br><span class="line">$ sudo npm install -g generator-generator</span><br></pre></td></tr></table></figure>
+<p><strong>2.运行generator-generator来创建我们自己需要的generator的基础框架</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo yo generator</span><br></pre></td></tr></table></figure>
+<p>回答下问题，就可以生成你需要的基础框架，如我这里的<a href="https://github.com/sunnyShining/generator-test.git">链接</a></p>
+<p><strong>3.准备好模版，将模版复制到generator/app/templates文件夹下</strong></p>
+<p><strong>4.编辑index.js</strong></p>
+<p>接下来编辑generator/app/index.js文件夹，通过提出问题，收集答案，来生成我们需要的文件。具体看代码注释。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">'use strict'</span>;</span><br><span class="line">const Generator = require(<span class="string">'yeoman-generator'</span>);</span><br><span class="line">const chalk = require(<span class="string">'chalk'</span>);</span><br><span class="line">const yosay = require(<span class="string">'yosay'</span>);</span><br><span class="line">const _ = require(<span class="string">'lodash'</span>);</span><br><span class="line">const fs = require(<span class="string">'fs'</span>);</span><br><span class="line"></span><br><span class="line">module.exports = class extends Generator &#123;</span><br><span class="line">    <span class="function"><span class="title">prompting</span></span>() &#123;</span><br><span class="line">        // Have Yeoman greet the user.</span><br><span class="line">        this.log(yosay(</span><br><span class="line">          <span class="string">'Welcome to the kickass '</span> + chalk.red(<span class="string">'generator-test'</span>) + <span class="string">' generator!'</span></span><br><span class="line">        ));</span><br><span class="line"></span><br><span class="line">        const prompts = [</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="built_in">type</span>: <span class="string">'list'</span>,</span><br><span class="line">                name: <span class="string">'type'</span>,</span><br><span class="line">                message: <span class="string">'请选择你要创建的类型?'</span>,</span><br><span class="line">                choices: [<span class="string">'routes'</span>, <span class="string">'components'</span>]</span><br><span class="line">            &#125;, &#123;</span><br><span class="line">                <span class="built_in">type</span>: <span class="string">'input'</span>,</span><br><span class="line">                name: <span class="string">'routesNme'</span>,</span><br><span class="line">                message: <span class="string">'请输入你要创建文件的名称！'</span>,</span><br><span class="line">                default: <span class="string">'Feed'</span></span><br><span class="line">            &#125;</span><br><span class="line">        ];</span><br><span class="line">        // 提出问题，收集答案</span><br><span class="line">        <span class="built_in">return</span> this.prompt(prompts).<span class="keyword">then</span>(props =&gt; &#123;</span><br><span class="line">            // To access props later use this.props.someAnswer;</span><br><span class="line">            this.props = props;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="title">writing</span></span>() &#123;</span><br><span class="line">        <span class="keyword">if</span> (this.props.type === <span class="string">'routes'</span>) &#123;</span><br><span class="line">        	// 模版</span><br><span class="line">            <span class="built_in">let</span> routesTmpl = _.template(this.fs.read(this.templatePath(<span class="string">'./Feed/Feed.jsx'</span>)));</span><br><span class="line">            this.fs.write(this.destinationPath(`src/routes/<span class="variable">$&#123;this.props.routesNme&#125;</span>/<span class="variable">$&#123;this.props.routesNme&#125;</span>.jsx`), routesTmpl(&#123;</span><br><span class="line">                routes_name: this.props.routesNme</span><br><span class="line">            &#125;));</span><br><span class="line">            this.fs.copy(</span><br><span class="line">                this.templatePath(<span class="string">'./Feed/Feed.less'</span>),</span><br><span class="line">                this.destinationPath(`src/routes/<span class="variable">$&#123;this.props.routesNme&#125;</span>/<span class="variable">$&#123;this.props.routesNme&#125;</span>.less`)</span><br><span class="line">            );</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (this.props.type === <span class="string">'components'</span>) &#123;</span><br><span class="line">            <span class="built_in">let</span> routesTmpl = _.template(this.fs.read(this.templatePath(<span class="string">'./Feed/Feed.jsx'</span>)));</span><br><span class="line">            this.fs.write(this.destinationPath(`src/components/<span class="variable">$&#123;this.props.routesNme&#125;</span>.jsx`), routesTmpl(&#123;</span><br><span class="line">                routes_name: this.props.routesNme</span><br><span class="line">            &#125;));</span><br><span class="line">            this.fs.copy(</span><br><span class="line">                this.templatePath(<span class="string">'./Feed/Feed.less'</span>),</span><br><span class="line">                this.destinationPath(`src/components/<span class="variable">$&#123;this.props.routesNme&#125;</span>/<span class="variable">$&#123;this.props.routesNme&#125;</span>.less`)</span><br><span class="line">            );</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="title">install</span></span>() &#123;</span><br><span class="line">        // this.installDependencies();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://github.com/sunnyShining/myBlog/tree/master/public/2017/12/03/YeomanGenerator/" data-id="cjaq8xzcn00002rzqvd0aj9as" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-vueLoading" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2017/12/03/vueLoading/" class="article-date">
@@ -99,7 +145,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://github.com/sunnyShining/myBlog/tree/master/public/2017/12/03/vueLoading/" data-id="cjaq6041d0000idzqpi3mjh5o" class="article-share-link">Share</a>
+      <a data-url="https://github.com/sunnyShining/myBlog/tree/master/public/2017/12/03/vueLoading/" data-id="cjaq8xzdb00042rzq8paflowj" class="article-share-link">Share</a>
       
       
     </footer>
@@ -142,7 +188,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://github.com/sunnyShining/myBlog/tree/master/public/2017/11/29/loading/" data-id="cjaq6041k0001idzq320i18x7" class="article-share-link">Share</a>
+      <a data-url="https://github.com/sunnyShining/myBlog/tree/master/public/2017/11/29/loading/" data-id="cjaq8xzd100022rzqsthintuq" class="article-share-link">Share</a>
       
       
     </footer>
@@ -184,11 +230,11 @@
 <p>改成</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> getOffset(Node, offset) &#123;</span><br><span class="line">    <span class="keyword">if</span> (!offset) &#123;</span><br><span class="line">          offset = &#123;&#125;;</span><br><span class="line">          offset.top = 0;</span><br><span class="line">          offset.left = 0;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (Node == document.body) &#123;</span><br><span class="line">        // 当该节点为body节点时，结束递归</span><br><span class="line">        <span class="built_in">return</span> offset;</span><br><span class="line">    &#125;</span><br><span class="line">    offset.top += Node.offsetTop;</span><br><span class="line">    offset.left += Node.offsetLeft;</span><br><span class="line">    <span class="built_in">return</span> getOffset(Node.offsetParent, offset); // 向上累加offset里的值</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>也可以实现</p>
-<audio src="http://yinyueshiting.baidu.com/data2/music/b36407dbb5aa6e3a4898668a96d54708/555874395/555874395.mp3?xcode=9a01670547f7452ea0cc505dc0621a48" controls="controls"></audio>
+
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://github.com/sunnyShining/myBlog/tree/master/public/2017/11/28/offset/" data-id="cjaq6041u0003idzqa2cs3nqv" class="article-share-link">Share</a>
+      <a data-url="https://github.com/sunnyShining/myBlog/tree/master/public/2017/11/28/offset/" data-id="cjaq8xzd300032rzqbxldt6vk" class="article-share-link">Share</a>
       
       
     </footer>
@@ -237,7 +283,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://github.com/sunnyShining/myBlog/tree/master/public/2017/11/27/hello-world/" data-id="cjaq6041s0002idzqezcwwxwg" class="article-share-link">Share</a>
+      <a data-url="https://github.com/sunnyShining/myBlog/tree/master/public/2017/11/27/hello-world/" data-id="cjaq8xzcu00012rzqfhbwjmsm" class="article-share-link">Share</a>
       
       
     </footer>
@@ -275,6 +321,10 @@
     <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2017/12/03/YeomanGenerator/">创建属于自己的Yeoman Generator</a>
+          </li>
         
           <li>
             <a href="/2017/12/03/vueLoading/">vue如何封装一个全局组件</a>
