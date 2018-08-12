@@ -1,4 +1,5 @@
 ---
+author: sunny
 title: js实现jquery的offset()方法(获取当前元素相对于文档的偏移量)
 date: 2017-11-28 22:43:46
 tags:

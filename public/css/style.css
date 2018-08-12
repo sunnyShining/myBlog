@@ -854,7 +854,6 @@ hr {
 .post .post-content .post-excerpt {
   position: relative;
   min-height: 140px;
-  margin-right: 210px;
   overflow: hidden;
 }
 .post .post-content .post-thumbnail {
@@ -935,12 +934,12 @@ hr {
  */
 pre,
 .highlight {
-  background: #f7f7f7;
+  background: #1d1f21;
   margin: 20px 0;
   padding: 15px;
   overflow: auto;
   font-size: 13px;
-  color: #4d4d4c;
+  color: #c5c8c6;
   line-height: 1.6;
 }
 .highlight .gutter pre,
@@ -980,7 +979,7 @@ pre code {
   clear: both;
   zoom: 1;
   font-size: 0.85em;
-  color: #8e908c;
+  color: #969896;
   line-height: 1em;
   margin-bottom: 1em;
 }
@@ -999,7 +998,7 @@ pre code {
   border-style: solid;
   border-color: #ccc;
   border-width: 1px 0;
-  background: #f7f7f7;
+  background: #1d1f21;
   padding: 15px 15px 15px 15px;
 }
 .gist .gist-file {
@@ -1025,8 +1024,8 @@ pre code {
   border: none;
 }
 .gist .gist-file .gist-meta {
-  background: #f7f7f7;
-  color: #8e908c;
+  background: #1d1f21;
+  color: #969896;
   font: 13px Consolas, Monaco, Menlo, monospace;
   text-shadow: 0 0;
   padding: 0;
@@ -1041,7 +1040,7 @@ pre code {
   text-decoration: underline;
 }
 pre .comment {
-  color: #8e908c;
+  color: #969896;
 }
 pre .variable,
 pre .attribute,
@@ -1055,7 +1054,7 @@ pre .html .doctype,
 pre .css .id,
 pre .css .class,
 pre .css .pseudo {
-  color: #c82829;
+  color: #c66;
 }
 pre .number,
 pre .preprocessor,
@@ -1063,11 +1062,11 @@ pre .built_in,
 pre .literal,
 pre .params,
 pre .constant {
-  color: #f5871f;
+  color: #de935f;
 }
 pre .ruby .class .title,
 pre .css .rules .attribute {
-  color: #718c00;
+  color: #b5bd68;
 }
 pre .string,
 pre .value,
@@ -1075,11 +1074,11 @@ pre .inheritance,
 pre .header,
 pre .ruby .symbol,
 pre .xml .cdata {
-  color: #718c00;
+  color: #b5bd68;
 }
 pre .title,
 pre .css .hexcolor {
-  color: #3e999f;
+  color: #8abeb7;
 }
 pre .function,
 pre .python .decorator,
@@ -1089,11 +1088,11 @@ pre .ruby .title .keyword,
 pre .perl .sub,
 pre .javascript .title,
 pre .coffeescript .title {
-  color: #4271ae;
+  color: #81a2be;
 }
 pre .keyword,
 pre .javascript .function {
-  color: #8959a8;
+  color: #b294bb;
 }
 /*
  * 搜索框

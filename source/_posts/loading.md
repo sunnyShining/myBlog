@@ -1,4 +1,5 @@
 ---
+author: sunny
 title: react如何封装一个全局组件
 date: 2017-11-29 21:59:29
 tags:

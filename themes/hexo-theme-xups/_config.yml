@@ -1,0 +1,122 @@
+#############################
+# 主题配置文件
+#############################
+
+#----------------------------
+# 头部导航
+#----------------------------
+menu:
+  home:
+    name: 首页
+    link: /
+    icon: icon-home
+  lab:
+    name: 实验室
+    link: /lab/
+    icon: icon-lab
+  about:
+    name: 关于
+    link: /about/
+    icon: icon-about
+  comment:
+    name: 留言
+    link: /comment/
+    icon: icon-comment
+
+#----------------------------
+# 副导航
+#----------------------------
+subnav:
+  github: "#"
+  weibo: "#"
+  rss: "#"
+  zhihu: "#"
+
+#----------------------------
+# RSS
+#----------------------------
+rss: /atom.xml
+
+#----------------------------
+# Favicon
+#----------------------------
+favicon: /favicon.ico
+
+#----------------------------
+# 头像url
+#----------------------------
+avatar: /img/sunny.jpg
+
+#----------------------------
+# 是否开启分享
+#----------------------------
+share: true
+
+#----------------------------
+# 侧栏是否显示微博秀
+#----------------------------
+weibo_show:
+  enable: true
+  code: <iframe id="myWeibo" width="100%" height="550" class="share_self"  frameborder="0" scrolling="no" src="https://widget.weibo.com/weiboshow/index.php?language=&amp;width=0&amp;height=550&amp;fansRow=2&amp;ptype=1&amp;speed=0&amp;skin=1&amp;isTitle=1&amp;noborder=1&amp;isWeibo=1&amp;isFans=0&amp;uid=2449308854&amp;verifier=454ed586&amp;dpc=1"></iframe>
+
+#----------------------------
+# 是否开启评论
+#----------------------------
+comment:
+  enable: true
+  owner: sunnyShining
+  repo: blog_comments
+  client_id: a6d772d870a68bc9c558
+  client_secret: 4f3ed1ee231fa1e940c0530f86d5d788512f2027
+
+#----------------------------
+# 是否开启云标签
+#----------------------------
+tagcloud: true
+
+#----------------------------
+# 友情链接
+#----------------------------
+friends:
+  enable: true
+  list:
+
+#----------------------------
+# 头部链接
+#----------------------------
+head_links:
+  enable: true
+  list:
+    sup:
+      0:
+        name: Github
+        link: https://github.com/sunnyShining
+      last:
+        name: gitee
+        link: https://gitee.com/sunnyShining
+    sub:
+      sinaweibo:
+        name: 新浪微博
+        link: https://weibo.com/u/2449308854
+      qqweibo:
+        name: 简书
+        link: https://www.jianshu.com/u/e53a4b002124
+#----------------------------
+# SEO
+#----------------------------
+SEO:
+  keywords: sunny, 前端, Web, 前端开发
+  description: sunny个人技术小站
+
+#----------------------------
+# 高亮样式
+#----------------------------
+highlight_theme: night
+#----------------------------
+# CDN
+# 如: //7xs305.com1.z0.glb.clouddn.com/
+# 主要以下两个目录进行 cdn 存储
+#   - img 图片资源下的 thumbnail 目录
+#   - css 样式资源下的 fonts 目录
+#----------------------------
+CDN:

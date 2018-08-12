@@ -1,0 +1,21 @@
+<%- partial('_partial/head') %>
+<body class="home">
+    <!-- 博客头部 -->
+    <%- partial('_partial/header') %>
+    <!-- 博客正文 -->
+    <div class="container body clearfix">
+        <section class="content">
+            <div class="content-main widget">
+                <%- body %>
+            </div>
+
+        </section>
+        <%- partial('_partial/sidebar') %>
+    </div>
+
+    <!-- 博客底部 -->
+    <%- partial('_partial/footer') %>
+    <!--博客js脚本 -->
+    <%- partial('_partial/after-footer') %>
+</body>
+</html>
