@@ -1,6 +1,27 @@
 <% if (theme.comment.enable) { %>
     <%- js('js/comment') %>
     <div id="comments" class="comment">
+        <div class="sign-bar" id="commentSignBar"></div>
+        <section class="box" id="commentBox">
+            <div class="com-avatar">
+                <img id="loginAvatar" src="/img/unsigned_avatar.jpg" alt="avatar">
+            </div>
+            <div class="com-text">
+                <div class="main">
+                    <textarea class="text-area-edited show" id="editBox" placeholder="欢迎评论！"></textarea>
+                    <div class="text-area-preview" id="previewBox"></div>
+                </div>
+                <div class="switch">
+                    <div class="switch-item on" id="editSwitcher">编辑</div>
+                    <div class="switch-item" id="previewSwitcher">预览</div>
+                </div>
+                <div class="button" onclick="JELON.Actions.postComment()">提交</div>
+            </div>
+        </section>
+        <section class="tips clearfix" id="commentTips">注：评论支持 markdown 语法！</section>
+        <section class="list-wrap" id="commentList">
+            <div class="text-center">正在加载评论</div>
+        </section>
         <!--
             <div class="sign-bar">
                 GitHub 已登录!
