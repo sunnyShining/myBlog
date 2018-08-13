@@ -557,7 +557,7 @@
             if (token && userInfo) {
                 userInfo = JSON.parse(userInfo);
                 html = '<span class="sign-txt" title="' + userInfo.login + '">GitHub 已登录!</span>' +
-                    '<span class="sign-link" id="signOut" onclick="JELON.Actions.signOut()">退出</span>';
+                    '<span class="sign-link" id="signOut">退出</span>';
             } else {
                 html = '<span class="sign-txt">GitHub 未登录?</span>' +
                     '<a href="https://github.com/login/oauth/authorize?scope=public_repo&redirect_uri=' + (win.location.href.indexOf('?') !== -1 ? encodeURIComponent(win.location.href.substring(0, location.href.indexOf('?'))) : encodeURIComponent(location.href) + '&client_id=' + CommentUtils.options.clientId + '&client_secret=' + CommentUtils.options.clientSecret) + '" class="sign-link">' +
@@ -598,6 +598,7 @@
             var html = '';
             var htmlList = '';
             var pageList = '';
+            var _this = this;
             // 页数
             var allPages = Math.ceil(comments / constants.PER_PAGE);
             if (comments === 0) {
@@ -633,74 +634,74 @@
                 } else if (allPages <= perNavPageMaxSize) {
                     // 添加上页
                     if (page !== 1) {
-                        pageList += '<a data-page="' + (page - 1) + '" class="item">上页</a>'
+                        pageList += '<a href="javascript: CommentUtils.pageJump(' + (page - 1) + ');" data-page="' + (page - 1) + '" class="item">上页</a>'
                     }
                     for (var i = 1; i <= allPages; i++) {
                         if (i === page) {
                             pageItem = '<a href="javascript: void(0);" class="item current">' + page + '</a>';
                         } else {
-                            pageItem = '<a data-page="' + i + '" class="item">' + i + '</a>';
+                            pageItem = '<a href="javascript: CommentUtils.pageJump(' + i + ');" data-page="' + i + '" class="item">' + i + '</a>';
                         }
                         pageList += pageItem;
                     }
                     // 下页
                     if (page !== allPages) {
-                        pageList += '<a data-page="' + (page + 1) + '" class="item">下页</a>';
+                        pageList += '<a href="javascript: CommentUtils.pageJump(' + (page + 1) + ');" data-page="' + (page + 1) + '" class="item">下页</a>';
                     }
                 } else if (allPages > perNavPageMaxSize) {
                     if (page <= perNavPageMaxSize) {
                         if (page !== 1) {
-                            pageList += '<a data-page="' + (page - 1) + '" class="item">上页</a>';
+                            pageList += '<a href="javascript: CommentUtils.pageJump(' + (page - 1) + ');" data-page="' + (page - 1) + '" class="item">上页</a>';
                         }
                         for (var i = 1; i <= perNavPageMaxSize; i++) {
                             if (i === page) {
                                 pageItem = '<a href="javascript: void(0);" class="item current">' + page + '</a>';
                             } else {
-                                pageItem = '<a data-page="' + i + '" class="item">' + i + '</a>';
+                                pageItem = '<a href="javascript: CommentUtils.pageJump(' + i + ');" data-page="' + i + '" class="item">' + i + '</a>';
                             }
                             pageList += pageItem;
                         }
 
                         pageList += '<span class="more">...</span>';
-                        pageList += '<a data-page="' + (page + 1) + '" class="item">下页</a>';
-                        pageList += '<a data-page="' + allPages + '" class="item">末页</a>';
+                        pageList += '<a href="javascript: CommentUtils.pageJump(' + (page + 1) + ');" data-page="' + (page + 1) + '" class="item">下页</a>';
+                        pageList += '<a href="javascript: CommentUtils.pageJump(' + allPages + ');" data-page="' + allPages + '" class="item">末页</a>';
                     } else if (page > perNavPageMaxSize && page <= allPages - perNavPageMaxSize) {
                         var mod = page % perNavPageMaxSize;
                         var start = Math.floor(page / perNavPageMaxSize) * perNavPageMaxSize + 1;
                         var end = Math.ceil(page / perNavPageMaxSize) * perNavPageMaxSize;
-                        pageList += '<a data-page="' + 1 + '" class="item">首页</a>';
-                        pageList += '<a data-page="' + (page - 1) + '" class="item">上页</a>';
+                        pageList += '<a href="javascript: CommentUtils.pageJump(' + 1 + ');" data-page="' + 1 + '" class="item">首页</a>';
+                        pageList += '<a href="javascript: CommentUtils.pageJump(' + (page - 1) + ');" data-page="' + (page - 1) + '" class="item">上页</a>';
                         for (var i = start; i <= end; i++) {
                             if (i === page) {
                                 pageItem = '<a href="javascript: void(0);" class="item current">' + page + '</a>';
                             } else {
-                                pageItem = '<a data-page="' + i + '" class="item">' + i + '</a>';
+                                pageItem = '<a href="javascript: CommentUtils.pageJump(' + i + ');" data-page="' + i + '" class="item">' + i + '</a>';
                             }
                             pageList += pageItem;
                         }
 
                         pageList += '<span class="more">...</span>';
-                        pageList += '<a data-page="' + (page + 1) + '" class="item">下页</a>';
-                        pageList += '<a data-page="' + allPages + '" class="item">末页</a>';
+                        pageList += '<a href="javascript: CommentUtils.pageJump(' + (page + 1) + ');" data-page="' + (page + 1) + '" class="item">下页</a>';
+                        pageList += '<a href="javascript: CommentUtils.pageJump(' + allPages + ');" data-page="' + allPages + '" class="item">末页</a>';
                     } else if (page > perNavPageMaxSize && page > allPages - perNavPageMaxSize) {
                         var start = allPages - perNavPageMaxSize + 1;
                         var end = allPages;
-                        pageList += '<a data-page="' + 1 + '" class="item">首页</a>';
-                        pageList += '<a data-page="' + (page - 1) + '" class="item">上页</a>';
+                        pageList += '<a href="javascript: CommentUtils.pageJump(' + 1 + ');" data-page="' + 1 + '" class="item">首页</a>';
+                        pageList += '<a href="javascript: CommentUtils.pageJump(' + (page - 1) + ');" data-page="' + (page - 1) + '" class="item">上页</a>';
                         for (var i = start; i <= end; i++) {
                             if (i === page) {
                                 pageItem = '<a href="javascript: void(0);" class="item current">' + page + '</a>';
                             } else {
-                                pageItem = '<a data-page="' + i + '" class="item">' + i + '</a>';
+                                pageItem = '<a href="javascript: CommentUtils.pageJump(' + i + ');" data-page="' + i + '" class="item">' + i + '</a>';
                             }
                             pageList += pageItem;
                         }
                         if (page !== allPages) {
-                            pageList += '<a data-page="' + (page + 1) + '" class="item">下页</a>';
+                            pageList += '<a href="javascript: CommentUtils.pageJump(' + (page + 1) + ');" data-page="' + (page + 1) + '" class="item">下页</a>';
                         }
                     }
                 }
-                html = '<header class="list-header">总共 <span class="comments-num" id="JELON__commentsNum">' + JL.issueComments + '</span> 条评论</header>' +
+                html = '<header class="list-header">总共 <span class="comments-num" id="commentsNum">' + _this.issueComments + '</span> 条评论</header>' +
                         '<ul class="list">' +
                             htmlList +
                         '</ul>' +
@@ -860,43 +861,40 @@
         pageJump: function(page) {
             var pageJump = tools.$('#pageJump');
             var _this = this;
-            pageJump && pageJump.addEventListener('click', function (e) {
-                var page = e.target.dataset && e.target.dataset.page;
-                if (page) {
-                    tools.ajax({
-                        url: 'repos/' + _this.options.owner + '/' + _this.options.repo + '/issues/' + _this.issueNumber + '/comments',
-                        method: 'GET',
-                        data: {
-                            page: Number(page),
-                            per_page: constants.PER_PAGE
-                        },
-                        success: function (list) {
-                            _this.updateList(page, _this.issueComments, list, function () {
-                                for (var i = 0, len = list.length; i < len; i++) {
-                                    (function(commentId) {
-                                        tools.ajax({
-                                            url: 'repos/' + _this.options.owner + '/' + _this.options.repo + '/issues/comments/' + commentId + '/reactions',
-                                            method: 'GET',
-                                            data: {
-                                                content: 'heart'
-                                            },
-                                            success: function (reactions) {
-                                                _this.reactionUpdate(commentId, reactions);
-                                            },
-                                            error: function (error) {
-                                                console.log(error);
-                                            }
-                                        });
-                                    }(list[i].id));
-                                }
-                            });
-                        },
-                        error: function (error) {
-                            console.log(error);
-                        }
-                    });
-                }
-            });
+            if (page) {
+                tools.ajax({
+                    url: 'repos/' + _this.options.owner + '/' + _this.options.repo + '/issues/' + _this.issueNumber + '/comments',
+                    method: 'GET',
+                    data: {
+                        page: Number(page),
+                        per_page: constants.PER_PAGE
+                    },
+                    success: function (list) {
+                        _this.updateList(page, _this.issueComments, list, function () {
+                            for (var i = 0, len = list.length; i < len; i++) {
+                                (function(commentId) {
+                                    tools.ajax({
+                                        url: 'repos/' + _this.options.owner + '/' + _this.options.repo + '/issues/comments/' + commentId + '/reactions',
+                                        method: 'GET',
+                                        data: {
+                                            content: 'heart'
+                                        },
+                                        success: function (reactions) {
+                                            _this.reactionUpdate(commentId, reactions);
+                                        },
+                                        error: function (error) {
+                                            console.log(error);
+                                        }
+                                    });
+                                }(list[i].id));
+                            }
+                        });
+                    },
+                    error: function (error) {
+                        console.log(error);
+                    }
+                });
+            }
         },
         // 提交
         postComment: function() {
