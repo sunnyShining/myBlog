@@ -315,7 +315,7 @@
             opts.success = opts.success || function() {};
             // 错误后回调
             opts.error = opts.error || function() {};
-            var spin = opts.spin; // 是否显示loading，默认不显示
+            var spin = opts.spin === undefined ? true : opts.spin; // 是否显示loading，默认不显示
             var errorToast = opts.errorToast === undefined ? true : opts.errorToast; // 是否显示错误警告，默认弹出
             var successToast = opts.successToast; // 是否显示成功警告
             var xhr = null;
@@ -504,7 +504,7 @@
                                                             content: 'heart'
                                                         },
                                                         success: function (reactions) {
-                                                            _this.Renders.list.reactionUpdate(commentId, reactions);
+                                                            _this.reactionUpdate(commentId, reactions);
                                                         },
                                                         error: function (err) {
                                                             console.log(err);
@@ -548,6 +548,8 @@
             this.signOut();
             // createIssue
             this.createIssue();
+            // 提交评论
+            this.postComment();
         },
         // 更新用户信息
         updateUserInfo: function() {
@@ -608,15 +610,16 @@
                 var pageItem = '';
                 // 循环评论列表
                 for (var i = 0, len = list.length; i < len; i++) {
+                    console.log(list[i].user);
                     item = '<li class="item">' +
                                 '<div class="user-avatar">' +
-                                    '<a target="_blank" href="' + list[i].user.html_url + '">' +
-                                        '<img src="' + list[i].user.avatar_url + '" alt="user-avatar">' +
+                                    '<a target="_blank" href="' + (list[i].user ? list[i].user.html_url : '#') + '">' +
+                                        '<img src="' + (list[i].user ? list[i].user.avatar_url: '') + '" alt="user-avatar">' +
                                     '</a>' +
                                 '</div>' +
                                 '<div class="user-comment">',
                                     '<div class="user-comment-header" id="comment_' + list[i].id + '_reactions">' +
-                                        '<span class="post-name">' + list[i].user.login + '</span>' +
+                                        '<span class="post-name">' + (list[i].user ? list[i].user.login : '') + '</span>' +
                                         '<span class="post-time">' + formatDate('yyyy-MM-dd hh:mm', new Date(list[i].created_at)) + '</span>' +
                                         '<span class="like" onclick="CommentUtils.like(' + list[i].id + ')">点赞</span>' +
                                         '<span class="like-num">' + list[i].reactions.heart + '</span>' +
@@ -755,7 +758,7 @@
             var oUl = tools.$('#commentList').getElementsByTagName('ul')[0];
             if (oUl) {
                 oUl.insertBefore(oLi, oUl.firstChild);
-                tools.$('#commentsNum').innerHTML = JL.issueComments + 1;
+                tools.$('#commentsNum').innerHTML = _this.issueComments + 1;
             } else {
                 tools.$('#commentList').innerHTML = '<header class="list-header">总共 <span class="comments-num" id="commentsNum">' + (_this.issueComments + 1) + '</span> 条评论</header>' +
                                                     '<ul class="list">' +
@@ -898,73 +901,78 @@
         },
         // 提交
         postComment: function() {
-            var accessToken = win.localStorage.getItem(constants.ACCESS_TOKEN_KEY);
-            var userInfo = win.localStorage.getItem(constants.USER_INFO_KEY);
+            var postComment = tools.$('#postComment');
             var _this = this;
-            if (!accessToken || !userInfo) {
-                alert('请先登录哦..!^_^');
-                return;
-            }
-            var body = tools.$('#editBox').value.trim();
-            // 安全转义
-            body = tools.htmlEncode(body);
-            if (body) {
-                if (_this.issueNumber !== 0) {
-                    tools.ajax({
-                        url: 'repos/' + _this.options.owner + '/' + _this.options.repo + '/issues/' + _this.issueNumber + '/comments',
-                        method: 'POST',
-                        data: data,
-                        success: function(res) {
-                            if (res.id) {
-                                _this.addOne(res);
-                                _this.issueComments++;
-                                tools.$('#editBox').value = '';
-                                tools.$('#previewBox').innerHTML = '';
-                            }
-                        },
-                        error: function(err) {
-                            console.log(err)
-                        }
-                    });
-                } else {
-                    // 如果还没有创建 issue，先创建 issue
-                    tools.ajax({
-                        url: 'repos/' + JL.options.owner + '/' + JL.options.repo + '/issues',
-                        method: 'POST',
-                        data: {
-                            title: document.title,
-                            body: win.location.href,
-                            labels: [(_this.options.label || win.location.href)]
-                        },
-                        success: function(res) {
-                            if (res.number) {
-                                _this.issueNumber = res.number
-                                tools.ajax({
-                                    url: 'repos/' + _this.options.owner + '/' + _this.options.repo + '/issues/' + _this.issueNumber + '/comments',
-                                    method: 'POST',
-                                    data: {
-                                        body: body
-                                    },
-                                    success: function(res) {
-                                        if (res.id) {
-                                            _this.addOne(json);
-                                            _this.issueComments++;
-                                            tools.$('#editBox').value = '';
-                                            tools.$('#previewBox').innerHTML = '';
-                                        }
-                                    },
-                                    error: function(err) {
-                                        console.log(err);
-                                    }
-                                });
-                            }
-                        },
-                        error: function(err) {
-                            console.log(err);
-                        }
-                    });
+            postComment && postComment.addEventListener('click', function (e){
+                var accessToken = win.localStorage.getItem(constants.ACCESS_TOKEN_KEY);
+                var userInfo = win.localStorage.getItem(constants.USER_INFO_KEY);
+                if (!accessToken || !userInfo) {
+                    alert('请先登录哦..!^_^');
+                    return;
                 }
-            }
+                var body = tools.$('#editBox').value.trim();
+                // 安全转义
+                body = tools.htmlEncode(body);
+                if (body) {
+                    if (_this.issueNumber && _this.issueNumber !== 0) {
+                        tools.ajax({
+                            url: 'repos/' + _this.options.owner + '/' + _this.options.repo + '/issues/' + _this.issueNumber + '/comments',
+                            method: 'POST',
+                            data: {
+                                body: body
+                            },
+                            success: function(res) {
+                                if (res.id) {
+                                    _this.addOne(res);
+                                    _this.issueComments++;
+                                    tools.$('#editBox').value = '';
+                                    tools.$('#previewBox').innerHTML = '';
+                                }
+                            },
+                            error: function(err) {
+                                console.log(err)
+                            }
+                        });
+                    } else {
+                        // 如果还没有创建 issue，先创建 issue
+                        tools.ajax({
+                            url: 'repos/' + _this.options.owner + '/' + _this.options.repo + '/issues',
+                            method: 'POST',
+                            data: {
+                                title: document.title,
+                                body: win.location.href,
+                                labels: [(_this.options.label || win.location.href)]
+                            },
+                            success: function(res) {
+                                if (res.number) {
+                                    _this.issueNumber = res.number
+                                    tools.ajax({
+                                        url: 'repos/' + _this.options.owner + '/' + _this.options.repo + '/issues/' + _this.issueNumber + '/comments',
+                                        method: 'POST',
+                                        data: {
+                                            body: body
+                                        },
+                                        success: function(res) {
+                                            if (res.id) {
+                                                _this.addOne(json);
+                                                _this.issueComments++;
+                                                tools.$('#editBox').value = '';
+                                                tools.$('#previewBox').innerHTML = '';
+                                            }
+                                        },
+                                        error: function(err) {
+                                            console.log(err);
+                                        }
+                                    });
+                                }
+                            },
+                            error: function(err) {
+                                console.log(err);
+                            }
+                        });
+                    }
+                }
+            });
         },
         // 喜欢
         like: function(commentId) {
