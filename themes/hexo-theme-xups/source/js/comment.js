@@ -519,8 +519,8 @@
                                     }
                                 });
                             } else {
-                                JL.Renders.list.update(1, 0, []);
-                                JL.Renders.tips.update();
+                                _this.updateList(1, 0, []);
+                                _this.updateTips();
                             }
                         } else {
                             // 授权码失效
@@ -583,7 +583,7 @@
             if (userInfo && JSON.parse(userInfo).login === CommentUtils.options.owner && CommentUtils.issueNumber === 0) {
                 handler = '<a id="createIssue" class="init" title="文章关联 issue">初始化评论</a>';
             }
-            CommentUtils.$('#commentTips').innerHTML = handler + '注：评论支持 markdown 语法！';
+            tools.$('#commentTips').innerHTML = handler + '注：评论支持 markdown 语法！';
         },
         /**
          * 评论列表模块视图更新
