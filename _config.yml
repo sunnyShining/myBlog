@@ -73,6 +73,7 @@ tag_map:
   node: node.js
   css: css
   编码规范: codeing
+  生活: life
 
 # Date / Time format
 ## Hexo uses Moment.js to parse and display date

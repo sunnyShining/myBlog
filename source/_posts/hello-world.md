@@ -2,6 +2,7 @@
 author: sunny
 title: Hello World 非 Hello World
 categories: 生活
+tags: 生活
 ---
 
 这是一个技术的博客地址，无奈在开始以后的技术博客前，先来篇心情博客，祭奠回忆的尘埃。
