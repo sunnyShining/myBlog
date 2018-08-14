@@ -2,7 +2,7 @@
 author: sunny
 title: js实现jquery的offset()方法(获取当前元素相对于文档的偏移量)
 date: 2017-11-28 22:43:46
-tags:
+tags: js
 ---
 
 从我[简书](http://www.jianshu.com/p/e8965308d7e9)搬迁
@@ -10,6 +10,8 @@ tags:
 # 背景
 
 最近做项目，由于zepto使用的功能较少，想将zepto的功能用较少原生实现，其中有个实现zepto的offset()方法取到各种值的难为了我，我百度了下，大体网上千篇一律的这样写到
+
+<!-- more -->
 
 ```bash
 这篇文章主要介绍了js实现jquery的offset()方法,实例分析了jquery的offset()方法原理与采用javascript实现的技巧,具有一定参考借鉴价值,需要的朋友可以参考下

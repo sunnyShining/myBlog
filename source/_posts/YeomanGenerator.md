@@ -2,12 +2,14 @@
 author: sunny
 title: 创建属于自己的Yeoman Generator
 date: 2017-12-03 11:22:36
-tags:
+tags: js
 ---
 
 ## 背景
 
 最近自己写了下自己项目的react的脚手架，以前一直采用种子文件进行复制，最近看到yo，想通过命令行自动去生成所需文件当然，对于Yeoman来说是大材小用，但小小的尝试也能基本掌握Yeoman的用法吧。
+
+<!-- more -->
 
 ## 步骤
 

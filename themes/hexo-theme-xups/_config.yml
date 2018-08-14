@@ -11,8 +11,8 @@ menu:
     link: /
     icon: icon-home
   lab:
-    name: 实验室
-    link: /lab/
+    name: python3
+    link: /python3/
     icon: icon-lab
   about:
     name: 关于

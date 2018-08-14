@@ -2,7 +2,7 @@
 author: sunny
 title: vue如何封装一个全局组件
 date: 2017-12-03 10:40:49
-tags:
+tags: vue
 ---
 
 ## 背景
@@ -12,6 +12,8 @@ tags:
 ## 思路
 
 通过Vue.extend(options)，使用基础 Vue 构造器，创建一个子类，再创建这个子类的实例，挂载到body元素上。具体看代码注释。
+
+<!-- more -->
 
 ## 代码
 

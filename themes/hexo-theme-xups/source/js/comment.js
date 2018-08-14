@@ -1,173 +1,6 @@
-// loading和toast
-(function(win, doc) {
-    var Toast = {
-        // 引入toast样式
-        importCss: function() {
-            var style = doc.createElement('style');
-            style.type = 'text/css';
-            style.innerHTML = '.c-toast {' +
-                'position: fixed;' +
-                'top: 0;' +
-                'left: 0;' +
-                'display: flex;' +
-                'justify-content: center;' +
-                'align-items: center;' +
-                'width: 100%;' +
-                'height: 100%;' +
-                'z-index: 200;' +
-                'background: transparent;' +
-                '}' +
-                '.c-toast .toast-content {' +
-                'padding: 10px 15px;' +
-                'max-width: 50%;' +
-                'text-align: center;' +
-                'font-size: 15px;' +
-                'color: #fff;' +
-                'background-color: rgba(58, 58, 58, 0.9);' +
-                'border-radius: 3px;' +
-                '}' +
-
-                '.c-toast .toast-loading {' +
-                'display: flex;' +
-                'flex-direction: column;' +
-                'justify-content: center;' +
-                'align-items: center;' +
-                'border-radius: 5px;' +
-                'padding: 15px 15px;' +
-                'min-width: 60px;' +
-                'font-size: 13px;' +
-                'color: #fff;' +
-                'background-color: rgba(58, 58, 58, 0.9);' +
-                'line-height: 1.5;' +
-                '}' +
-                '@keyframes loading {' +
-                'from {' +
-                'transform: rotateZ(0deg)' +
-                '}' +
-                'to {' +
-                'transform: rotateZ(360deg);' +
-                '}' +
-                '}' +
-                '.c-toast .loading-img {' +
-                'animation-name: loading;' +
-                'animation-fill-mode: both;' +
-                'animation-duration: 1.5s;' +
-                'animation-timing-function: linear;' +
-                'animation-iteration-count: infinite;' +
-                '}' +
-                '.c-toast .toast-loading img {' +
-                'margin-bottom: 5px;' +
-                'width: 36px;' +
-                'height: 36px;' +
-                '}' +
-
-                '.c-toast-text-info{' +
-                'margin-top: 6px;' +
-                '}' +
-
-                '.c-toast-icon {' +
-                'fill: currentColor;' +
-                'background-size: cover;' +
-                'width: 22px;' +
-                'height: 22px;' +
-                '}' +
-                '.c-toast-icon-xxs {' +
-                'width: 15px;' +
-                'height: 15px;' +
-                '}' +
-
-                '.c-toast-icon-xs {' +
-                'width: 18px;' +
-                'height: 18px;' +
-                '}' +
-
-                '.c-toast-icon-sm {' +
-                'width: 21px;' +
-                'height: 21px;' +
-                '}' +
-
-                '.c-toast-icon-md {' +
-                'width: 22px;' +
-                'height: 22px;' +
-                '}' +
-
-                '.c-toast-icon-lg {' +
-                'width: 36px;' +
-                'height: 36px;' +
-                '}' +
-
-                '.c-toast-icon-loading {' +
-                '-webkit-animation: cirle-anim 1s linear infinite;' +
-                'animation: cirle-anim 1s linear infinite;' +
-                '}' +
-
-                '@-webkit-keyframes cirle-anim {' +
-                '100% {' +
-                '-webkit-transform: rotate(360deg);' +
-                'transform: rotate(360deg);' +
-                '}' +
-                '}' +
-
-                '@keyframes cirle-anim {' +
-                '100% {' +
-                '-webkit-transform: rotate(360deg);' +
-                'transform: rotate(360deg);' +
-                '}' +
-                '}';
-            document.getElementsByTagName('HEAD').item(0).appendChild(style);
-        },
-        info: function(content, duration) {
-            var options = {
-                content: content || '系统错误',
-                duration: duration || 1.5
-            };
-            var toastNode = document.createElement('div');
-            toastNode.className = 'c-toast';
-            var toastContent = document.createElement('div');
-            toastContent.className = 'toast-content';
-            toastContent.innerHTML = options.content;
-            toastNode.appendChild(toastContent);
-            document.body.appendChild(toastNode);
-            // 经过设置几秒自动关闭
-            setTimeout(function() {
-                toastNode && toastNode.remove();
-            }, options.duration * 1000);
-        },
-        loading: function(content) {
-            if (!document.querySelector('.c-toast')) {
-                content = content || '加载中...';
-                this.importCss();
-                var toastNode = document.createElement('div');
-                toastNode.className = 'c-toast';
-                var toastLoading = document.createElement('div');
-                toastLoading.className = 'toast-loading';
-                var span = document.createElement('span');
-                span.className = 'c-toast-text-info';
-                var loadImg = '<svg class="c-toast-icon c-toast-icon-loading c-toast-icon-lg">' +
-                    '<svg viewBox="0 -2 59.75 60.25">' +
-                    '<path fill="#ccc" d="M29.69-.527C14.044-.527 1.36 12.158 1.36 27.806S14.043 56.14 29.69 56.14c15.65 0 28.334-12.686 28.334-28.334S45.34-.527 29.69-.527zm.185 53.75c-14.037 0-25.417-11.38-25.417-25.417S15.838 2.39 29.875 2.39s25.417 11.38 25.417 25.417-11.38 25.416-25.417 25.416z" />' +
-                    '<path fill="none" stroke="#108ee9" stroke-width="3" stroke-linecap="round" stroke-miterlimit="10" d="M56.587 29.766c.37-7.438-1.658-14.7-6.393-19.552" />' +
-                    '</svg>' +
-                    '</svg>';
-                span.innerHTML = content;
-                toastLoading.innerHTML = loadImg;
-                toastLoading.appendChild(span);
-                toastNode.appendChild(toastLoading);
-                document.body.appendChild(toastNode);
-            }
-        },
-        closeLoading: function() {
-            var toastNode = document.querySelector('.c-toast');
-            toastNode && toastNode.remove();
-        }
-    };
-    Toast.importCss();
-    window.Toast = Toast;
-})(window, document);
-
-(function(win, doc) {
+(function (win, doc) {
     if (!win['String']['prototype']['trim']) {
-        win['String']['prototype']['trim'] = function() {
+        win['String']['prototype']['trim'] = function () {
             return this.replace(/^\s+|\s+$/g, '');
         };
     }
@@ -178,10 +11,10 @@
         API_HOST: 'https://api.github.com/'
     };
     var tools = {
-        $: function(selector) {
+        $: function (selector) {
             return /^(\[object HTML)[a-zA-Z]*(Element\])$/.test(Object.prototype.toString.call(selector)) ? selector : doc.querySelector(selector);
         },
-        queryUrl: function(key, url, uncode) {
+        queryUrl: function (key, url, uncode) {
             url = url || location.href;
             var reg = new RegExp('(\\?|&|#|&amp;)' + key + '=([^?&#]*)');
             var result = url.match(reg);
@@ -190,7 +23,7 @@
             }
             return result ? decodeURIComponent(result[2]) : '';
         },
-        addClass: function(elem, className) {
+        addClass: function (elem, className) {
             if (!elem) return;
             var classNames;
             var setClass;
@@ -224,7 +57,7 @@
                 }
             }
         },
-        removeClass: function(elem, className) {
+        removeClass: function (elem, className) {
             if (!elem) return;
             var classNames, i, l, c, cl;
             if (elem instanceof Array) {
@@ -257,9 +90,9 @@
         /**
          * 格式化日期文本，如 yyyy-MM-dd hh:mm:ss
          */
-        formatDate: function(format, date) {
+        formatDate: function (format, date) {
             if (!date) return '';
-            if (typeof date == 'number') date = new Date(date * 1000);
+            if (typeof date === 'number') date = new Date(date * 1000);
             var o = {
                 'M+': date.getMonth() + 1,
                 'd+': date.getDate(),
@@ -276,12 +109,12 @@
                 format = format.replace(reg, match);
             }
 
-            function match(m) {
+            function match (m) {
                 return m.length == 1 ? o[k] : ('00' + o[k]).substr(('' + o[k]).length);
             }
             return format;
         },
-        htmlEncode: function(str) {
+        htmlEncode: function (str) {
             if (typeof str !== 'string') return;
             str = str.replace(/&/g, '&amp;')
                 .replace(/</g, '&lt;')
@@ -299,7 +132,7 @@
          * @param {function}opts.success ajax发送并接收成功调用的回调函数
          * @param {function}opts.error ajax发送并接收成功调用的回调函数
          */
-        ajax: function(opts) {
+        ajax: function (opts) {
             opts = opts || {};
             // 请求方法
             opts.method = (opts.method && opts.method.toLocaleUpperCase()) || 'POST';
@@ -312,12 +145,12 @@
             // 头部
             // opts.headers = Object.assign({}, {'Accept': '*/*', 'Content-Type': 'application/x-www-form-urlencoded'}, opts.headers || {});
             // 成功后回调
-            opts.success = opts.success || function() {};
+            opts.success = opts.success || function () {};
             // 错误后回调
-            opts.error = opts.error || function() {};
+            opts.error = opts.error || function () {};
             var spin = opts.spin === undefined ? true : opts.spin; // 是否显示loading，默认不显示
             var errorToast = opts.errorToast === undefined ? true : opts.errorToast; // 是否显示错误警告，默认弹出
-            var successToast = opts.successToast; // 是否显示成功警告
+            // var successToast = opts.successToast; // 是否显示成功警告
             var xhr = null;
             // 兼容IE可不做处理
             if (XMLHttpRequest) {
@@ -337,8 +170,6 @@
                 if (win.responseCount === undefined) win.responseCount = 0;
                 if (!win.responseCount++) Toast.loading();
             }
-            // 附带身份凭证
-            xhr.withCredentials = true;
             // 设置xhr请求的超时时间
             xhr.timeout = 20000;
             if (opts.method === 'POST') {
@@ -368,7 +199,7 @@
                 }
                 xhr.send(null);
             }
-            xhr.onreadystatechange = function() {
+            xhr.onreadystatechange = function () {
                 if (xhr.readyState === 4) {
                     if (spin && Toast) {
                         if (!win.responseCount || !--win.responseCount) Toast.closeLoading();
@@ -386,18 +217,20 @@
                         response = {
                             message: xhr.statusText || '服务器请求失败！'
                         };
+                        errorToast && Toast.info(response.message);
                         opts.error(response);
                     }
                 }
             };
-            xhr.onerror = function() {
-                opts.error({ message: '请求错误！' });
+            xhr.onerror = function () {
+                errorToast && Toast.info('请求错误！');
+                opts.error({message: '请求错误！'});
             };
         },
-        flashTitle: function(title) {
+        flashTitle: function (title) {
             var counter = 0;
             document.title = title + '...';
-            var timer = setInterval(function() {
+            setInterval(function () {
                 counter++;
                 if (counter % 3 === 0) {
                     document.title = title + '...';
@@ -412,22 +245,11 @@
     var CommentUtils = {
         // 存放数据
         options: {},
-        init: function(options) {
+        init: function (options) {
             this.options = options || {};
-            var $container = tools.$('#comments');
             var _this = this;
-            if (options.container) {
-                if (typeof options.container === 'object') {
-                    $container = options.container;
-                } else if (typeof options.container === 'string') {
-                    $container = tools.$(options.container);
-                } else {
-                    $container = tools.$('#comments');
-                }
-            }
             _this.updateUserInfo();
             _this.updateEditBox();
-            // $container.innerHTML = this.Renders.signBar.tpl + this.Renders.box.tpl + this.Renders.tips.tpl + this.Renders.list.tpl;
             var code = tools.queryUrl('code');
             // if code，继续GitHub 授权
             if (code) {
@@ -455,7 +277,7 @@
                                 data: {
                                     access_token: res.access_token
                                 },
-                                success: function(data) {
+                                success: function (data) {
                                     if (data.login) {
                                         win.localStorage.setItem(constants.USER_INFO_KEY, JSON.stringify(data)); // 保存用户信息到 localStorage
                                         win.location.href = win.location.href.substring(0, win.location.href.indexOf('?'));
@@ -493,10 +315,10 @@
                                         page: 1,
                                         per_page: constants.PER_PAGE
                                     },
-                                    success: function(list) {
+                                    success: function (list) {
                                         _this.updateList(1, comments, list, function () {
                                             for (var i = 0, len = list.length; i < len; i++) {
-                                                (function(commentId) {
+                                                (function (commentId) {
                                                     tools.ajax({
                                                         url: 'repos/' + _this.options.owner + '/' + _this.options.repo + '/issues/comments/' + commentId + '/reactions',
                                                         method: 'GET',
@@ -552,7 +374,7 @@
             this.postComment();
         },
         // 更新用户信息
-        updateUserInfo: function() {
+        updateUserInfo: function () {
             var token = win.localStorage.getItem(constants.ACCESS_TOKEN_KEY);
             var userInfo = win.localStorage.getItem(constants.USER_INFO_KEY);
             var html = '';
@@ -562,15 +384,15 @@
                     '<span class="sign-link" id="signOut">退出</span>';
             } else {
                 html = '<span class="sign-txt">GitHub 未登录?</span>' +
-                    '<a href="https://github.com/login/oauth/authorize?scope=public_repo&redirect_uri=' + (win.location.href.indexOf('?') !== -1 ? encodeURIComponent(win.location.href.substring(0, location.href.indexOf('?'))) : encodeURIComponent(location.href) + '&client_id=' + CommentUtils.options.clientId + '&client_secret=' + CommentUtils.options.clientSecret) + '" class="sign-link">' +
+                    '<a href="https://github.com/login/oauth/authorize?scope=public_repo&redirect_uri=' + (win.location.href.indexOf('?') !== -1 ? encodeURIComponent(win.location.href.substring(0, win.location.href.indexOf('?'))) : encodeURIComponent(win.location.href) + '&client_id=' + this.options.clientId + '&client_secret=' + this.options.clientSecret) + '" class="sign-link">' +
                         '登录' +
                     '</a>';
             }
             tools.$('#commentSignBar').innerHTML = html;
         },
         // 更新提交评论区域
-        updateEditBox: function() {
-            var userInfo = localStorage.getItem(constants.USER_INFO_KEY);
+        updateEditBox: function () {
+            var userInfo = win.localStorage.getItem(constants.USER_INFO_KEY);
             if (userInfo) {
                 userInfo = JSON.parse(userInfo);
             } else {
@@ -578,11 +400,11 @@
             }
             tools.$('#loginAvatar').src = userInfo.avatar_url || '/img/unsigned_avatar.jpg';
         },
-        updateTips: function() {
+        updateTips: function () {
             var userInfo = win.localStorage.getItem(constants.USER_INFO_KEY);
             var handler = '';
             // 如果文章还没关联 issue 并且登录账号是自己时
-            if (userInfo && JSON.parse(userInfo).login === CommentUtils.options.owner && CommentUtils.issueNumber === 0) {
+            if (userInfo && JSON.parse(userInfo).login === this.options.owner && this.issueNumber === 0) {
                 handler = '<a id="createIssue" class="init" title="文章关联 issue">初始化评论</a>';
             }
             tools.$('#commentTips').innerHTML = handler + '注：评论支持 markdown 语法！';
@@ -610,17 +432,16 @@
                 var pageItem = '';
                 // 循环评论列表
                 for (var i = 0, len = list.length; i < len; i++) {
-                    console.log(list[i].user);
                     item = '<li class="item">' +
                                 '<div class="user-avatar">' +
-                                    '<a target="_blank" href="' + (list[i].user ? list[i].user.html_url : '#') + '">' +
-                                        '<img src="' + (list[i].user ? list[i].user.avatar_url: '') + '" alt="user-avatar">' +
+                                    '<a target="_blank" href="' + list[i].user.html_url + '">' +
+                                        '<img src="' + list[i].user.avatar_url + '" alt="user-avatar">' +
                                     '</a>' +
                                 '</div>' +
-                                '<div class="user-comment">',
+                                '<div class="user-comment">' +
                                     '<div class="user-comment-header" id="comment_' + list[i].id + '_reactions">' +
-                                        '<span class="post-name">' + (list[i].user ? list[i].user.login : '') + '</span>' +
-                                        '<span class="post-time">' + formatDate('yyyy-MM-dd hh:mm', new Date(list[i].created_at)) + '</span>' +
+                                        '<span class="post-name">' + list[i].user.login + '</span>' +
+                                        '<span class="post-time">' + tools.formatDate('yyyy-MM-dd hh:mm', new Date(list[i].created_at)) + '</span>' +
                                         '<span class="like" onclick="CommentUtils.like(' + list[i].id + ')">点赞</span>' +
                                         '<span class="like-num">' + list[i].reactions.heart + '</span>' +
                                         '<span class="reply" onclick="CommentUtils.reply(\'' + list[i].user.login + '\', \'' + (list[i].body_html || list[i].body).replace(/<[^>]+>|\s|[\r\n]/g, ' ') + '\')">回复</span>' +
@@ -637,7 +458,7 @@
                 } else if (allPages <= perNavPageMaxSize) {
                     // 添加上页
                     if (page !== 1) {
-                        pageList += '<a href="javascript: CommentUtils.pageJump(' + (page - 1) + ');" data-page="' + (page - 1) + '" class="item">上页</a>'
+                        pageList += '<a href="javascript: CommentUtils.pageJump(' + (page - 1) + ');" data-page="' + (page - 1) + '" class="item">上页</a>';
                     }
                     for (var i = 1; i <= allPages; i++) {
                         if (i === page) {
@@ -718,7 +539,7 @@
             }
         },
         // 点赞详情
-        reactionUpdate: function(commentId, reactions) {
+        reactionUpdate: function (commentId, reactions) {
             var userInfo = win.localStorage.getItem(constants.USER_INFO_KEY);
             if (userInfo) {
                 userInfo = JSON.parse(userInfo);
@@ -736,7 +557,7 @@
             }
         },
         // 增加一个
-        addOne: function(data) {
+        addOne: function (data) {
             var oLi = document.createElement('li');
             oLi.className = 'item';
             var item = '<div class="user-avatar">' +
@@ -747,8 +568,8 @@
                         '<div class="user-comment">' +
                             '<div class="user-comment-header" id="comment_' + data.id + '_reactions">' +
                                 '<span class="post-name">' + data.user.login + '</span>' +
-                                '<span class="post-time">' + formatDate('yyyy-MM-dd hh:mm', new Date(data.created_at)) + '</span>' +
-                                '<span class="like" onclick="CommentUtils.like(' + data.reactions.heart + ')">点赞</span>' +
+                                '<span class="post-time">' + tools.formatDate('yyyy-MM-dd hh:mm', new Date(data.created_at)) + '</span>' +
+                                '<span class="like" onclick="CommentUtils.like(' + data.id + ')">点赞</span>' +
                                 '<span class="like-num">' + data.reactions.heart + '</span>' +
                                 '<span class="reply" onclick="CommentUtils.reply(\'' + data.user.login + '\', \'' + (data.body_html || data.body).replace(/<[^>]+>|\s|[\r\n]/g, ' ') + '\')">回复</span>' +
                             '</div>' +
@@ -758,9 +579,9 @@
             var oUl = tools.$('#commentList').getElementsByTagName('ul')[0];
             if (oUl) {
                 oUl.insertBefore(oLi, oUl.firstChild);
-                tools.$('#commentsNum').innerHTML = _this.issueComments + 1;
+                tools.$('#commentsNum').innerHTML = this.issueComments + 1;
             } else {
-                tools.$('#commentList').innerHTML = '<header class="list-header">总共 <span class="comments-num" id="commentsNum">' + (_this.issueComments + 1) + '</span> 条评论</header>' +
+                tools.$('#commentList').innerHTML = '<header class="list-header">总共 <span class="comments-num" id="commentsNum">' + (this.issueComments + 1) + '</span> 条评论</header>' +
                                                     '<ul class="list">' +
                                                         '<li class="item">' +
                                                             item +
@@ -796,10 +617,10 @@
                             mode: 'markdown',
                             context: 'github/gollum'
                         },
-                        success: function(res) {
+                        success: function (res) {
                             previewBox.innerHTML = res;
                         },
-                        error: function(err) {
+                        error: function (err) {
                             console.log(err);
                         }
                     });
@@ -825,7 +646,7 @@
             });
         },
         // 登出
-        signOut: function() {
+        signOut: function () {
             var signOut = tools.$('#signOut');
             var _this = this;
             signOut && signOut.addEventListener('click', function () {
@@ -836,7 +657,7 @@
             });
         },
         // 创建createIssue
-        createIssue: function() {
+        createIssue: function () {
             var createIssue = tools.$('#createIssue');
             var _this = this;
             createIssue && createIssue.addEventListener('click', function () {
@@ -850,7 +671,7 @@
                     },
                     success: function (res) {
                         if (res.number) {
-                            _this.issueNumber = json.number;
+                            _this.issueNumber = res.number;
                             _this.updateTips();
                         }
                     },
@@ -861,8 +682,7 @@
             });
         },
         // 页面跳转
-        pageJump: function(page) {
-            var pageJump = tools.$('#pageJump');
+        pageJump: function (page) {
             var _this = this;
             if (page) {
                 tools.ajax({
@@ -875,7 +695,7 @@
                     success: function (list) {
                         _this.updateList(page, _this.issueComments, list, function () {
                             for (var i = 0, len = list.length; i < len; i++) {
-                                (function(commentId) {
+                                (function (commentId) {
                                     tools.ajax({
                                         url: 'repos/' + _this.options.owner + '/' + _this.options.repo + '/issues/comments/' + commentId + '/reactions',
                                         method: 'GET',
@@ -900,14 +720,27 @@
             }
         },
         // 提交
-        postComment: function() {
+        postComment: function () {
             var postComment = tools.$('#postComment');
             var _this = this;
-            postComment && postComment.addEventListener('click', function (e){
+            postComment && postComment.addEventListener('click', function (e) {
                 var accessToken = win.localStorage.getItem(constants.ACCESS_TOKEN_KEY);
                 var userInfo = win.localStorage.getItem(constants.USER_INFO_KEY);
                 if (!accessToken || !userInfo) {
-                    alert('请先登录哦..!^_^');
+                    Dialog.open({
+                        title: '温馨提示',
+                        msg: '需要登录，是否跳转github登陆',
+                        buttons: [
+                            {title: '取消'},
+                            {
+                                title: '确定',
+                                click: function () {
+                                    win.location.replace('https://github.com/login/oauth/authorize?scope=public_repo&redirect_uri=' + (win.location.href.indexOf('?') !== -1 ? encodeURIComponent(win.location.href.substring(0, win.location.href.indexOf('?'))) : encodeURIComponent(win.location.href) + '&client_id=' + _this.options.clientId + '&client_secret=' + _this.options.clientSecret));
+                                    Dialog.close();
+                                }
+                            }
+                        ]
+                    });
                     return;
                 }
                 var body = tools.$('#editBox').value.trim();
@@ -921,7 +754,7 @@
                             data: {
                                 body: body
                             },
-                            success: function(res) {
+                            success: function (res) {
                                 if (res.id) {
                                     _this.addOne(res);
                                     _this.issueComments++;
@@ -929,8 +762,8 @@
                                     tools.$('#previewBox').innerHTML = '';
                                 }
                             },
-                            error: function(err) {
-                                console.log(err)
+                            error: function (err) {
+                                console.log(err);
                             }
                         });
                     } else {
@@ -943,16 +776,16 @@
                                 body: win.location.href,
                                 labels: [(_this.options.label || win.location.href)]
                             },
-                            success: function(res) {
+                            success: function (res) {
                                 if (res.number) {
-                                    _this.issueNumber = res.number
+                                    _this.issueNumber = res.number;
                                     tools.ajax({
                                         url: 'repos/' + _this.options.owner + '/' + _this.options.repo + '/issues/' + _this.issueNumber + '/comments',
                                         method: 'POST',
                                         data: {
                                             body: body
                                         },
-                                        success: function(res) {
+                                        success: function (json) {
                                             if (res.id) {
                                                 _this.addOne(json);
                                                 _this.issueComments++;
@@ -960,13 +793,13 @@
                                                 tools.$('#previewBox').innerHTML = '';
                                             }
                                         },
-                                        error: function(err) {
+                                        error: function (err) {
                                             console.log(err);
                                         }
                                     });
                                 }
                             },
-                            error: function(err) {
+                            error: function (err) {
                                 console.log(err);
                             }
                         });
@@ -975,7 +808,7 @@
             });
         },
         // 喜欢
-        like: function(commentId) {
+        like: function (commentId) {
             var reactions = tools.$('#comment_' + commentId + '_reactions');
             var oLiked = reactions.getElementsByClassName('liked');
             var oLike = reactions.getElementsByClassName('like')[0];
@@ -993,27 +826,56 @@
                         data: {
                             content: 'heart'
                         },
-                        success: function(res) {
+                        success: function (res) {
                             if (res.content === 'heart') {
                                 tools.addClass(oLike, 'liked');
                                 oLike.innerHTML = '已赞';
                                 oNum.innerHTML = Number(oNum.innerHTML) + 1;
                             }
                         },
-                        error: function(err) {
+                        error: function (err) {
                             console.log(err);
                         }
+                    });
+                } else {
+                    Dialog.open({
+                        title: '温馨提示',
+                        msg: '需要登录，是否跳转github登陆',
+                        buttons: [
+                            {title: '取消'},
+                            {
+                                title: '确定',
+                                click: function () {
+                                    win.location.replace('https://github.com/login/oauth/authorize?scope=public_repo&redirect_uri=' + (win.location.href.indexOf('?') !== -1 ? encodeURIComponent(win.location.href.substring(0, win.location.href.indexOf('?'))) : encodeURIComponent(win.location.href) + '&client_id=' + _this.options.clientId + '&client_secret=' + _this.options.clientSecret));
+                                    Dialog.close();
+                                }
+                            }
+                        ]
                     });
                 }
             }
         },
         // 回复
-        reply: function(people, content) {
+        reply: function (people, content) {
             var accessToken = win.localStorage.getItem(constants.ACCESS_TOKEN_KEY);
             var userInfo = win.localStorage.getItem(constants.USER_INFO_KEY);
             var previewBox = tools.$('#previewBox');
             var editBox = tools.$('#editBox');
             if (!accessToken || !userInfo) {
+                Dialog.open({
+                    title: '温馨提示',
+                    msg: '需要登录，是否跳转github登陆',
+                    buttons: [
+                        {title: '取消'},
+                        {
+                            title: '确定',
+                            click: function () {
+                                win.location.replace('https://github.com/login/oauth/authorize?scope=public_repo&redirect_uri=' + (win.location.href.indexOf('?') !== -1 ? encodeURIComponent(win.location.href.substring(0, win.location.href.indexOf('?'))) : encodeURIComponent(win.location.href) + '&client_id=' + _this.options.clientId + '&client_secret=' + _this.options.clientSecret));
+                                Dialog.close();
+                            }
+                        }
+                    ]
+                });
                 return;
             }
             this.editPreviewSwitch('edit');
@@ -1028,4 +890,4 @@
         }
     };
     win.CommentUtils = CommentUtils;
-})(window, document)
+})(window, document);
