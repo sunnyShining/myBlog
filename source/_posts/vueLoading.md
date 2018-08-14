@@ -3,6 +3,7 @@ author: sunny
 title: vue如何封装一个全局组件
 date: 2017-12-03 10:40:49
 tags: vue
+categories: 编程
 ---
 
 ## 背景

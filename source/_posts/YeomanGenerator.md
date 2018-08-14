@@ -3,6 +3,7 @@ author: sunny
 title: 创建属于自己的Yeoman Generator
 date: 2017-12-03 11:22:36
 tags: js
+categories: 编程
 ---
 
 ## 背景
