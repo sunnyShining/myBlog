@@ -80,7 +80,18 @@ tagcloud: true
 friends:
   enable: true
   list:
-
+    1:
+      name: liaolongdong的github
+      title: liaolongdong的github
+      link: https://github.com/liaolongdong
+    2:
+      name: CaptainYYH的github
+      title: CaptainYYH的github
+      link: https://github.com/CaptainYYH
+    3:
+      name: Smile415的github
+      title: Smile415的github
+      link: https://github.com/Smile415
 #----------------------------
 # 头部链接
 #----------------------------
