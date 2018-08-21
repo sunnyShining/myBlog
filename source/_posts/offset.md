@@ -6,7 +6,7 @@ tags: js
 categories: 编程
 ---
 
-从我[简书](http://www.jianshu.com/p/e8965308d7e9)搬迁
+从我[简书](https://www.jianshu.com/p/e8965308d7e9)搬迁
 
 # 背景
 

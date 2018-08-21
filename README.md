@@ -15,4 +15,6 @@ $ hexo server
 
 $ hexo deploy
 
+$ hexo new [layout] <title>
+
 ```

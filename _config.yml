@@ -74,6 +74,7 @@ tag_map:
   css: css
   编码规范: codeing
   生活: life
+  webpack: webpack
 
 # Date / Time format
 ## Hexo uses Moment.js to parse and display date
