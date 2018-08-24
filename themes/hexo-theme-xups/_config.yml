@@ -102,9 +102,12 @@ head_links:
       0:
         name: Github
         link: https://github.com/sunnyShining
-      last:
+      1:
         name: gitee
         link: https://gitee.com/sunnyShining
+      last:
+        name: 百度统计
+        link: https://tongji.baidu.com/web/26214126/homepage/index
     sub:
       sinaweibo:
         name: 新浪微博
@@ -118,7 +121,10 @@ head_links:
 SEO:
   keywords: sunny, 前端, Web, 前端开发
   description: sunny个人技术小站
-
+#----------------------------
+# 百度分析
+#----------------------------
+baidu_analytics: true
 #----------------------------
 # 高亮样式
 #----------------------------
