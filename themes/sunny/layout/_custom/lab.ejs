@@ -1,30 +1,25 @@
 <div class="NightTheme">
+    <a class="submit-btn" id="submit">提交运行</a>
     <div id="main_container">
         <div id="core" class="core core_margin1">
-            <div class="editor_wrapper" style="height: 895px;">
-                <fieldset class="editorSet left">
-                    <div class="editor html top">
-                        <span class="quick_tools">HTML</span>
+            <div class="editorSet clearfix">
+                <div>
+                    <div class="editor">
+                        <span class="label">html</span>
                         <pre id="editor1" class="edit-area"></pre>
                     </div>
-                    <div class="handler handler_horizontal" style="top: 443px;"></div>
-                    <div class="editor js bottom">
-                        <span class="quick_tools">javascript</span>
+                    <div class="editor">
+                        <span class="label">javascript</span>
                         <pre id="editor2" class="edit-area"></pre>
                     </div>
-                </fieldset>
-                <div class="handler handler_vertical" style="left: 503px;"></div>
-                <fieldset class="editorSet right">
-                    <div class="editor css top">
-                        <span class="quick_tools">css</span>
+                    <div class="editor">
+                        <span class="label">css</span>
                         <pre id="editor3" class="edit-area"></pre>
                     </div>
-                    <div class="handler handler_horizontal" style="top: 443px;"></div>
-                    <div class="editor preview bottom">
-                        <span class="quick_tools" id="submit">点击提交</span>
-                        <iframe style="background: #fff" id="preview" frameborder="0" srcdoc="<!DOCTYPE html><html><head><meta charset=&quot;utf-8&quot; /><title>代码测试</title><meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=utf-8&quot;/><meta name=&quot;format-detection&quot; content=&quot;telephone=no&quot; /><meta name=&quot;apple-mobile-web-app-status-bar-style&quot; content=&quot;black&quot; /><meta name=&quot;apple-mobile-web-app-capable&quot; content=&quot;yes&quot; /><meta http-equiv=&quot;X-UA-Compatible&quot; content=&quot;chrome=1,IE=edge&quot;/><meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0&quot;/><style type=&quot;text/css&quot;></style><script type=&quot;text/javascript&quot; src=&quot;//cdn.bootcss.com/vConsole/3.2.0/vconsole.min.js&quot;></script><script type=&quot;text/javascript&quot;>new window.VConsole();</script></head><body><script type=&quot;text/javascript&quot;></script></body></html>"></iframe>
+                    <div class="editor">
+                        <iframe style="top: 0;background: #fff;" class="edit-area" id="preview" frameborder="0" srcdoc="<!DOCTYPE html><html><head><meta charset=&quot;utf-8&quot; /><title>代码测试</title><meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=utf-8&quot;/><meta name=&quot;format-detection&quot; content=&quot;telephone=no&quot; /><meta name=&quot;apple-mobile-web-app-status-bar-style&quot; content=&quot;black&quot; /><meta name=&quot;apple-mobile-web-app-capable&quot; content=&quot;yes&quot; /><meta http-equiv=&quot;X-UA-Compatible&quot; content=&quot;chrome=1,IE=edge&quot;/><meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0&quot;/><style type=&quot;text/css&quot;></style><script type=&quot;text/javascript&quot; src=&quot;//cdn.bootcss.com/vConsole/3.2.0/vconsole.min.js&quot;></script><script type=&quot;text/javascript&quot;>new window.VConsole();</script></head><body><script type=&quot;text/javascript&quot;></script></body></html>"></iframe>
                     </div>
-                </fieldset>
+                </div>
             </div>
         </div>
     </div>
@@ -32,68 +27,68 @@
 <%- js('js/ace/ace') %>
 <%- js('js/ace/ext-language_tools') %>
 <script>
-    (function () {
-        var editor1 = ace.edit("editor1", {
-            theme: "ace/theme/monokai",
-            mode: "ace/mode/html",
-            wrap: true,
-            autoScrollEditorIntoView: true,
-            enableBasicAutocompletion: true,
-            enableSnippets: true,
-            enableLiveAutocompletion: true
-        });
-        var editor2 = ace.edit("editor2", {
-            theme: "ace/theme/monokai",
-            mode: "ace/mode/javascript",
-            autoScrollEditorIntoView: true,
-            enableBasicAutocompletion: true,
-            enableSnippets: true,
-            enableLiveAutocompletion: true
-        });
-        var editor3 = ace.edit("editor3", {
-            theme: "ace/theme/monokai",
-            mode: "ace/mode/css",
-            autoScrollEditorIntoView: true,
-            enableBasicAutocompletion: true,
-            enableSnippets: true,
-            enableLiveAutocompletion: true
-        });
-        var submit = document.querySelector('#submit');
-        submit.addEventListener('click', function () {
-            var htmlValue = editor1.getValue();
-            var jsValue = editor2.getValue();
-            var cssValue = editor3.getValue();
-            var htmlStr = '<!DOCTYPE html>' +
-                '<html>' +
-                '<head>' +
-                '<meta charset="utf-8" />' +
-                '<title>代码测试</title>' +
-                '<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>' +
-                '<meta name="format-detection" content="telephone=no" />' +
-                '<meta name="apple-mobile-web-app-status-bar-style" content="black" />' +
-                '<meta name="apple-mobile-web-app-capable" content="yes" />' +
-                '<meta http-equiv="X-UA-Compatible" content="chrome=1,IE=edge"/>' +
-                '<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0"/>' +
-                '<style type="text/css">' +
-                cssValue +
-                '</style>' +
-                '<script type="text/javascript" src="//cdn.bootcss.com/vConsole/3.2.0/vconsole.min.js">' +
-                '</' +
-                'script>' +
-                '<script type="text/javascript">' +
-                    'new window.VConsole();' +
-                '</' +
-                'script>' +
-                '</head>' +
-                '<body>' +
-                htmlValue +
-                '<script type="text/javascript">' +
-                jsValue +
-                '</' +
-                'script>' +
-                '</body>' +
-                '</html>';
-            document.getElementById('preview').srcdoc = htmlStr;
-        })
-    })()
+(function() {
+    var editor1 = ace.edit("editor1", {
+        theme: "ace/theme/monokai",
+        mode: "ace/mode/html",
+        wrap: true,
+        autoScrollEditorIntoView: true,
+        enableBasicAutocompletion: true,
+        enableSnippets: true,
+        enableLiveAutocompletion: true
+    });
+    var editor2 = ace.edit("editor2", {
+        theme: "ace/theme/monokai",
+        mode: "ace/mode/javascript",
+        autoScrollEditorIntoView: true,
+        enableBasicAutocompletion: true,
+        enableSnippets: true,
+        enableLiveAutocompletion: true
+    });
+    var editor3 = ace.edit("editor3", {
+        theme: "ace/theme/monokai",
+        mode: "ace/mode/css",
+        autoScrollEditorIntoView: true,
+        enableBasicAutocompletion: true,
+        enableSnippets: true,
+        enableLiveAutocompletion: true
+    });
+    var submit = document.querySelector('#submit');
+    submit.addEventListener('click', function() {
+        var htmlValue = editor1.getValue();
+        var jsValue = editor2.getValue();
+        var cssValue = editor3.getValue();
+        var htmlStr = '<!DOCTYPE html>' +
+            '<html>' +
+            '<head>' +
+            '<meta charset="utf-8" />' +
+            '<title>代码测试</title>' +
+            '<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>' +
+            '<meta name="format-detection" content="telephone=no" />' +
+            '<meta name="apple-mobile-web-app-status-bar-style" content="black" />' +
+            '<meta name="apple-mobile-web-app-capable" content="yes" />' +
+            '<meta http-equiv="X-UA-Compatible" content="chrome=1,IE=edge"/>' +
+            '<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0"/>' +
+            '<style type="text/css">' +
+            cssValue +
+            '</style>' +
+            '<script type="text/javascript" src="//cdn.bootcss.com/vConsole/3.2.0/vconsole.min.js">' +
+            '</' +
+            'script>' +
+            '<script type="text/javascript">' +
+            'new window.VConsole();' +
+            '</' +
+            'script>' +
+            '</head>' +
+            '<body>' +
+            htmlValue +
+            '<script type="text/javascript">' +
+            jsValue +
+            '</' +
+            'script>' +
+            '</body>' +
+            '</html>';
+        document.getElementById('preview').srcdoc = htmlStr;
+    })
+})()
 </script>
