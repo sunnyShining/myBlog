@@ -1,5 +1,5 @@
 <div class="NightTheme">
-    <a class="submit-btn" id="submit">提交运行</a>
+    <span class="submit-btn" id="submit">提交运行</span>
     <div id="main_container">
         <div id="core" class="core core_margin1">
             <div class="editorSet clearfix">
@@ -9,11 +9,11 @@
                         <pre id="editor1" class="edit-area"></pre>
                     </div>
                     <div class="editor">
-                        <span class="label">javascript</span>
+                        <span class="label">css</span>
                         <pre id="editor2" class="edit-area"></pre>
                     </div>
                     <div class="editor">
-                        <span class="label">css</span>
+                        <span class="label">javascript</span>
                         <pre id="editor3" class="edit-area"></pre>
                     </div>
                     <div class="editor">
@@ -39,7 +39,7 @@
     });
     var editor2 = ace.edit("editor2", {
         theme: "ace/theme/monokai",
-        mode: "ace/mode/javascript",
+        mode: "ace/mode/css",
         autoScrollEditorIntoView: true,
         enableBasicAutocompletion: true,
         enableSnippets: true,
@@ -47,7 +47,7 @@
     });
     var editor3 = ace.edit("editor3", {
         theme: "ace/theme/monokai",
-        mode: "ace/mode/css",
+        mode: "ace/mode/javascript",
         autoScrollEditorIntoView: true,
         enableBasicAutocompletion: true,
         enableSnippets: true,
@@ -56,8 +56,8 @@
     var submit = document.querySelector('#submit');
     submit.addEventListener('click', function() {
         var htmlValue = editor1.getValue();
-        var jsValue = editor2.getValue();
-        var cssValue = editor3.getValue();
+        var cssValue = editor2.getValue();
+        var jsValue = editor3.getValue();
         var htmlStr = '<!DOCTYPE html>' +
             '<html>' +
             '<head>' +

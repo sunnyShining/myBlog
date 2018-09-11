@@ -1,200 +1,29 @@
-fieldset,
-img
-  border 0
+@media screen and (min-width: 960px)
+  .editorSet
+    width 100%
+  .editorSet .editor
+    height 450px
+    width 48%
+    overflow-y hidden
+    background-color rgb(44, 52, 55)
+    float left
+
+@media screen and (max-width: 959px)
+  .editorSet
+    width 100%
+  .editorSet .editor
+    height 450px
+    width 100%
+    overflow-y hidden
+    background-color rgb(44, 52, 55)
 .NightTheme
-  background-color rgb(44, 52, 55)
-  .activeline
-    background #333 !important
-  .red
-    color rgb(222, 189, 0)
-  .header
-    -webkit-box-shadow 0px 1px 3px rgba(0, 0, 0, .2)
-    -moz-box-shadow 0px 1px 3px rgba(0, 0, 0, .2)
-    box-shadow 0px 1px 3px rgba(0, 0, 0, .2)
-  .explorer
-    border-right none
-    -webkit-box-shadow 0px 1px 6px rgba(0, 0, 0, .7)
-    -webkit-box-shadow 0px 1px 6px rgba(0, 0, 0, .7)
-    -moz-box-shadow 0px 1px 6px rgba(0, 0, 0, .7)
-    box-shadow 0px 1px 6px rgba(0, 0, 0, .7)
-    background-color #fff
-    background-color rgb(51, 59, 61)
-    .title
-      color #ccc
-    .maintitle
-      border-bottom 1px solid rgb(38, 51, 57)
-      color #fff
-    li
-      &.tip
-        color #fff
-        a
-          color #debd00
   .editorSet
     .editor
       border 1px solid rgb(22, 26, 27)
       -webkit-box-shadow inset 0 1px 3px rgb(22, 26, 27)
       -moz-box-shadow inset 0 1px 3px rgb(22, 26, 27)
       box-shadow inset 0 1px 3px rgb(22, 26, 27)
-  .CodeMirror
-    background-color #fff
-  .headerMenu
-    background url(../img/bg-black.gif) repeat-x
-  .menuItem
-    color #fff
-    .btn
-      a
-        color #fff
-    .select
-      border 1px solid #161018
-      ul
-        li
-          a
-            color #fff
-  .toolItem
-    color #fff
-    a
-      color #fff
-      text-decoration none
-    .select
-      .title
-        border 1px solid rgb(28, 36, 38)
-        background-color rgb(52, 62, 64)
-  .prj_selected
-    .title
-      a
-        color #debd00
-  .versions
-    .version
-      a
-        color #ccc
-    .description
-      color #ccc
-      .dtitle
-        color #debd00
-  .version
-    a
-      &.current
-        color rgb(222, 189, 0)
-  .project
-    a
-      &.delete
-        color #fff
-        background url("/img/runjs_icon-black.gif") 8px 8px no-repeat
-    .selected
-      color #6aa8c5
-  .resources
-    a
-      &.rdelete
-        color #666
-      &:hover
-        &.rdelete
-          color #fff
-  #image_preview
-    border solid 1px #d3d4d5
-  .btn
-    border 1px solid rgb(22, 16, 24)
-  .code_url
-    color #175977
-  .aTheme
-    color #175977
-  .arrow_bottom
-    border-color transparent #fff transparent transparent
-  .arrow_bottom_blue
-    border-color transparent #fff transparent transparent
-  .btnGroup
-    -webkit-box-shadow inset 0px 1px 1px rgb(170, 170, 170), 0 1px 3px rgb(22, 34, 40)
-    -moz-box-shadow inset 0px 1px 1px rgb(170, 170, 170), 0 1px 3px rgb(22, 34, 40)
-    box-shadow inset 0px 1px 1px rgb(170, 170, 170), 0 1px 3px rgb(22, 34, 40)
-  .btn_shadow
-    -webkit-box-shadow inset 0px 1px 1px rgba(255, 255, 255, .2), 0 1px 3px rgb(22, 34, 40)
-    -moz-box-shadow inset 0px 1px 1px rgba(255, 255, 255, .2), 0 1px 3px rgb(22, 34, 40)
-    box-shadow inset 0px 1px 1px rgba(255, 255, 255, .2), 0 1px 3px rgb(22, 34, 40)
-  .select
-    ul
-      background-color rgb(44, 52, 55)
-  .setting_menu
-    ul
-      border-bottom 1px solid rgb(34, 39, 42)
-      li
-        color #fff
-        &:hover
-          color #fff
-          background-color #333
-    span
-      color #999
-    em
-      &:hover
-        color #f00
-  .ZebraDialog
-    background #fff
-    color #222
-    -webkit-box-shadow 0px 0px 0px 1px rgb(41, 58, 65)
-    -moz-box-shadow 0px 0px 0px 1px rgb(41, 58, 65)
-    box-shadow 0px 0px 0px 1px rgb(41, 58, 65)
-    .ZebraDialog_Title
-      background rgb(41, 58, 65)
-      color #fff
-    .ZebraDialog_Buttons
-      background #e5e5e5
-      border-top 1px solid #dadada
-      a
-        color #000
-        background transparent
-        border 1px solid #aaa
-        &:hover
-          background #717366
-          color #fff
-  .quick_tools
-    span
-      &:hover
-        text-decoration underline
-        color #fff
-      a
-        &:hover
-          color #fff
-/*-----codeMirror-----*/
-/*-----Menu-----*/
-/*----Explorer----*/
-.NightTheme .project .title,
-.NightTheme .project .title a
-  color #ccc
-/*-----Custom Controls-----*/
-.NightTheme .toolItem .select ul,
-.NightTheme .menuItem .select ul
-  border 1px solid rgb(23, 34, 40)
-.NightTheme .toolItem .select ul li:hover,
-.NightTheme .menuItem .select ul li:hover
-  background-color rgb(102, 102, 102)
-.NightTheme .mainproject,
-.NightTheme .mainresource
-  border 1px solid rgb(38, 51, 57)
-.NightTheme .setting_menu,
-.NightTheme .setting_menu ul.sub_menu
-  border 1px solid rgb(34, 39, 42)
-  background-color rgb(61, 69, 72)
-  -webkit-box-shadow 3px 3px 6px rgb(34, 39, 42)
-  -moz-box-shadow 3px 3px 6px rgb(34, 39, 42)
-  box-shadow 3px 3px 6px rgb(34, 39, 42)
-/*-----ZebraDialog-----*/
-.btn
-  &.new_version
-    border-left none
-    border-right none
-.editor_wrapper
-  position relative
-.editorSet
-  width 50%
-  height 100%
-  .editor
-    height 50%
-    width 100%
-    overflow-y hidden
-.core textarea,
-.core iframe
-  border 0 !important
-  min-height 100px
-  min-width 100px
-.quick_tools
+.label
   background rgba(230, 230, 230, 0.5)
   height 20px
   padding 0 6px
@@ -206,41 +35,31 @@ img
   border-radius 3px
 .editor
   iframe
-    height 94%
-    width 98%
-fieldset
-  &.left
-    position absolute
-    left -5px
-  &.right
-    position absolute
-    right -5px
-.top
-  position absolute
-  top 0
-.bottom
-  position absolute
-  bottom -5px
-/*------Resize Handler--------*/
-.handler_horizontal
-  width 100%
-  height 8px
-  padding 0 1px
-  cursor row-resize
-  position absolute
-  top 0
-  left 0
-.handler_vertical
-  width 8px
-  height 100%
-  padding 5px 0
-  cursor col-resize
-  position absolute
-  left 0
+    border 0 !important
+    min-height 100px
+    min-width 100px
+    height 100%
+    width 100%
+.submit-btn
+  color #fff
+  background-color #67c23a
+  display inline-block
+  line-height 1
+  white-space nowrap
+  cursor pointer
+  border 1px solid #67c23a
+  -webkit-appearance none
+  text-align center
+  box-sizing border-box
+  outline none
+  margin 0
+  transition .1s
+  -moz-user-select none
+  -webkit-user-select none
+  -ms-user-select none
+  padding 12px 20px
+  font-size 14px
+  border-radius 4px
+  margin-bottom 2px
 .edit-area
-  margin: 0
-  position: absolute
-  top: 20px
-  bottom: 0
-  left: 0
-  right: 0
+    height 85%
