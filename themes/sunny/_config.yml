@@ -11,9 +11,17 @@ menu:
     link: /
     icon: icon-home
   lab:
+    name: 实验室
+    link: /lab/
+    icon: icon-code
+  python:
     name: python3
     link: /python3/
-    icon: icon-lab
+    icon: icon-python
+  interview:
+    name: 面试
+    link: /interview/
+    icon: icon-bubbles
   about:
     name: 关于
     link: /about/

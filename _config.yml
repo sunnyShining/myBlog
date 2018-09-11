@@ -31,6 +31,7 @@ skip_render:
   source/about
   source/comment
   source/python3
+  source/interview
 
 # Writing
 new_post_name: :title.md # File name of new posts

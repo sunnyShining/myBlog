@@ -5,73 +5,37 @@
 $CDN = hexo-config("CDN") || './fonts/'
 
 @font-face
-  font-family "HomizioNova"
-  src url($CDN + 'homizio-nova/light.ttf'),url($CDN + 'homizio-nova/light.otf')
-  font-weight normal
+  font-family: "iconfont"
+  src url($CDN + 'iconfont.eot?t=1536656193704'), url('./fonts/iconfont/iconfont.eot?t=1536656193704')
+  src url($CDN + 'iconfont.eot?t=1536656193704#iefix') format('embedded-opentype'),
+  url('data:application/x-font-woff;charset=utf-8;base64,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') format('woff'),
+  url('./fonts/iconfont/iconfont.ttf?t=1536656193704') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
+  url('./fonts/iconfont/iconfont.svg?t=1536654725680#iconfont') format('svg') /* iOS 4.1- */
+
+.iconfont
+  font-family "iconfont" !important
+  font-size 16px
   font-style normal
-@font-face
-  font-family "HomizioNova"
-  src url($CDN + 'homizio-nova/light_italic.ttf'),url($CDN + 'homizio-nova/light_italic.otf')
-  font-weight normal
-  font-style italic
-@font-face
-  font-family "HomizioNova"
-  src url($CDN + 'homizio-nova/regular.ttf'),url($CDN + 'homizio-nova/regular.otf')
-  font-weight bold
-  font-style normal
-@font-face
-  font-family "HomizioNova"
-  src url($CDN + 'homizio-nova/italic.ttf'),url($CDN + 'homizio-nova/italic.otf')
-  font-weight bold
-  font-style italic
-@font-face
-  font-family 'icomoon'
-  src url($CDN + 'icomoon/icomoon.eot?e2xg5y'), url('./fonts/icomoon/icomoon.eot?e2xg5y')
-  src url($CDN + 'icomoon/icomoon.eot?#iefixe2xg5y') format('embedded-opentype'),
-      url($CDN + 'icomoon/icomoon.woff?e2xg5y') format('woff'),
-      url($CDN + 'icomoon/icomoon.ttf?e2xg5y') format('truetype'),
-      url($CDN + 'icomoon/icomoon.svg?e2xg5y#icomoon') format('svg'),
-      url('./fonts/icomoon/icomoon.eot?#iefixe2xg5y') format('embedded-opentype'),
-      url('./fonts/icomoon/icomoon.woff?e2xg5y') format('woff'),
-      url('./fonts/icomoon/icomoon.ttf?e2xg5y') format('truetype'),
-      url('./fonts/icomoon/icomoon.svg?e2xg5y#icomoon') format('svg')
-  font-weight normal
-  font-style normal
-[class^="icon-"],[class*=" icon-"]
-  font-family 'icomoon'
-  speak none
-  font-style normal
-  font-weight normal
-  font-variant normal
-  text-transform none
-  line-height 1
   -webkit-font-smoothing antialiased
   -moz-osx-font-smoothing grayscale
+
+.icon-code:before
+  content "\e665"
+
 .icon-home:before
-  content "\e900"
-.icon-office:before
-  content "\e903"
-.icon-newspaper:before
-  content "\e904"
-.icon-profile:before
-  content "\e923"
-.icon-files-empty:before
-  content "\e925"
-.icon-price-tags:before
-  content "\e936"
-.icon-envelop:before
-  content "\e945"
-.icon-bubble:before
-  content "\e96b"
-.icon-comment:before
-  content "\e96d"
+  content "\e61b"
+
+.icon-bubbles:before
+  content "\e66f"
+
 .icon-about:before
-  content "\e976"
-.icon-cogs:before
-  content "\e995"
-.icon-paragraph-justify:before
-  content "\ea7a"
-.icon-lab:before
-  content "\ea80"
-.icon-github:before
-  content "\eab1"
+  content "\e640"
+
+.icon-comment:before
+  content "\e65d"
+
+.icon-menu:before
+  content "\e65f"
+
+.icon-python:before
+  content "\f216"
