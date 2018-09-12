@@ -21,7 +21,7 @@ menu:
   interview:
     name: 面试
     link: /interview/
-    icon: icon-bubbles
+    icon: icon-interview
   about:
     name: 关于
     link: /about/
