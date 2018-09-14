@@ -97,7 +97,7 @@ sponsor:
   enable: true
   list:
       0:
-        logo: img/sponsor/upyun_logo.png
+        logo: https://sunnyshining.github.io/img/sponsor/upyun_logo.png
         title: 又拍云
         link: https://www.upyun.com/league?utm_source=baidu&utm_medium=ppc&utm_campaign=cdn&utm_term=freecdn&utm_content=fc001
 #----------------------------
