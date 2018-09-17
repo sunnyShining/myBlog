@@ -18,6 +18,10 @@ menu:
     name: python3
     link: /python3/
     icon: icon-python
+  skills:
+    name: 技巧
+    link: /skills/
+    icon: icon-skill
   interview:
     name: 面试
     link: /interview/
