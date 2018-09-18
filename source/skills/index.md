@@ -86,3 +86,33 @@ $ sudo npm i eslint-plugin-standard -g
 打开.js, .jsx 后缀的文件;
 
 打开菜单view， Syntax -> Open all with current extension as... -> Babel -> JavaScript (Babel)，选择babel为默认 javascript 打开syntax
+
+### 4、VirtualBox虚拟机ubuntu如何远程登录
+
+1⃣️设置网路连接方式，保证和电脑处于同一网段（能ping通）
+2⃣️进入虚拟机安装openssh-client和openssh-server
+
+```sh
+$ sudo apt-get install openssh-client
+$ sudo apt-get install openssh-server
+```
+
+3⃣️启动ssh服务
+
+```sh
+$ sudo /etc/init.d/ssh start
+$ sudo /etc/init.d/ssh restart(重启ssh服务)
+```
+
+4⃣️ssh root@192.168.0.68
+
+```
+$ ssh sunny@192.168.0.68
+```
+
+5⃣️停止服务
+
+```
+$ sudo /etc/init.d/ssh stop
+```
+
