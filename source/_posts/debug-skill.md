@@ -66,10 +66,10 @@ if (/MicroMessenger/i.test(window.navigator.userAgent.toLowerCase())) {
 
 以上所讲调试适合移动端项目，微信里面h5页面也想实现这样调试，多做1个步骤即可。
 
-1、微信浏览器打开http://debugx5.qq.com这个链接，选择信息tab页，将打开TBS内核Inspector调试功能☑️即可，下方还有vconsole感兴趣也可以☑️
+1、微信浏览器打开http://debugx5.qq.com 这个链接，选择信息tab页，将打开TBS内核Inspector调试功能☑️即可，下方还有vconsole感兴趣也可以☑️
 
 ![tbs](https://qncdn.wanshifu.com/e0c124057be5e57ff03f9f2db325e84c)
 
 2、而后参考上面chrome://inspect调试
 
-> 如出现页面空白可参考链接https://www.cnblogs.com/slmk/p/7591126.html解决
+> 如出现页面空白可参考链接https://www.cnblogs.com/slmk/p/7591126.html 解决

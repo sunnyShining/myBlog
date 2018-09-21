@@ -10,6 +10,8 @@
             <%- partial('_custom/lab', { page: page, post: page }) %>
         <% } else if (page.pageid && page.pageid == 'python3') { %>
             <%- partial('_custom/python3', { page: page, post: page }) %>
+        <% } else if (page.pageid && page.pageid == 'skills') { %>
+            <%- partial('_custom/skills', { page: page, post: page }) %>
         <% } else if (page.pageid && page.pageid == 'comment') { %>
             <%- partial('_custom/comment', { page: page, post: page }) %>
         <% } else if (page.pageid && page.pageid == 'interview') { %>
