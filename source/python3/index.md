@@ -11,4 +11,7 @@ projects:
             1:
                 name: python3网络爬虫，下载起点小说
                 link: https://sunnyshining.github.io/2018/python3-download-noval
+            2:
+                name: urllib、pyquery下载笔趣阁小说
+                link: https://sunnyshining.github.io/2018/mojintianshi/
 ---

@@ -10,6 +10,8 @@ tags: python
 
 **1、爬取的小说名为摸金天师，小说首页为http://www.biquge.com.tw/18_18128/，通过urllib.request.urlopen获取页面HTTPResposne类型的对象，在通过read()方法获取页面内容**
 
+<!-- more -->
+
 ```python
 request = urllib.request.Request(url, headers=headers)
 try:
