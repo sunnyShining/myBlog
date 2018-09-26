@@ -1,13 +1,15 @@
 {
   "name": "hexo-site",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "private": true,
+  "author": "sunny <17765293970@163.com>",
+  "description": "sunny's blog",
   "hexo": {
     "version": "3.7.1"
   },
   "scripts": {
     "start": "hexo server",
-    "deploy": "hexo generate --deploy",
+    "d": "rimraf public && rimraf .deploy_git && hexo generate --deploy",
     "generate": "hexo generate"
   },
   "dependencies": {
@@ -22,6 +24,7 @@
     "hexo-server": "^0.2.0"
   },
   "devDependencies": {
-    "hexo-deployer-git": "^0.3.1"
+    "hexo-deployer-git": "^0.3.1",
+    "rimraf": "^2.6.2"
   }
 }
