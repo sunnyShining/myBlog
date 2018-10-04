@@ -25,4 +25,19 @@ projects:
             1:
                 name: python3批量压缩图片
                 link: https://sunnyshining.github.io/2018/python-compress-img/
+    knowledge:
+        title: python3基础知识
+        time: 2018-10-02
+        content:
+            1:
+                name: python3基础知识
+                link: https://sunnyshining.github.io/2018/python3-base-knowledge/
+    numpy:
+        title: python3 numpy
+        time: 2017-10-10
+        content:
+            1:
+                name: python3 numpy
+                link: https://sunnyshining.github.io/2017/python-numpy/
+
 ---
