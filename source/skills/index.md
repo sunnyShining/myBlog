@@ -115,4 +115,25 @@ $ ssh sunny@192.168.0.68
 ```
 $ sudo /etc/init.d/ssh stop
 ```
+### 5、阿里云mongodb数据库远程访问
+
+1⃣️打开配置文件
+
+```sh
+$ vi /etc/mongod.conf
+
+修改成
+# network interfaces
+net:
+  port: 27017
+  bindIp: 0.0.0.0  # Enter 0.0.0.0,:: to bind to all IPv4 and IPv6 addresses or, alternatively, use the net.bindIpAll setting.
+```
+2⃣️修改安全组，开放27017端口
+3⃣️启动
+
+```sh
+$ service mongod start
+```
+4⃣️远程访问
+
 
