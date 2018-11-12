@@ -579,9 +579,9 @@
             var oUl = tools.$('#commentList').getElementsByTagName('ul')[0];
             if (oUl) {
                 oUl.insertBefore(oLi, oUl.firstChild);
-                tools.$('#commentsNum').innerHTML = this.issueComments + 1;
+                tools.$('#commentsNum').innerHTML = (this.issueComments || 0)  + 1;
             } else {
-                tools.$('#commentList').innerHTML = '<header class="list-header">总共 <span class="comments-num" id="commentsNum">' + (this.issueComments + 1) + '</span> 条评论</header>' +
+                tools.$('#commentList').innerHTML = '<header class="list-header">总共 <span class="comments-num" id="commentsNum">' + ((this.issueComments || 0) + 1) + '</span> 条评论</header>' +
                                                     '<ul class="list">' +
                                                         '<li class="item">' +
                                                             item +
