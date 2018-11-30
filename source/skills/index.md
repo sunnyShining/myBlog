@@ -136,4 +136,72 @@ $ service mongod start
 ```
 4⃣️远程访问
 
+### 6、阿里云安装mysql数据库和使用(Ubuntu)
+
+1⃣️安装
+
+```sh
+$ apt install mysql-server
+$ apt isntall mysql-client
+$ apt install libmysqlclient-dev
+```
+
+2⃣️测试安装是否成功
+
+```sh
+$ netstat -tap | grep mysql
+```
+
+出现
+
+```
+tcp6       0      0 [::]:mysql              [::]:*                  LISTEN      2209/mysqd
+```
+
+3⃣️添加用户和设置管理员root密码
+
+删除不需要用户名和密码就能登录
+
+```sh
+$ mysql -uroot
+$ use mysql;
+$ delete from user where user = "";
+$ flush privileges;
+```
+
+给root设置密码
+
+```sh
+$ set password = password("您的密码");
+```
+
+创建允许本地访问的用户
+
+```sh
+$ create user sunny@localhost identified by '123456';
+```
+
+创建允许公网IP访问的用户
+
+```sh
+$ create user 'sunny'@'%' identified by '123456';
+```
+
+授予本地访问用户权限
+
+```sh
+$ grant all privileges on dbname.* to sunny@localhost identified by '123456';
+```
+
+授予公网IP访问用户权限
+
+```sh
+$ grant all privileges on dbname.* to 'sunny'@'%' identified by '123456';
+```
+
+刷新权限
+
+```sh
+$ flush privileges;
+```
 
