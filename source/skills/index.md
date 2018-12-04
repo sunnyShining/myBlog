@@ -226,6 +226,9 @@ bind 127.0.0.1 ::1 => # bind 127.0.0.1 ::1
 
 重启服务
 $ service redis-server restart
+
+远程登录
+$ redis-cli -h host -p port -a password
 ```
 
 
