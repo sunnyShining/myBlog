@@ -205,3 +205,27 @@ $ grant all privileges on dbname.* to 'sunny'@'%' identified by '123456';
 $ flush privileges;
 ```
 
+### 7、阿里云安装redis(Ubuntu)
+
+1⃣️安装
+
+
+```sh
+$ apt install redis-server
+```
+
+2⃣️修改配置
+
+```sh
+$ cd /etc/redis/
+$ vi redis.conf
+
+修改配置
+bind 127.0.0.1 ::1 => # bind 127.0.0.1 ::1
+# requirepass foobared => requirepass 2786270
+
+重启服务
+$ service redis-server restart
+```
+
+
