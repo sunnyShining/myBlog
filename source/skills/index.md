@@ -205,6 +205,16 @@ $ grant all privileges on dbname.* to 'sunny'@'%' identified by '123456';
 $ flush privileges;
 ```
 
+修改配置
+
+```sh
+$ vi /etc/mysql/mysql.conf.d/mysqld.cnf
+
+bind-address            = 127.0.0.1 => bind-address            = 0.0.0.0
+
+$ service mysql restart
+```
+
 ### 7、阿里云安装redis(Ubuntu)
 
 1⃣️安装
