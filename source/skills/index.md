@@ -234,6 +234,8 @@ $ vi redis.conf
 bind 127.0.0.1 ::1 => # bind 127.0.0.1 ::1
 # requirepass foobared => requirepass 2786270
 
+protected-mode yes => protected-mode no
+
 重启服务
 $ service redis-server restart
 
