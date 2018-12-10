@@ -136,10 +136,117 @@ $ service mongod start
 ```
 4⃣️远程访问
 
+
+### 6、阿里云安装mysql数据库和使用(Ubuntu)
+
+1⃣️安装
+
+```sh
+$ apt install mysql-server
+$ apt isntall mysql-client
+$ apt install libmysqlclient-dev
+```
+
+2⃣️测试安装是否成功
+
+```sh
+$ netstat -tap | grep mysql
+```
+
+出现
+
+```
+tcp6       0      0 [::]:mysql              [::]:*                  LISTEN      2209/mysqd
+```
+
+3⃣️添加用户和设置管理员root密码
+
+删除不需要用户名和密码就能登录
+
+```sh
+$ mysql -uroot
+$ use mysql;
+$ delete from user where user = "";
+$ flush privileges;
+```
+
+给root设置密码
+
+```sh
+$ set password = password("您的密码");
+```
+
+创建允许本地访问的用户
+
+```sh
+$ create user sunny@localhost identified by '123456';
+```
+
+创建允许公网IP访问的用户
+
+```sh
+$ create user 'sunny'@'%' identified by '123456';
+```
+
+授予本地访问用户权限
+
+```sh
+$ grant all privileges on dbname.* to sunny@localhost identified by '123456';
+```
+
+授予公网IP访问用户权限
+
+```sh
+$ grant all privileges on dbname.* to 'sunny'@'%' identified by '123456';
+```
+
+刷新权限
+
+```sh
+$ flush privileges;
+```
+
+修改配置
+
+```sh
+$ vi /etc/mysql/mysql.conf.d/mysqld.cnf
+
+bind-address            = 127.0.0.1 => bind-address            = 0.0.0.0
+
+$ service mysql restart
+```
+
+### 7、阿里云安装redis(Ubuntu)
+
+1⃣️安装
+
+
+```sh
+$ apt install redis-server
+```
+
+2⃣️修改配置
+
+```sh
+$ cd /etc/redis/
+$ vi redis.conf
+
+修改配置
+bind 127.0.0.1 ::1 => # bind 127.0.0.1 ::1
+# requirepass foobared => requirepass 2786270
+
+protected-mode yes => protected-mode no
+
+重启服务
+$ service redis-server restart
+
+远程登录
+$ redis-cli -h host -p port -a password
+```
+
 ### 6、git终端避免多次输入密码
 
 ```sh
 $ git config --global credential.helper osxkeychain
 ```
-
 
