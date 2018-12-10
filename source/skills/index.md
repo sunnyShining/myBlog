@@ -136,4 +136,10 @@ $ service mongod start
 ```
 4⃣️远程访问
 
+### 6、git终端避免多次输入密码
+
+```sh
+$ git config --global credential.helper osxkeychain
+```
+
 
