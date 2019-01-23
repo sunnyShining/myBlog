@@ -35,11 +35,11 @@ console.log(i);
 
 var执行结果
 
-![var](./images/bibao_var.png)
+![var](bibao_var.png)
 
 let执行结果
 
-![let](./images/bibao_let.png)
+![let](bibao_let.png)
 
 ## 问题
 
