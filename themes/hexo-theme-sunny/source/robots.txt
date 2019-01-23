@@ -1,1 +1,1 @@
-sitemap:http://static.sunnyshining.xyz/baidusitemap.xml
+sitemap:https://static.sunnyshining.xyz/baidusitemap.xml
