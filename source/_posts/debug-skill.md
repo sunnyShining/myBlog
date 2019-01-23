@@ -41,6 +41,9 @@ if (/MicroMessenger/i.test(window.navigator.userAgent.toLowerCase())) {
   </script>
 </head>
 ```
+效果：
+
+![wechat](https://qncdn.wanshifu.com/7081e388fa8740319848b429cb459e12)
 
 其他高级用法可参考[文档](https://github.com/Tencent/vConsole/blob/dev/README_CN.md)
 
@@ -53,10 +56,13 @@ if (/MicroMessenger/i.test(window.navigator.userAgent.toLowerCase())) {
 
 2、手机中打开“设置”->"开发人员选项"->"USB调试"
 
-3、打开pc侧chrome, 在地址栏中输入chrome://inspect/#devices 选中discover usb devices。可以看到我们的手机设备
+3、打开pc侧chrome, 在地址栏中输入chrome://inspect/#devices 选中discover usb devices。可以看到我们的手机设备，如下图所示
 
+![chrome](https://qncdn.wanshifu.com/57ad65c61444944b300485ef97fd1ccf)
 
 4、点击inspect即可像调试pc页面一样调试移动端页面，如下
+
+![example](https://qncdn.wanshifu.com/e70a00b53e9d01e33996e62c971903f0)
 
 以上所讲调试适合移动端项目，微信里面h5页面也想实现这样调试，多做1个步骤即可。
 

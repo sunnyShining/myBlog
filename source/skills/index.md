@@ -136,7 +136,6 @@ $ service mongod start
 ```
 4⃣️远程访问
 
-
 ### 6、阿里云安装mysql数据库和使用(Ubuntu)
 
 1⃣️安装
@@ -244,9 +243,4 @@ $ service redis-server restart
 $ redis-cli -h host -p port -a password
 ```
 
-### 6、git终端避免多次输入密码
-
-```sh
-$ git config --global credential.helper osxkeychain
-```
 

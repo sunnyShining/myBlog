@@ -9,6 +9,7 @@
   },
   "scripts": {
     "start": "hexo server",
+    "p": "bash ./deploy.sh",
     "d": "rimraf public && rimraf .deploy_git && hexo generate --deploy",
     "generate": "hexo generate"
   },
