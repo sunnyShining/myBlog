@@ -91,15 +91,15 @@ let arr = [];
 
 {
 	let i = 0;
-     arr[i]=function(){
-         console.log(i);
-     };
+    arr[i]=function(){
+        console.log(i);
+    };
 }
 {
 	let i = 1;
-     arr[i]=function(){
-         console.log(i);
-     };
+    arr[i]=function(){
+        console.log(i);
+    };
 }
 ...
 {
