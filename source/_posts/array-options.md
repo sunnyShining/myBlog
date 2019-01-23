@@ -9,4 +9,4 @@ categories: 编程
 
 <!-- more -->
 
-![array_options1.png](https://upload-images.jianshu.io/upload_images/4605151-626fe829b10af252.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![array_options1.png](array_options1.png)
