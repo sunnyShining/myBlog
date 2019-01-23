@@ -10,7 +10,6 @@ tags: javascript
 ```javascript
 
 // var
-
 var arr = [];
 for (var i = 0; i< 10; i++) {
 	arr[i] = function () {
@@ -21,7 +20,6 @@ arr[6]();
 console.log(i);
 
 // let
-
 let arr = [];
 for (let i = 0; i< 10; i++) {
 	arr[i] = function () {
@@ -37,11 +35,11 @@ console.log(i);
 
 var执行结果
 
-![var](images/bibao_var.png)
+![var](./images/bibao_var.png)
 
 let执行结果
 
-![let](images/bibao_let.png)
+![let](./images/bibao_let.png)
 
 ## 问题
 
