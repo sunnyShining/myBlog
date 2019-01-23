@@ -6,5 +6,5 @@ git.branch
 git pull origin ${br/* /}:${br/* /}
 yarn d
 git add -A
-git commit -m 'deploy aboutMe on '${br/* /}' branch'
+git commit -m 'deploy blog on '${br/* /}' branch'
 git push origin ${br/* /}
