@@ -100,5 +100,5 @@ theme: hexo-theme-sunny
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
   type: git
-  repo: https://github.com/sunnyShining/blog.git
+  repo: https://github.com/sunnyShining/sunnyShining.github.io.git
   branch: master
