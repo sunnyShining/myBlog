@@ -345,7 +345,7 @@
                 if (btnJson.title === '确定') {
                     return;
                 }
-                Dialog.closeView();
+                Dialog.close();
             });
         }
     };
