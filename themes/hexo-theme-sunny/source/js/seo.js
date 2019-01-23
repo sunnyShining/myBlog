@@ -1,7 +1,14 @@
-var xhr = new XMLHttpRequest();
-const headers = {'Accept': '*/*', 'Content-Type': 'application/x-www-form-urlencoded'};
-xhr.open('POST', 'http://data.zz.baidu.com/urls', true);
-for (var key in headers) {
-    xhr.setRequestHeader(key, headers[key]);
-}
-xhr.send('site=static.sunnyshining.xyz&token=vK3FvKTFdT4axvSs')
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
