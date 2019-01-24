@@ -1,0 +1,448 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8" >
+    <meta name="robots" content="index,follow" />
+    <meta name="author" content="sunny" />
+    <meta http-equiv="X-UA-Compatible" content="IE=11,IE=10,IE=9,IE=8" >
+    <meta name="baidu-site-verification" content="rAWa6yMQTj" />
+    
+    <title>react内联样式使用webpack将px转rem | sunny</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" >
+    <meta name="keywords" content="sunny, 前端, Web, 前端开发" >
+    <meta name="description" content="sunny个人技术小站" >
+    <meta name="referrer" content="no-referrer" />
+
+    
+    <link rel="alternative" href="/atom.xml" title="sunny" type="application/atom+xml" >
+    
+    
+    <link rel="shortcut icon" href="/favicon.ico" >
+    
+    <link rel="stylesheet" href="/css/style.css">
+    <script src="/js/utils.js"></script>
+    <script src="/js/seo.js"></script>
+    
+    <script>
+		var _hmt = _hmt || [];
+		(function() {
+		  var hm = document.createElement("script");
+		  hm.src = "https://hm.baidu.com/hm.js?d125f138759db3cb063c66a0f298f768";
+		  var s = document.getElementsByTagName("script")[0];
+		  s.parentNode.insertBefore(hm, s);
+		})();
+    </script>
+
+</head>
+
+<body class="home">
+    <!-- 博客头部 -->
+    <header class="header">
+    <section class="container header-main">
+        <div class="logo">
+            <a href="/">
+                <div class="cover">
+                    <span class="name">sunny</span>
+                    <span class="description">Happy Every Day</span>
+                </div>
+            </a>
+        </div>
+        <div class="dropnav icon iconfont icon-menu" id="btnDropNav"></div>
+        <ul class="menu hidden" id="menu">
+            
+            <li rel="/2018/px-to-rem/index.html" class="item ">
+                <a href="/" title="首页" class="icon iconfont icon-home">&nbsp;首页</a>
+            </li>
+            
+            <li rel="/2018/px-to-rem/index.html" class="item ">
+                <a href="/lab/" title="实验室" class="icon iconfont icon-code">&nbsp;实验室</a>
+            </li>
+            
+            <li rel="/2018/px-to-rem/index.html" class="item ">
+                <a href="/python3/" title="python3" class="icon iconfont icon-python">&nbsp;python3</a>
+            </li>
+            
+            <li rel="/2018/px-to-rem/index.html" class="item ">
+                <a href="/skills/" title="技巧" class="icon iconfont icon-skill">&nbsp;技巧</a>
+            </li>
+            
+            <li rel="/2018/px-to-rem/index.html" class="item ">
+                <a href="/interview/" title="面试" class="icon iconfont icon-interview">&nbsp;面试</a>
+            </li>
+            
+            <li rel="/2018/px-to-rem/index.html" class="item ">
+                <a href="/about/" title="关于" class="icon iconfont icon-about">&nbsp;关于</a>
+            </li>
+            
+            <li rel="/2018/px-to-rem/index.html" class="item ">
+                <a href="/comment/" title="留言" class="icon iconfont icon-comment">&nbsp;留言</a>
+            </li>
+            
+        </ul>
+        <div class="profile clearfix">
+            <div class="feeds fl">
+                
+                
+                <p class="links">
+                    
+                        <a href="https://github.com/sunnyShining" target="_blank">Github</a>
+                        |
+                    
+                        <a href="https://gitee.com/sunnyShining" target="_blank">gitee</a>
+                        |
+                    
+                        <a href="https://tongji.baidu.com/web/26214126/homepage/index" target="_blank">百度统计</a>
+                        
+                    
+                </p>
+                <p class="sns">
+                    
+                        <a href="https://weibo.com/u/2449308854" class="sinaweibo" target="_blank"><b>■</b> 新浪微博</a>
+                    
+                        <a href="https://www.jianshu.com/u/e53a4b002124" class="qqweibo" target="_blank"><b>■</b> 简书</a>
+                    
+                    <a href="javascript: void(0);" class="wechat">
+                        <b>■</b>
+                        公众号
+                        <span class="popover">
+                            <img src="/img/wechat_mp.jpg" width="120" height="120" alt="我的微信订阅号">
+                            <i class="arrow"></i>
+                        </span>
+                    </a>
+                </p>
+                
+            </div>
+            <div class="avatar fr">
+                <img src="/img/sunny.jpg" alt="avatar" title="sunny" >
+            </div>
+        </div>
+    </section>
+</header>
+
+    <!-- 博客正文 -->
+    <div class="container body clearfix">
+        <section class="content">
+            <div class="content-main widget">
+                <!-- 文章页 -->
+<!-- 文章 -->
+<article class="post article">
+    <header class="text-center">
+        <h3 class="post-title"><span>react内联样式使用webpack将px转rem</span></h3>
+    </header>
+    <p class="post-meta text-center">
+        sunny 发表于
+        <time datetime="2018-04-24T14:34:51.000Z">2018-04-24</time>
+    </p>
+    <div class="post-content">
+        <p>从我<a href="https://www.jianshu.com/p/83bb5e97bdf3" target="_blank" rel="noopener">简书</a>搬迁</p>
+<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>在开发react项目时，很多时候我们把style写在css、less、scss里，经过像postcss这样的配置处理，但有没有这样一种需求呢，像有些样式我们直接写在xml标签上style里，然后也能进行处理，如px2rem能将px转rem，是否在style上写也能实现。</p>
+<a id="more"></a>
+<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><p>我们在webpack，/.(js|jsx)?$/这样babel-loader之前（webpack从右往左）加一个loader把需要转变的px进行替换，不就好了，先找找有没有这样的loader，我找了下没找到，只能自己写一个了</p>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> loaderUtils = <span class="built_in">require</span>(<span class="string">'loader-utils'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 默认参数</span></span><br><span class="line"><span class="keyword">const</span> defaultopts = &#123;</span><br><span class="line">    remUnit: <span class="number">100</span>, <span class="comment">// rem unit value (default: 100)</span></span><br><span class="line">    remFixed: <span class="number">2</span>, <span class="comment">// rem value precision (default: 2)</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">// 获取webpack配置好的参数</span></span><br><span class="line"><span class="keyword">const</span> opts = loaderUtils.getOptions(<span class="keyword">this</span>);</span><br><span class="line"><span class="comment">// 将参数组合</span></span><br><span class="line"><span class="keyword">const</span> config = <span class="built_in">Object</span>.assign(&#123;&#125;, defaultopts, opts);</span><br><span class="line"><span class="keyword">const</span> ZPXRegExp = <span class="regexp">/\b(\d+(\.\d+)?)SUPX\b/</span>;</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="keyword">function</span> (<span class="params">source</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> pxGlobalRegExp = <span class="keyword">new</span> <span class="built_in">RegExp</span>(ZPXRegExp.source, <span class="string">'g'</span>);</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">this</span>.cacheable) &#123;</span><br><span class="line">        <span class="keyword">this</span>.cacheable();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 先test下有没有符合的如果有再进行替换</span></span><br><span class="line">    <span class="keyword">if</span> (pxGlobalRegExp.test(source)) &#123;</span><br><span class="line">        <span class="keyword">return</span> source.replace(pxGlobalRegExp, ($<span class="number">0</span>, $<span class="number">1</span>) =&gt; &#123;</span><br><span class="line">            <span class="keyword">let</span> val = $<span class="number">1</span> / config.remUnit;</span><br><span class="line">            <span class="comment">// 精确到几位</span></span><br><span class="line">            val = <span class="built_in">parseFloat</span>(val.toFixed(config.remFixed));</span><br><span class="line">            <span class="keyword">return</span> val === <span class="number">0</span> ? val : val + <span class="string">'rem'</span>;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> source;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h2 id="用法"><a href="#用法" class="headerlink" title="用法"></a>用法</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    loader: path.join(rootPath, &apos;loaders/jsxPx2RemLoader&apos;),</span><br><span class="line">    options: &#123;</span><br><span class="line">        remUnit: 100,</span><br><span class="line">        remFixed: 3</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="源代码"><a href="#源代码" class="headerlink" title="源代码"></a>源代码</h2><p><a href="https://github.com/sunnyShining/jsxStyleLoader/blob/master/tools/loaders/jsxPx2RemLoader/index.js" target="_blank" rel="noopener">https://github.com/sunnyShining/jsxStyleLoader/blob/master/tools/loaders/jsxPx2RemLoader/index.js</a></p>
+<h2 id="赞赏"><a href="#赞赏" class="headerlink" title="赞赏"></a>赞赏</h2><p>如果你觉得我写的对你有帮助，请给我点赞助，不胜感激</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/4605151-54db300e5da7f210.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="WechatIMG42.jpg"><br><img src="https://upload-images.jianshu.io/upload_images/4605151-81f69250028678af.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="WechatIMG43.jpg"></p>
+
+    </div>
+    <p class="post-meta">
+        <span class="post-cat">分类：
+            <a class="cat-link" href="/categories/programming/">编程</a>
+        </span>
+        <span class="post-tags">
+            标签：
+            
+    
+        <a href="/tags/webpack/" title="webpack">webpack</a>
+    
+
+        </span>
+    </p>
+</article>
+<!-- 分享按钮 -->
+
+    <div class="article-share clearfix text-center">
+        <div class="share-area">
+            <span class="share-txt">分享到：</span>
+            <a href="javascript: window.open('http://service.weibo.com/share/share.php?url=' + encodeURIComponent(location.href) + '&title=' + document.title + '&language=zh_cn');" class="share-icon weibo"></a>
+            <a href="javascript: Dialog.open('请复制链接到微信并发送');" class="share-icon wechat"></a>
+            <a href="javascript: window.open('http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=' + encodeURIComponent(location.href) + '&title=' + document.title);" class="share-icon qqzone"></a>
+            <a href="javascript: window.open('http://connect.qq.com/widget/shareqq/index.html?url=' + encodeURIComponent(location.href) + '&desc=sunny个人博客&title=' + document.title + '&callback=' + encodeURIComponent(location.href));" class="share-icon qq"></a>
+            <a href="javascript: window.open('http://shuo.douban.com/!service/share?href=' + encodeURIComponent(location.href) + '&name=' + document.title + '&text=' + document.title);" class="share-icon douban"></a>
+        </div>
+    </div>
+
+
+<!-- 上一篇/下一篇 -->
+
+<div class="article-nav clearfix">
+    
+    <span class="prev fl">
+        上一篇<br >
+        <a href="/2018/python3-download-noval/">
+            
+                python3网络爬虫，下载起点小说
+            
+        </a>
+    </span>
+    
+
+    
+    <span class="next fr">
+        下一篇<br >
+        <a href="/2018/vue-init-question/">
+            
+                解决vue init webpack project新建项目权限问题
+            
+        </a>
+    </span>
+    
+</div>
+
+<!-- 文章评论 -->
+
+    <script src="/js/comment.js"></script>
+    <div id="comments" class="comment">
+        <div class="sign-bar" id="commentSignBar"></div>
+        <section class="box" id="commentBox">
+            <div class="com-avatar">
+                <img id="loginAvatar" src="/img/unsigned_avatar.jpg" alt="avatar">
+            </div>
+            <div class="com-text">
+                <div class="main">
+                    <textarea class="text-area-edited show" id="editBox" placeholder="欢迎评论！"></textarea>
+                    <div class="text-area-preview" id="previewBox"></div>
+                </div>
+                <div class="switch">
+                    <div class="switch-item on" id="editSwitcher">编辑</div>
+                    <div class="switch-item" id="previewSwitcher">预览</div>
+                </div>
+                <div class="button" id="postComment">提交</div>
+            </div>
+        </section>
+        <section class="tips clearfix" id="commentTips">注：评论支持 markdown 语法！</section>
+        <section class="list-wrap" id="commentList">
+            <div class="text-center">正在加载评论</div>
+        </section>
+        <!--
+            <div class="sign-bar">
+                GitHub 已登录!
+                <span class="sign-link">登出</span>
+            </div>
+            <section class="box">
+                <div class="com-avatar"><img src="/img/jelon.jpg" alt="avatar"></div>
+                <div class="com-text">
+                    <div class="main">
+                        <textarea class="text-area-edited show" placeholder="欢迎评论！"></textarea>
+                        <div class="text-area-preview"></div>
+                    </div>
+                    <div class="switch">
+                        <div class="switch-item on">编辑</div>
+                        <div class="switch-item">预览</div>
+                    </div>
+                    <div class="button">提交</div>
+                </div>
+            </section>
+            <section class="tips">注：评论支持 markdown 语法！</section>
+            <section class="list-wrap">
+                <ul class="list">
+                    <li>
+                        <div class="user-avatar">
+                            <a href="/">
+                                <img src="/img/jelon.jpg" alt="user-avatar">
+                            </a>
+                        </div>
+                        <div class="user-comment">
+                            <div class="user-comment-header">
+                                <span class="post-name">张德龙</span>
+                                <span class="post-time">2017年12月12日</span>
+                                <span class="like liked">已赞</span>
+                                <span class="like-num">2</span>
+                            </div>
+                            <div class="user-comment-body">333333</div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="user-avatar">
+                            <a href="/">
+                                <img src="/img/jelon.jpg" alt="user-avatar">
+                            </a>
+                        </div>
+                        <div class="user-comment">
+                            <div class="user-comment-header">
+                                <span class="post-name">刘德华</span>
+                                <span class="post-time">2017年12月12日</span>
+                                <span class="like">点赞</span>
+                                <span class="like-num">2</span>
+                            </div>
+                            <div class="user-comment-body">vvvvv</div>
+                        </div>
+                    </li>
+                </ul>
+                <div class="page-nav">
+                    <a href="javascript: void(0);" class="item">1</a>
+                    <a href="javascript: void(0);" class="item">2</a>
+                    <a href="javascript: void(0);" class="item current">3</a>
+                </div>
+            </section>
+        -->
+    </div>
+    <script>
+        CommentUtils.init({
+            container: '#comments',
+            label: 'px-to-rem' || '2018/px-to-rem/',
+            owner: 'sunnyShining',
+            repo: 'blog_comments',
+            clientId: 'a6d772d870a68bc9c558',
+            clientSecret: '4f3ed1ee231fa1e940c0530f86d5d788512f2027'
+        });
+    </script>
+
+
+            </div>
+
+        </section>
+        <!-- 侧栏部分 -->
+<aside class="sidebar">
+    <section class="widget">
+        <h3 class="widget-hd"><strong>文章分类</strong></h3>
+        <!-- 文章分类 -->
+<ul class="widget-bd">
+    
+    <li>
+        <a href="/categories/programming/">编程</a>
+        <span class="badge">(19)</span>
+    </li>
+    
+    <li>
+        <a href="/categories/life/">生活</a>
+        <span class="badge">(3)</span>
+    </li>
+    
+</ul>
+    </section>
+
+    
+    <section class="widget">
+        <h3 class="widget-hd"><strong>热门标签</strong></h3>
+        <!-- 文章标签 -->
+<div class="widget-bd tag-wrap">
+  
+    <a class="tag-item" href="/tags/js/" title="javascript">javascript (4)</a>
+  
+    <a class="tag-item" href="/tags/life/" title="生活">生活 (3)</a>
+  
+    <a class="tag-item" href="/tags/codeing/" title="codeing">codeing (2)</a>
+  
+    <a class="tag-item" href="/tags/js/" title="js">js (3)</a>
+  
+    <a class="tag-item" href="/tags/linux/" title="linux">linux (1)</a>
+  
+    <a class="tag-item" href="/tags/react/" title="react">react (1)</a>
+  
+    <a class="tag-item" href="/tags/python/" title="python">python (5)</a>
+  
+    <a class="tag-item" href="/tags/webpack/" title="webpack">webpack (1)</a>
+  
+    <a class="tag-item" href="/tags/vue/" title="vue">vue (2)</a>
+  
+</div>
+    </section>
+    
+
+    
+    <!-- 我的微博 -->
+    <section class="widget">
+        <h3 class="widget-hd"><strong>我的微博</strong></h3>
+        <div class="widget-bd" style="position: relative;">
+    <div id="myWeiboLoading" class="text-center" style="position:absolute;top:0;left:0;right:0;bottom:0;line-height:50px;font-size:12px;background-color:#fff;z-index:9;">微博加载中...</div>
+    <iframe id="myWeibo" width="100%" height="400" class="share_self"  frameborder="0" scrolling="no" src="https://widget.weibo.com/weiboshow/index.php?language=&width=0&height=400&fansRow=1&ptype=1&speed=0&skin=1&isTitle=1&noborder=1&isWeibo=1&isFans=1&uid=2449308854&verifier=454ed586&dpc=1"></iframe>
+    <script>
+        (function () {
+            var oMyWeibo = document.getElementById('myWeibo');
+            var oMyWeiboLoading = document.getElementById('myWeiboLoading');
+            var timer = null;
+            oMyWeibo.onload = function () {
+                timer = setTimeout(function () {
+                    oMyWeiboLoading.parentNode.removeChild(oMyWeiboLoading);
+                    timer = null;
+                }, 300);
+            };
+        })();
+    </script>
+</div>
+    </section>
+    
+
+    
+    <!-- 友情链接 -->
+    <section class="widget">
+        <h3 class="widget-hd"><strong>友情链接</strong></h3>
+        <!-- 文章分类 -->
+<ul class="widget-bd">
+    
+        <li>
+            <a href="https://github.com/liaolongdong" target="_blank" title="liaolongdong的github">liaolongdong的github</a>
+        </li>
+    
+        <li>
+            <a href="https://github.com/CaptainYYH" target="_blank" title="CaptainYYH的github">CaptainYYH的github</a>
+        </li>
+    
+        <li>
+            <a href="https://github.com/Smile415" target="_blank" title="Smile415的github">Smile415的github</a>
+        </li>
+    
+</ul>
+    </section>
+    
+    
+    <!-- 友情链接 -->
+    <section class="widget">
+        <h3 class="widget-hd"><strong>赞助</strong></h3>
+        <!-- 赞助 -->
+<ul class="widget-bd">
+    
+        <li>
+            <a href="https://www.upyun.com/league?utm_source=baidu&amp;utm_medium=ppc&amp;utm_campaign=cdn&amp;utm_term=freecdn&amp;utm_content=fc001" target="_blank" title="又拍云">
+            	<img width="100%" src="https://sunnyshining.github.io/img/sponsor/upyun_logo.png" alt="又拍云" />
+            </a>
+        </li>
+    
+</ul>
+    </section>
+    
+</aside>
+<!-- / 侧栏部分 -->
+    </div>
+
+    <!-- 博客底部 -->
+    <footer class="footer">
+    &copy;CopyRight
+    
+        2018-2019
+    
+
+    <a> SUNNY的博客 | 粤ICP备18140638号-1 <img src="/img/beian.png" style="vertical-align: middle;" /></a>
+</footer>
+<div class="back-to-top" id="backToTop" title="返回顶部">返回顶部</div>
+
+    <!--博客js脚本 -->
+    <!-- 这里放网站js脚本 -->
+<script src="/js/main.js"></script>
+    <div class="snow-container"></div>
+    <style type="text/css">
+    .snow-container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 9999;
+    }
+    </style>
+    <script type="text/javascript" src='//code.jquery.com/jquery-3.3.1.min.js'></script>
+    <script src="/js/snowy.js"></script>
+</body>
+</html>

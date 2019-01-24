@@ -1,0 +1,450 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8" >
+    <meta name="robots" content="index,follow" />
+    <meta name="author" content="sunny" />
+    <meta http-equiv="X-UA-Compatible" content="IE=11,IE=10,IE=9,IE=8" >
+    <meta name="baidu-site-verification" content="rAWa6yMQTj" />
+    
+    <title>js实现jquery的offset()方法(获取当前元素相对于文档的偏移量) | sunny</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" >
+    <meta name="keywords" content="sunny, 前端, Web, 前端开发" >
+    <meta name="description" content="sunny个人技术小站" >
+    <meta name="referrer" content="no-referrer" />
+
+    
+    <link rel="alternative" href="/atom.xml" title="sunny" type="application/atom+xml" >
+    
+    
+    <link rel="shortcut icon" href="/favicon.ico" >
+    
+    <link rel="stylesheet" href="/css/style.css">
+    <script src="/js/utils.js"></script>
+    <script src="/js/seo.js"></script>
+    
+    <script>
+		var _hmt = _hmt || [];
+		(function() {
+		  var hm = document.createElement("script");
+		  hm.src = "https://hm.baidu.com/hm.js?d125f138759db3cb063c66a0f298f768";
+		  var s = document.getElementsByTagName("script")[0];
+		  s.parentNode.insertBefore(hm, s);
+		})();
+    </script>
+
+</head>
+
+<body class="home">
+    <!-- 博客头部 -->
+    <header class="header">
+    <section class="container header-main">
+        <div class="logo">
+            <a href="/">
+                <div class="cover">
+                    <span class="name">sunny</span>
+                    <span class="description">Happy Every Day</span>
+                </div>
+            </a>
+        </div>
+        <div class="dropnav icon iconfont icon-menu" id="btnDropNav"></div>
+        <ul class="menu hidden" id="menu">
+            
+            <li rel="/2017/offset/index.html" class="item ">
+                <a href="/" title="首页" class="icon iconfont icon-home">&nbsp;首页</a>
+            </li>
+            
+            <li rel="/2017/offset/index.html" class="item ">
+                <a href="/lab/" title="实验室" class="icon iconfont icon-code">&nbsp;实验室</a>
+            </li>
+            
+            <li rel="/2017/offset/index.html" class="item ">
+                <a href="/python3/" title="python3" class="icon iconfont icon-python">&nbsp;python3</a>
+            </li>
+            
+            <li rel="/2017/offset/index.html" class="item ">
+                <a href="/skills/" title="技巧" class="icon iconfont icon-skill">&nbsp;技巧</a>
+            </li>
+            
+            <li rel="/2017/offset/index.html" class="item ">
+                <a href="/interview/" title="面试" class="icon iconfont icon-interview">&nbsp;面试</a>
+            </li>
+            
+            <li rel="/2017/offset/index.html" class="item ">
+                <a href="/about/" title="关于" class="icon iconfont icon-about">&nbsp;关于</a>
+            </li>
+            
+            <li rel="/2017/offset/index.html" class="item ">
+                <a href="/comment/" title="留言" class="icon iconfont icon-comment">&nbsp;留言</a>
+            </li>
+            
+        </ul>
+        <div class="profile clearfix">
+            <div class="feeds fl">
+                
+                
+                <p class="links">
+                    
+                        <a href="https://github.com/sunnyShining" target="_blank">Github</a>
+                        |
+                    
+                        <a href="https://gitee.com/sunnyShining" target="_blank">gitee</a>
+                        |
+                    
+                        <a href="https://tongji.baidu.com/web/26214126/homepage/index" target="_blank">百度统计</a>
+                        
+                    
+                </p>
+                <p class="sns">
+                    
+                        <a href="https://weibo.com/u/2449308854" class="sinaweibo" target="_blank"><b>■</b> 新浪微博</a>
+                    
+                        <a href="https://www.jianshu.com/u/e53a4b002124" class="qqweibo" target="_blank"><b>■</b> 简书</a>
+                    
+                    <a href="javascript: void(0);" class="wechat">
+                        <b>■</b>
+                        公众号
+                        <span class="popover">
+                            <img src="/img/wechat_mp.jpg" width="120" height="120" alt="我的微信订阅号">
+                            <i class="arrow"></i>
+                        </span>
+                    </a>
+                </p>
+                
+            </div>
+            <div class="avatar fr">
+                <img src="/img/sunny.jpg" alt="avatar" title="sunny" >
+            </div>
+        </div>
+    </section>
+</header>
+
+    <!-- 博客正文 -->
+    <div class="container body clearfix">
+        <section class="content">
+            <div class="content-main widget">
+                <!-- 文章页 -->
+<!-- 文章 -->
+<article class="post article">
+    <header class="text-center">
+        <h3 class="post-title"><span>js实现jquery的offset()方法(获取当前元素相对于文档的偏移量)</span></h3>
+    </header>
+    <p class="post-meta text-center">
+        sunny 发表于
+        <time datetime="2017-11-28T14:43:46.000Z">2017-11-28</time>
+    </p>
+    <div class="post-content">
+        <p>从我<a href="https://www.jianshu.com/p/e8965308d7e9" target="_blank" rel="noopener">简书</a>搬迁</p>
+<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>最近做项目，由于zepto使用的功能较少，想将zepto的功能用较少原生实现，其中有个实现zepto的offset()方法取到各种值的难为了我，我百度了下，大体网上千篇一律的这样写到</p>
+<a id="more"></a>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">这篇文章主要介绍了js实现jquery的offset()方法,实例分析了jquery的offset()方法原理与采用javascript实现的技巧,具有一定参考借鉴价值,需要的朋友可以参考下</span><br><span class="line">本文实例讲述了js实现jquery的offset()方法。分享给大家供大家参考。具体分析如下：</span><br><span class="line">用过jQuery的offset()的同学都知道offset().top或offset().left很方便地取得元素相对于整个页面的偏移。</span><br><span class="line">而在js里，没有这样直接的方法，节点的属性offsetTop可以获得该节点相对于父节点的相对偏移，但不能直接获得其绝对偏移，我们可用节点逐层递归向上来相加offsetTop来获得绝对偏移。</span><br><span class="line">复制代码代码如下:</span><br><span class="line"><span class="keyword">function</span> getOffset(Node, offset) &#123;</span><br><span class="line">    <span class="keyword">if</span> (!offset) &#123;</span><br><span class="line">          offset = &#123;&#125;;</span><br><span class="line">          offset.top = 0; </span><br><span class="line">          offset.left = 0;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (Node == document.body) &#123;</span><br><span class="line">        //当该节点为body节点时，结束递归</span><br><span class="line">        <span class="built_in">return</span> offset;   </span><br><span class="line">    &#125;</span><br><span class="line">    offset.top += Node.offsetTop;</span><br><span class="line">	offset.left += Node.offsetLeft;</span><br><span class="line">    <span class="built_in">return</span> getOffset(Node.parentNode, offset); //向上累加offset里的值</span><br><span class="line">&#125;</span><br><span class="line">使用时，则如：</span><br><span class="line">复制代码代码如下:</span><br><span class="line">var a = document.getElementById(<span class="string">'a'</span>); // getOffset(a).top // getOffset(a).left</span><br><span class="line">希望本文所述对大家的javascript程序设计有所帮助。</span><br></pre></td></tr></table></figure>
+<p>我本着试试看的态度将这个方法炒了上去，打印出值结果与我需要的值相差甚远，为此我仔细翻了下源码，源码见下面链接<br><a href="http://blog.csdn.net/liangklfang/article/details/49229231" target="_blank" rel="noopener">源码</a><br>找到如下方法getBoundingClientRect，翻了下caniuse发现兼容性还好（本人移动端），故可以写成以下方式</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">// 获取当前元素相对于文档的偏移量</span><br><span class="line"><span class="built_in">let</span> getOffset = (elem) =&gt; &#123;</span><br><span class="line">    <span class="built_in">let</span> docElem = document.documentElement;</span><br><span class="line">    <span class="built_in">let</span> box = elem.getBoundingClientRect();</span><br><span class="line">    <span class="built_in">return</span> &#123;</span><br><span class="line">            top: box.top  +  docElem.scrollTop ,</span><br><span class="line">            left: box.left + docElem.scrollLeft</span><br><span class="line">     &#125;</span><br></pre></td></tr></table></figure>
+<p>如果要考虑兼容性，请仔细看zepto源码<br>另外上述</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> getOffset(Node, offset) &#123;</span><br><span class="line">    <span class="keyword">if</span> (!offset) &#123;</span><br><span class="line">          offset = &#123;&#125;;</span><br><span class="line">          offset.top = 0;</span><br><span class="line">          offset.left = 0;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (Node == document.body) &#123;</span><br><span class="line">        // 当该节点为body节点时，结束递归</span><br><span class="line">        <span class="built_in">return</span> offset;</span><br><span class="line">     &#125;</span><br><span class="line">    offset.top += Node.offsetTop;</span><br><span class="line">    offset.left += Node.offsetLeft;</span><br><span class="line">    <span class="built_in">return</span> getOffset(Node.parentNode, offset); // 向上累加offset里的值</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>改成</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> getOffset(Node, offset) &#123;</span><br><span class="line">    <span class="keyword">if</span> (!offset) &#123;</span><br><span class="line">          offset = &#123;&#125;;</span><br><span class="line">          offset.top = 0;</span><br><span class="line">          offset.left = 0;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (Node == document.body) &#123;</span><br><span class="line">        // 当该节点为body节点时，结束递归</span><br><span class="line">        <span class="built_in">return</span> offset;</span><br><span class="line">    &#125;</span><br><span class="line">    offset.top += Node.offsetTop;</span><br><span class="line">    offset.left += Node.offsetLeft;</span><br><span class="line">    <span class="built_in">return</span> getOffset(Node.offsetParent, offset); // 向上累加offset里的值</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>也可以实现</p>
+
+    </div>
+    <p class="post-meta">
+        <span class="post-cat">分类：
+            <a class="cat-link" href="/categories/programming/">编程</a>
+        </span>
+        <span class="post-tags">
+            标签：
+            
+    
+        <a href="/tags/js/" title="js">js</a>
+    
+
+        </span>
+    </p>
+</article>
+<!-- 分享按钮 -->
+
+    <div class="article-share clearfix text-center">
+        <div class="share-area">
+            <span class="share-txt">分享到：</span>
+            <a href="javascript: window.open('http://service.weibo.com/share/share.php?url=' + encodeURIComponent(location.href) + '&title=' + document.title + '&language=zh_cn');" class="share-icon weibo"></a>
+            <a href="javascript: Dialog.open('请复制链接到微信并发送');" class="share-icon wechat"></a>
+            <a href="javascript: window.open('http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=' + encodeURIComponent(location.href) + '&title=' + document.title);" class="share-icon qqzone"></a>
+            <a href="javascript: window.open('http://connect.qq.com/widget/shareqq/index.html?url=' + encodeURIComponent(location.href) + '&desc=sunny个人博客&title=' + document.title + '&callback=' + encodeURIComponent(location.href));" class="share-icon qq"></a>
+            <a href="javascript: window.open('http://shuo.douban.com/!service/share?href=' + encodeURIComponent(location.href) + '&name=' + document.title + '&text=' + document.title);" class="share-icon douban"></a>
+        </div>
+    </div>
+
+
+<!-- 上一篇/下一篇 -->
+
+<div class="article-nav clearfix">
+    
+    <span class="prev fl">
+        上一篇<br >
+        <a href="/2017/loading/">
+            
+                react如何封装一个全局组件
+            
+        </a>
+    </span>
+    
+
+    
+    <span class="next fr">
+        下一篇<br >
+        <a href="/2017/python-numpy/">
+            
+                python3 numpy
+            
+        </a>
+    </span>
+    
+</div>
+
+<!-- 文章评论 -->
+
+    <script src="/js/comment.js"></script>
+    <div id="comments" class="comment">
+        <div class="sign-bar" id="commentSignBar"></div>
+        <section class="box" id="commentBox">
+            <div class="com-avatar">
+                <img id="loginAvatar" src="/img/unsigned_avatar.jpg" alt="avatar">
+            </div>
+            <div class="com-text">
+                <div class="main">
+                    <textarea class="text-area-edited show" id="editBox" placeholder="欢迎评论！"></textarea>
+                    <div class="text-area-preview" id="previewBox"></div>
+                </div>
+                <div class="switch">
+                    <div class="switch-item on" id="editSwitcher">编辑</div>
+                    <div class="switch-item" id="previewSwitcher">预览</div>
+                </div>
+                <div class="button" id="postComment">提交</div>
+            </div>
+        </section>
+        <section class="tips clearfix" id="commentTips">注：评论支持 markdown 语法！</section>
+        <section class="list-wrap" id="commentList">
+            <div class="text-center">正在加载评论</div>
+        </section>
+        <!--
+            <div class="sign-bar">
+                GitHub 已登录!
+                <span class="sign-link">登出</span>
+            </div>
+            <section class="box">
+                <div class="com-avatar"><img src="/img/jelon.jpg" alt="avatar"></div>
+                <div class="com-text">
+                    <div class="main">
+                        <textarea class="text-area-edited show" placeholder="欢迎评论！"></textarea>
+                        <div class="text-area-preview"></div>
+                    </div>
+                    <div class="switch">
+                        <div class="switch-item on">编辑</div>
+                        <div class="switch-item">预览</div>
+                    </div>
+                    <div class="button">提交</div>
+                </div>
+            </section>
+            <section class="tips">注：评论支持 markdown 语法！</section>
+            <section class="list-wrap">
+                <ul class="list">
+                    <li>
+                        <div class="user-avatar">
+                            <a href="/">
+                                <img src="/img/jelon.jpg" alt="user-avatar">
+                            </a>
+                        </div>
+                        <div class="user-comment">
+                            <div class="user-comment-header">
+                                <span class="post-name">张德龙</span>
+                                <span class="post-time">2017年12月12日</span>
+                                <span class="like liked">已赞</span>
+                                <span class="like-num">2</span>
+                            </div>
+                            <div class="user-comment-body">333333</div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="user-avatar">
+                            <a href="/">
+                                <img src="/img/jelon.jpg" alt="user-avatar">
+                            </a>
+                        </div>
+                        <div class="user-comment">
+                            <div class="user-comment-header">
+                                <span class="post-name">刘德华</span>
+                                <span class="post-time">2017年12月12日</span>
+                                <span class="like">点赞</span>
+                                <span class="like-num">2</span>
+                            </div>
+                            <div class="user-comment-body">vvvvv</div>
+                        </div>
+                    </li>
+                </ul>
+                <div class="page-nav">
+                    <a href="javascript: void(0);" class="item">1</a>
+                    <a href="javascript: void(0);" class="item">2</a>
+                    <a href="javascript: void(0);" class="item current">3</a>
+                </div>
+            </section>
+        -->
+    </div>
+    <script>
+        CommentUtils.init({
+            container: '#comments',
+            label: 'offset' || '2017/offset/',
+            owner: 'sunnyShining',
+            repo: 'blog_comments',
+            clientId: 'a6d772d870a68bc9c558',
+            clientSecret: '4f3ed1ee231fa1e940c0530f86d5d788512f2027'
+        });
+    </script>
+
+
+            </div>
+
+        </section>
+        <!-- 侧栏部分 -->
+<aside class="sidebar">
+    <section class="widget">
+        <h3 class="widget-hd"><strong>文章分类</strong></h3>
+        <!-- 文章分类 -->
+<ul class="widget-bd">
+    
+    <li>
+        <a href="/categories/programming/">编程</a>
+        <span class="badge">(19)</span>
+    </li>
+    
+    <li>
+        <a href="/categories/life/">生活</a>
+        <span class="badge">(3)</span>
+    </li>
+    
+</ul>
+    </section>
+
+    
+    <section class="widget">
+        <h3 class="widget-hd"><strong>热门标签</strong></h3>
+        <!-- 文章标签 -->
+<div class="widget-bd tag-wrap">
+  
+    <a class="tag-item" href="/tags/js/" title="javascript">javascript (4)</a>
+  
+    <a class="tag-item" href="/tags/life/" title="生活">生活 (3)</a>
+  
+    <a class="tag-item" href="/tags/codeing/" title="codeing">codeing (2)</a>
+  
+    <a class="tag-item" href="/tags/js/" title="js">js (3)</a>
+  
+    <a class="tag-item" href="/tags/linux/" title="linux">linux (1)</a>
+  
+    <a class="tag-item" href="/tags/react/" title="react">react (1)</a>
+  
+    <a class="tag-item" href="/tags/python/" title="python">python (5)</a>
+  
+    <a class="tag-item" href="/tags/webpack/" title="webpack">webpack (1)</a>
+  
+    <a class="tag-item" href="/tags/vue/" title="vue">vue (2)</a>
+  
+</div>
+    </section>
+    
+
+    
+    <!-- 我的微博 -->
+    <section class="widget">
+        <h3 class="widget-hd"><strong>我的微博</strong></h3>
+        <div class="widget-bd" style="position: relative;">
+    <div id="myWeiboLoading" class="text-center" style="position:absolute;top:0;left:0;right:0;bottom:0;line-height:50px;font-size:12px;background-color:#fff;z-index:9;">微博加载中...</div>
+    <iframe id="myWeibo" width="100%" height="400" class="share_self"  frameborder="0" scrolling="no" src="https://widget.weibo.com/weiboshow/index.php?language=&width=0&height=400&fansRow=1&ptype=1&speed=0&skin=1&isTitle=1&noborder=1&isWeibo=1&isFans=1&uid=2449308854&verifier=454ed586&dpc=1"></iframe>
+    <script>
+        (function () {
+            var oMyWeibo = document.getElementById('myWeibo');
+            var oMyWeiboLoading = document.getElementById('myWeiboLoading');
+            var timer = null;
+            oMyWeibo.onload = function () {
+                timer = setTimeout(function () {
+                    oMyWeiboLoading.parentNode.removeChild(oMyWeiboLoading);
+                    timer = null;
+                }, 300);
+            };
+        })();
+    </script>
+</div>
+    </section>
+    
+
+    
+    <!-- 友情链接 -->
+    <section class="widget">
+        <h3 class="widget-hd"><strong>友情链接</strong></h3>
+        <!-- 文章分类 -->
+<ul class="widget-bd">
+    
+        <li>
+            <a href="https://github.com/liaolongdong" target="_blank" title="liaolongdong的github">liaolongdong的github</a>
+        </li>
+    
+        <li>
+            <a href="https://github.com/CaptainYYH" target="_blank" title="CaptainYYH的github">CaptainYYH的github</a>
+        </li>
+    
+        <li>
+            <a href="https://github.com/Smile415" target="_blank" title="Smile415的github">Smile415的github</a>
+        </li>
+    
+</ul>
+    </section>
+    
+    
+    <!-- 友情链接 -->
+    <section class="widget">
+        <h3 class="widget-hd"><strong>赞助</strong></h3>
+        <!-- 赞助 -->
+<ul class="widget-bd">
+    
+        <li>
+            <a href="https://www.upyun.com/league?utm_source=baidu&amp;utm_medium=ppc&amp;utm_campaign=cdn&amp;utm_term=freecdn&amp;utm_content=fc001" target="_blank" title="又拍云">
+            	<img width="100%" src="https://sunnyshining.github.io/img/sponsor/upyun_logo.png" alt="又拍云" />
+            </a>
+        </li>
+    
+</ul>
+    </section>
+    
+</aside>
+<!-- / 侧栏部分 -->
+    </div>
+
+    <!-- 博客底部 -->
+    <footer class="footer">
+    &copy;CopyRight
+    
+        2018-2019
+    
+
+    <a> SUNNY的博客 | 粤ICP备18140638号-1 <img src="/img/beian.png" style="vertical-align: middle;" /></a>
+</footer>
+<div class="back-to-top" id="backToTop" title="返回顶部">返回顶部</div>
+
+    <!--博客js脚本 -->
+    <!-- 这里放网站js脚本 -->
+<script src="/js/main.js"></script>
+    <div class="snow-container"></div>
+    <style type="text/css">
+    .snow-container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 9999;
+    }
+    </style>
+    <script type="text/javascript" src='//code.jquery.com/jquery-3.3.1.min.js'></script>
+    <script src="/js/snowy.js"></script>
+</body>
+</html>
