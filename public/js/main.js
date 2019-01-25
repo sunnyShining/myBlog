@@ -82,7 +82,7 @@
                 }
 
                 if (elem.getAttribute('data-echo-background') !== null) {
-                    elem.style.backgroundImage = "url(" + elem.getAttribute('data-echo-background') + ")";
+                    elem.style.backgroundImage = 'url(' + elem.getAttribute('data-echo-background') + ')';
                 } else {
                     elem.src = elem.getAttribute('data-echo');
                 }
@@ -96,7 +96,7 @@
             } else if (unload && !!(src = elem.getAttribute('data-echo-placeholder'))) {
 
                 if (elem.getAttribute('data-echo-background') !== null) {
-                    elem.style.backgroundImage = "url(" + src + ")";
+                    elem.style.backgroundImage = 'url(' + src + ')';
                 } else {
                     elem.src = src;
                 }
@@ -120,11 +120,11 @@
     return echo;
 });
 
-(function (win, doc) {
+(function(win, doc) {
     var utils = {
         name: 'sunny',
         version: '1.0.0',
-        init: function () {
+        init: function() {
             this.backToTop();
             this.toggleMenu();
             echo.init({
@@ -144,7 +144,7 @@
         toggleMenu: function() {
             var menu = this.$('#menu');
             var btnDropNav = this.$('#btnDropNav');
-            btnDropNav && btnDropNav.addEventListener('click', function () {
+            btnDropNav && btnDropNav.addEventListener('click', function() {
                 if (menu.className.indexOf('hidden') === -1) {
                     menu.className += ' hidden';
                 } else {
@@ -164,8 +164,9 @@
                     backToTop.style.display = 'none';
                 }
             };
-            backToTop.addEventListener('click', function () {
+            backToTop.addEventListener('click', function() {
                 var Timer = setInterval(GoTop, 10);
+
                 function GoTop() {
                     if (doc.documentElement.scrollTop + doc.body.scrollTop < 1) {
                         clearInterval(Timer)
@@ -180,3 +181,15 @@
     utils.init();
     win.utils = utils;
 })(window, document);
+
+(function() {
+    document.body.addEventListener('copy', function(e) {
+        var txt = window.getSelection();
+        if (txt.toString().length >= 120) {
+            var text = txt.toString() + '\n\n著作权归作者所有。\n商业转载请联系作者获得授权,非商业转载请注明出处。\n原文: ' + location.href;
+            var clipboard = window.clipboardData || e.clipboardData;
+            clipboard.setData('text/plain', text);
+            e.preventDefault();
+        }
+    });
+})()

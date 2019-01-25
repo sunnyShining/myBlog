@@ -1,14 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://www.sunnyshining.xyz/2019/bfc/</loc>
+    <lastmod>2019-01-25</lastmod>
+  </url>  <url>
+    <loc>https://www.sunnyshining.xyz/2018/quotation/</loc>
+    <lastmod>2019-01-24</lastmod>
+  </url>  <url>
+    <loc>https://www.sunnyshining.xyz/2019/vertical-center/</loc>
+    <lastmod>2019-01-24</lastmod>
+  </url>  <url>
     <loc>https://www.sunnyshining.xyz/2019/bibao/</loc>
     <lastmod>2019-01-24</lastmod>
   </url>  <url>
     <loc>https://www.sunnyshining.xyz/2018/array-options/</loc>
     <lastmod>2019-01-23</lastmod>
-  </url>  <url>
-    <loc>https://www.sunnyshining.xyz/2018/quotation/</loc>
-    <lastmod>2018-11-12</lastmod>
   </url>  <url>
     <loc>https://www.sunnyshining.xyz/2018/js-task/</loc>
     <lastmod>2018-10-25</lastmod>
@@ -40,22 +46,22 @@
     <loc>https://www.sunnyshining.xyz/2018/debug-skill/</loc>
     <lastmod>2018-09-19</lastmod>
   </url>  <url>
-    <loc>https://www.sunnyshining.xyz/2018/px-to-rem/</loc>
-    <lastmod>2018-08-24</lastmod>
-  </url>  <url>
     <loc>https://www.sunnyshining.xyz/2018/vue-init-question/</loc>
     <lastmod>2018-08-24</lastmod>
   </url>  <url>
     <loc>https://www.sunnyshining.xyz/2017/handle-dom/</loc>
     <lastmod>2018-08-24</lastmod>
   </url>  <url>
-    <loc>https://www.sunnyshining.xyz/2017/offset/</loc>
+    <loc>https://www.sunnyshining.xyz/2018/px-to-rem/</loc>
+    <lastmod>2018-08-24</lastmod>
+  </url>  <url>
+    <loc>https://www.sunnyshining.xyz/2017/hello-world/</loc>
     <lastmod>2018-08-24</lastmod>
   </url>  <url>
     <loc>https://www.sunnyshining.xyz/2018/python3-download-noval/</loc>
     <lastmod>2018-08-24</lastmod>
   </url>  <url>
-    <loc>https://www.sunnyshining.xyz/2017/hello-world/</loc>
+    <loc>https://www.sunnyshining.xyz/2017/offset/</loc>
     <lastmod>2018-08-24</lastmod>
   </url>  <url>
     <loc>https://www.sunnyshining.xyz/2017/yeoman-generator/</loc>
