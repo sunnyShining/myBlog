@@ -186,7 +186,7 @@
     document.body.addEventListener('copy', function(e) {
         var txt = window.getSelection();
         if (txt.toString().length >= 120) {
-            var text = txt.toString() + '\n\n著作权归作者所有。\n商业转载请联系作者获得授权,非商业转载请注明出处。\n原文: ' + location.href;
+            var text = txt.toString() + '\n\n---------------------\n著作权归作者所有。\n商业转载请联系作者获得授权,非商业转载请注明出处。\n原文: ' + location.href;
             var clipboard = window.clipboardData || e.clipboardData;
             clipboard.setData('text/plain', text);
             e.preventDefault();
