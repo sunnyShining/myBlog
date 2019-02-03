@@ -8,10 +8,11 @@ pageid: interview
 
 #### 1、DOMContentLoaded和onload事件区别和兼容
 
-<p style="text-indent: 1em">DOMContentLoaded事件是当初始HTML文档完全被加载和解析（即所有DOM解析完）时触发的，无需要等待样式列表、图片、子框架完成加载。onload事件要等页面所有元素，包括图片以及脚本等全部加载完成才触发，因此它比DOMContentLoaded要更晚执行。</p>
+DOMContentLoaded事件是当初始HTML文档完全被加载和解析（即所有DOM解析完）时触发的，无需要等待样式列表、图片、子框架完成加载。onload事件要等页面所有元素，包括图片以及脚本等全部加载完成才触发，因此它比DOMContentLoaded要更晚执行。
 
 #### 2、js基本数据类型
-<p style="text-indent: 1em">string、number、boolean、object、null、undefined、symbol
+
+5个简单数据类型（基本数据类型）+ 1个复杂数据类型 undefiend, number string null boolean + object ES6 新增Symbol
 
 #### 3、Promise实现
 
@@ -276,6 +277,36 @@ var b = a.quchong();
 console.log(a, b); // [1, 3, 1, 7, 3, 4, 1, 7, 3] [1, 3, 7, 4]
 ```
 
+#### 8、手写一个原生ajax
+
+```js
+
+var xhr = new XMLHttpRequest();
+xhr.open(method, url, async);
+xhr.send(postData);
+xhr.onreadystatechange = function () {
+    if (xhr.readyState === 4) {
+        console.log(JSON.parse(xhr.responseText));
+    }
+}
+```
+
+#### 9、实现bind函数
+
+```js
+if (!Function.prototype.bind) {
+    Function.prototype.bind = function () {
+        var self = this,         // 保存原函数
+            context = [].shift.call(arguments), // 保存需要绑定的this上下文
+            args = [].slice.call(arguments);    // 剩余的参数转为数组
+        return function () {                    // 返回一个新函数
+            // 这里arguments和上一个不一样
+            self.apply(context, [].concat.call(args, [].slice.call(arguments)));
+        }
+    }
+}
+```
+
 #### 8、localStorage、cookie与session的区别
 
 一、cookie详解
@@ -457,10 +488,7 @@ print(person.getName());
 undefined  
 default  
 a
-6、基本的数据类型
-5个简单数据类型（基本数据类型）+ 1个复杂数据类型 
-undefiend, number string null boolean + object 
-ES6 新增Symbol
+
 
 7、基本的两列自适应布局
 左定右适应：
@@ -733,7 +761,6 @@ function merge(left, right) {
 42、实现两个排序数组的合并
 参考42题中的merge函数。
 
-43、手写一个原生ajax
 ajax：一种请求数据的方式，不需要刷新整个页面； 
 ajax的技术核心是 XMLHttpRequest 对象； 
 ajax 请求过程：创建 XMLHttpRequest 对象、连接服务器、发送请求、接收响应数据；
@@ -821,7 +848,7 @@ ajax.post('/test.php', {foo: 'bar'}, function(response,xml) {
  
 });
 44、手写一个promise版的ajax
-45、手写实现一个promise
+
 46、手写实现requireJS模块实现
 47、手写实现jquery里面的insertAfter
 48、react和vue的介绍以及异同
@@ -1236,8 +1263,6 @@ ajax.post('/test.php', {foo: 'bar'}, function(response,xml) {
 261、使用flex布局实现三等分，左右两个元素分别贴到左边和右边，垂直居中
 
 262、平时如何学前端的，看了哪些书，关注了哪些公众号
-
-263、实现bind函数
 
 264、数组和链表区别，分别适合什么数据结构
 
