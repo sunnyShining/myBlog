@@ -69,9 +69,6 @@ micro-task(微任务)：Promise，process.nextTick
 又遇到了setTimeout，其回调函数被分发到宏任务Event Queue中，我们记为setTimeout2。
 整体script作为第一个宏任务进入主线程，遇到console.log，输出8。
 
-
-
-
 |宏任务Event Queue| 微任务Event Queue|
 |:-------- |:-----:|
 |setTimeout1|then1|

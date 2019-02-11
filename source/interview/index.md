@@ -369,6 +369,149 @@ box-sizing:content-box;
 box-sizing:border-box;
 ```
 
+#### 12、使用new操作符时具体是干了些什么
+
+4个步骤:
+(1)创建一个空对象
+
+```js
+var obj = new object();
+```
+
+(2)设置原型链
+
+```js
+obj.__proto__ = Func.prototype;
+```
+
+(3)让Func中的this指向obj,并执行函数体
+
+```js
+var result = Func.apply(obj);
+```
+
+(4)判断Func返回值类型，如果是值类型，返回obj；如果是引用类型，就返回这个引用类型的对象。
+
+```js
+function isPrimitive (res) {
+    // 如果result为值类型则返回true
+    // 如果result为引用类型则返回false
+}
+func = isPrimitive(result) ? obj : result;
+```
+
+模拟
+
+```js
+function mockNew (constructor) {
+    function isPrimitive (res) {
+        // 如果result为值类型则返回true
+        // 如果result为引用类型则返回false
+    }
+    var obj = Object.create(constructor.prototype);
+    var res = constructor.apply(obj, Array.prototype.slice(arguments, 1));
+    return isPrimitive(res) ? obj : result;
+}
+```
+
+#### 13、手写一个js的深克隆
+
+浅拷贝：对拷贝后的数据进行修改会影响原数据的一种拷贝方式。
+深拷贝（深度克隆）：对拷贝后的数据进行修改不会影响原数据的一种拷贝方式。
+
+```js
+function deepCopy (obj) {
+    //判断是否是简单数据类型，
+    if(typeof obj == "object"){
+        //复杂数据类型
+        var result = obj.constructor == Array ? [] : {};
+        for (let i in obj) {
+            result[i] = typeof obj[i] == "object" ? deepCopy(obj[i]) : obj[i];
+        }
+    } else {
+        //简单数据类型 直接 == 赋值
+        var result = obj;
+    }
+    return result;
+}
+```
+
+#### 14、使用flex布局实现三等分，左右两个元素分别贴到左边和右边，垂直居中
+
+```html
+<style type="text/css">
+    *{
+        margin: 0;
+        padding: 0;
+    }
+    .parent{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: 200px;
+        width: 100%;
+        background-color: red;
+    }
+    .son{
+        width: 20%;
+        height: 100px;
+    }
+    .green{
+        background-color: green;
+    }
+    .yellow{
+        background-color: yellow;
+    }
+    .black{
+        background-color: black;
+    }
+</style>
+
+<body>
+    <div class="parent">
+        <div class="son green"></div>
+        <div class="son yellow"></div>
+        <div class="son black"></div>
+    </div>
+</body>
+```
+
+#### 15、vue的特点？双向数据绑定是如何实现的
+
+Object.defineProperty()方法会直接在一个对象上定义一个新属性，或者修改一个对象的现有属性， 并返回这个对象。
+
+```js
+var obj = {};
+var val;
+Object.defineProperty(obj, 'test', {
+    enumerable: true, // 是否可以被枚举
+    configurable: true, // 是否可以删除目标属性或是否可以再次修改属性
+    // writable: true, // 是否可以被重写
+    get: function () {
+        console.log('123' + val);
+        return val;
+    },
+    set: function (newVal) {
+        console.log('set');
+        val = newVal;
+    }
+});
+console.log(obj.test); // undefined
+obj.test = '33333'; // set
+console.log(obj.test); // 33333
+```
+
+#### 16、margin坍塌？水平方向会不会坍塌？
+
+在标准文档流中，竖直方向的margin会出现叠加现象（水平方向不会塌陷）
+1.当两个对象为上下关系时，而且都具备margin属性时，上面的margin-bottom与下面的margin-top会发生塌陷
+  当margin-bottom和margin-top都为正数时，结果为两者之间的最大值
+  当margin-bottom和margin-top都为负时，结果为两者绝对最较大的那个值。
+  当margin-bottom和margin-top为一正一负时，结果为两者之和。
+2.当两个对象为上下包含关系
+  父元素无填充内容，且没有设置border时，子元素的margin-top不会起作用
+  父元素设置border属性，子元素的margin-top起作用
+  父元素有填充内容，子元素的margin-top会起作用，当margin-top小于填充内容时，距离为填充内容的高度
 
 2、手写单链表查找倒数第k个节点
 1、为了找出倒数第k个元素，最容易想到的办法是首先遍历一遍单链表，求出整个单链表的长度n，然后将倒数第k个，转换为正数第n-k个，接下来遍历一次就可以得到结果。但是该方法存在一个问题，即需要对链表进行两次遍历，第一次遍历用于求解单链表的长度，第二次遍历用于查找正数第n-k个元素。 
@@ -677,38 +820,11 @@ cat.name;
 cat.eat();
 缺点是： 
 3.组合继承
-
-
-25、你说自己抗压能力强，具体表现在哪里？
-略
-
-26、对前端前景的展望，以后前端会怎么发展
 27、手写第一次面试没有写出来的链表问题，要求用es6写
-28、平时是怎么学技术的？
-29、平时大学里面时间是怎么规划的？
-30、接下来有什么计划？这个学期和下个学期的计划是？
-31、项目中遇到的难点，或者你学习路上的难点
-32、你是通过什么方法和途径来学习前端的
 33、手写一个简单遍历算法
 34、解释一下react和vue，以及区别
-35、你在团队中更倾向于什么角色？
-36、对java的理解
 37、介绍node.js，并且介绍你用它做的项目
-38、手写一个js的深克隆
-function deepCopy(obj){
-    //判断是否是简单数据类型，
-    if(typeof obj == "object"){
-        //复杂数据类型
-        var result = obj.constructor == Array ? [] : {};
-        for(let i in obj){
-            result[i] = typeof obj[i] == "object" ? deepCopy(obj[i]) : obj[i];
-        }
-    }else {
-        //简单数据类型 直接 == 赋值
-        var result = obj;
-    }
-    return result;
-}
+
 39、for函数里面setTimeout异步问题
 40、手写归并排序
 <1>.长度为n(n>1),把该输入序列分成两个长度为n/2的子序列； 
@@ -848,9 +964,7 @@ ajax.post('/test.php', {foo: 'bar'}, function(response,xml) {
 
 54、实现一个布局：左边固定宽度为200，右边自适应，而且滚动条要自动选择只出现最高的那个
 
-55、画出盒子模型，要使谷歌浏览器的盒子模型显示得跟IE浏览器一致（让谷歌跟ie一致，不是ie跟谷歌一致），该怎么做？
-
-56、手写JS实现类继承，讲原型链原理，并解释new一个对象的过程都发生了什么
+56、手写JS实现类继承，讲原型链原理
 
 57、Array对象自带的方法，一一列举
 
@@ -868,11 +982,7 @@ ajax.post('/test.php', {foo: 'bar'}, function(response,xml) {
 
 64、刚才说有些浏览器不兼容@import，具体指哪些浏览器？
 
-65、介绍一下cookie,localstorage,sessionstorage,session
-
 66、jquery绑定click的方法有几种
-
-67、你的优点/竞争力
 
 68、移动端适配问题
 
@@ -881,8 +991,6 @@ ajax.post('/test.php', {foo: 'bar'}, function(response,xml) {
 70、做过css动画吗
 
 71、如何优化网站
-
-72、以后的规划
 
 73、你做过最困难的事情是啥？
 
@@ -893,8 +1001,6 @@ ajax.post('/test.php', {foo: 'bar'}, function(response,xml) {
 76、问做过啥项目，用到什么技术，遇到什么困难
 
 77、兼容性
-
-78、盒子模型
 
 79、Array的unshift() method的作用是什么？如何连接两个Array？如何在Array里移除一个元素？
 
@@ -917,8 +1023,6 @@ ajax.post('/test.php', {foo: 'bar'}, function(response,xml) {
 88、知不知道HTTP2？
 
 89、输入URL后发生了什么？
-
-90、new operator实际上做了什么？
 
 91、面向对象的属性有哪些？
 
@@ -955,8 +1059,6 @@ ajax.post('/test.php', {foo: 'bar'}, function(response,xml) {
 108、css:两个块状元素上下的margin-top和margin-bottom会重叠。啥原因？怎么解决？
 
 109、js：写一个递归。就是每隔5秒调用一个自身，一共100次
-
-110、cookie和session有什么区别
 
 111、网络分层结构
 
@@ -1110,8 +1212,6 @@ ajax.post('/test.php', {foo: 'bar'}, function(response,xml) {
 
 190、vuex是用来做什么的
 
-191、说下你知道的响应状态码
-
 192、ajax的过程以及 readyState几个状态的含义
 
 193、你除了前端之外还会些什么？
@@ -1130,8 +1230,6 @@ ajax.post('/test.php', {foo: 'bar'}, function(response,xml) {
 
 201、es6与es7了解多少
 
-202、说下你知道的响应状态码
-
 203、看过哪些框架的源码
 
 204、遇到过哪些浏览器兼容性问题
@@ -1141,8 +1239,6 @@ ajax.post('/test.php', {foo: 'bar'}, function(response,xml) {
 206、你知道有哪些跨域方式,分别说说
 
 207、JavaScript有哪几种类型的值
-
-208、使用 new操作符时具体是干了些什么
 
 209、学习前端的方法以及途径
 
@@ -1167,8 +1263,6 @@ ajax.post('/test.php', {foo: 'bar'}, function(response,xml) {
 219、说下你所了解的设计模式的优点
 
 220、vue源码结构
-
-221、状态码
 
 222、浏览器缓存的区别
 
@@ -1200,8 +1294,6 @@ ajax.post('/test.php', {foo: 'bar'}, function(response,xml) {
 
 238、link和@import有什么区别？
 
-239、cookies，sessionStorage 和 localStorage 的区别
-
 240、看过哪些前端的书？平时是怎么学习的
 
 241、说下你所理解的mvc与mvvc
@@ -1209,8 +1301,6 @@ ajax.post('/test.php', {foo: 'bar'}, function(response,xml) {
 242、position有哪些值,说下各自的作用
 
 243、写个从几个li中取下标的闭包代码
-
-244、你的职业规划是怎么样的？
 
 245、移动端性能优化
 
@@ -1236,15 +1326,9 @@ ajax.post('/test.php', {foo: 'bar'}, function(response,xml) {
 
 256、如何避免多重回调—promise，promise简单描述一下，如何在外部进行resolve()
 
-257、margin坍塌？水平方向会不会坍塌？
-
 258、伪类和伪元素区别
 
 259、vue如何实现父子组件通信，以及非父子组件通信
-
-
-
-261、使用flex布局实现三等分，左右两个元素分别贴到左边和右边，垂直居中
 
 262、平时如何学前端的，看了哪些书，关注了哪些公众号
 
@@ -1252,31 +1336,13 @@ ajax.post('/test.php', {foo: 'bar'}, function(response,xml) {
 
 265、对mvc的理解
 
-266、描述一个印象最深的项目，在其中担任的角色，解决什么问题
-
 268、描述下二分查找
 
 269、为什么选择前端，如何学习的，看了哪些书，《js高级程序设计》和《你不知道的js》有什么区别，看书，看博客，看公众号三者的时间是如何分配的？
 
-270、如何评价BAT？
-
 271、描述下在实习中做过的一个项目，解决了什么问题，在其中担任了什么角色？这个过程存在什么问题，有什么值得改进的地方？
 
-272、如何看待加班，如果有个项目需要连续一个月加班，你怎么看？
-
-273、遇到的压力最大的一件事是什么？如何解决的？
-
-274、平时有什么爱好
-
-275、自身有待改进的地方
-
 276、n长的数组放入n+1个数，不能重复，找出那个缺失的数
-
-277、手里有什么offer
-
-278、你对于第一份工作最看重的三个方面是什么？
-
-279、如何评价现在的前端？
 
 280、用原生js实现复选框选择以及全选非全选功能
 
@@ -1286,12 +1352,6 @@ ajax.post('/test.php', {foo: 'bar'}, function(response,xml) {
 
 283、为什么选择前端，移动端性能优化
 
-284、vue的特点？双向数据绑定是如何实现的
-
-285、Object.defineProperty
-
 286、算法题：数组去重，去除重复两次以上的元素，代码题：嵌套的ul-li结构，根据input中输入的内容，去除相应的li节点，且如果某个嵌套的ul下面的li都被移除，则该ul的父li节点也要被移除
-
-287、页面加载过程
 
 288、浏览器如何实现图片缓存
