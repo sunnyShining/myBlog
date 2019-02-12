@@ -513,6 +513,39 @@ console.log(obj.test); // 33333
   父元素设置border属性，子元素的margin-top起作用
   父元素有填充内容，子元素的margin-top会起作用，当margin-top小于填充内容时，距离为填充内容的高度
 
+#### 17、伪类和伪元素区别
+
+伪类其实是弥补了CSS选择器的不足，用来更方便地获取信息
+伪元素本质上是创建了一个虚拟容器(元素)，我们可以在其中添加内容或样式
+
+#### 18、Cookie跨域请求能不能带上
+客户端设置xhr.withCredentials = true
+服务端设置header("Access-Control-Allow-Credentials: true");
+
+#### 19、对象自身属性方法和原型中的属性方法的区别
+
+举个例子：
+
+```js
+var object = function(){
+    this.a = 1;
+    this.b = 2;
+}
+```
+
+然后new一个对象 var obj1 = new object();
+
+给对象obj1加一个属性 obj.c = 3；
+但是我再var obj2 = new object();这里的obj2并没有c这个属性;
+
+但是我通过原型的方式加属性c； object.prototype.c = 3；
+那么我var obj3 = new object();
+obj3就有c这个属性
+
+#### 20、304与200读取缓存的区别
+
+协商缓存（304）VS强缓存（200）
+
 2、手写单链表查找倒数第k个节点
 1、为了找出倒数第k个元素，最容易想到的办法是首先遍历一遍单链表，求出整个单链表的长度n，然后将倒数第k个，转换为正数第n-k个，接下来遍历一次就可以得到结果。但是该方法存在一个问题，即需要对链表进行两次遍历，第一次遍历用于求解单链表的长度，第二次遍历用于查找正数第n-k个元素。 
 这种思路的时间复杂度是O(n)，但需要遍历链表两次。
@@ -863,92 +896,6 @@ function merge(left, right) {
 42、实现两个排序数组的合并
 参考42题中的merge函数。
 
-ajax：一种请求数据的方式，不需要刷新整个页面； 
-ajax的技术核心是 XMLHttpRequest 对象； 
-ajax 请求过程：创建 XMLHttpRequest 对象、连接服务器、发送请求、接收响应数据；
-
-一个在stackoverflow的高分回答结合上面的代码，给出get和post的两种不同请求方法：
-
-var ajax = {};
-ajax.x = function () {
-    if (typeof XMLHttpRequest !== 'undefined') {
-        return new XMLHttpRequest();
-    }
-    var versions = [
-    "MSXML2.XmlHttp.6.0",
-    "MSXML2.XmlHttp.5.0",
-    "MSXML2.XmlHttp.4.0",
-    "MSXML2.XmlHttp.3.0",
-    "MSXML2.XmlHttp.2.0",
-    "Microsoft.XmlHttp"
-    ];
- 
-    var xhr;
-    for (var i = 0; i < versions.length; i++) {
-        try {
-            xhr = new ActiveXObject(versions[i]);
-            break;
-        } catch (e) {
-        }
-    }
-    return xhr;
-};
- 
-ajax.send = function (url, method, data, success,fail,async) {
-    if (async === undefined) {
-        async = true;
-    }
-    var x = ajax.x();
-    x.open(method, url, async);
-    x.onreadystatechange = function () {
-        if (x.readyState == 4) {
-            var status = x.status;
-            if (status >= 200 && status < 300) {
-                success && success(x.responseText,x.responseXML)
-            } else {
-                fail && fail(status);
-            }
- 
-        }
-    };
-    if (method == 'POST') {
-        x.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-    }
-    x.send(data)
-};
- 
-ajax.get = function (url, data, callback, fail, async) {
-    var query = [];
-    for (var key in data) {
-        query.push(encodeURIComponent(key) + '=' + encodeURIComponent(data[key]));
-    }
-    ajax.send(url + (query.length ? '?' + query.join('&') : ''), 'GET', null, success, fail, async)
-};
- 
-ajax.post = function (url, data, callback, fail, async) {
-    var query = [];
-    for (var key in data) {
-        query.push(encodeURIComponent(key) + '=' + encodeURIComponent(data[key]));
-    }
-    ajax.send(url,'POST', query.join('&'), success, fail, async)
-};
-使用方法：GET
-
-ajax.get('/test.php', {foo: 'bar'}, function(response,xml) {
-    //success
-},
-function(status){
-    //fail
-});
-POST
-
-ajax.post('/test.php', {foo: 'bar'}, function(response,xml) {
-    //succcess
- 
-},function(status){
-    //fail
- 
-});
 44、手写一个promise版的ajax
 
 46、手写实现requireJS模块实现
@@ -1106,8 +1053,6 @@ ajax.post('/test.php', {foo: 'bar'}, function(response,xml) {
 
 133、js异步的方法（promise，generator，async）
 
-134、Cookie跨域请求能不能带上
-
 135、最近看什么开源项目？
 
 136、commonJS和AMD
@@ -1264,10 +1209,6 @@ ajax.post('/test.php', {foo: 'bar'}, function(response,xml) {
 
 220、vue源码结构
 
-222、浏览器缓存的区别
-
-223、304与200读取缓存的区别
-
 224、http请求头有哪些,说说看你了解哪些
 
 225、js中this的作用
@@ -1282,13 +1223,9 @@ ajax.post('/test.php', {foo: 'bar'}, function(response,xml) {
 
 231、一来给了张纸要求写js自定义事件
 
-232、前端跨域的方法
-
 234、h5有个api能定位你知道是哪个吗？
 
 235、vue与angularjs中双向数据绑定是怎样实现的？
-
-236、webpack怎样配置？
 
 237、nodejs中的文件怎么读写？
 
@@ -1312,8 +1249,6 @@ ajax.post('/test.php', {foo: 'bar'}, function(response,xml) {
 
 249、原生js模板引擎
 
-250、repaint和reflow区别
-
 251、requirejs如何避免循环依赖？
 
 252、实现布局：左边一张图片，右边一段文字（不是环绕）
@@ -1326,19 +1261,13 @@ ajax.post('/test.php', {foo: 'bar'}, function(response,xml) {
 
 256、如何避免多重回调—promise，promise简单描述一下，如何在外部进行resolve()
 
-258、伪类和伪元素区别
-
 259、vue如何实现父子组件通信，以及非父子组件通信
-
-262、平时如何学前端的，看了哪些书，关注了哪些公众号
 
 264、数组和链表区别，分别适合什么数据结构
 
 265、对mvc的理解
 
 268、描述下二分查找
-
-269、为什么选择前端，如何学习的，看了哪些书，《js高级程序设计》和《你不知道的js》有什么区别，看书，看博客，看公众号三者的时间是如何分配的？
 
 271、描述下在实习中做过的一个项目，解决了什么问题，在其中担任了什么角色？这个过程存在什么问题，有什么值得改进的地方？
 
