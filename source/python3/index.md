@@ -10,7 +10,7 @@ projects:
         content:
             1:
                 name: python3网络爬虫，下载起点小说
-                link: https://sunnyshining.github.io/2018/python3-download-noval
+                link: https://sunnyshining.github.io/2018/python3DownloadNoval
     biqu_demo:
         title: python3笔趣阁小说
         time: 2018-09-25
@@ -24,20 +24,20 @@ projects:
         content:
             1:
                 name: python3批量压缩图片
-                link: https://sunnyshining.github.io/2018/python-compress-img/
+                link: https://sunnyshining.github.io/2018/pythonCompressImg/
     knowledge:
         title: python3基础知识
         time: 2018-10-02
         content:
             1:
                 name: python3基础知识
-                link: https://sunnyshining.github.io/2018/python3-base-knowledge/
+                link: https://sunnyshining.github.io/2018/python3BaseKnowledge/
     numpy:
         title: python3 numpy
         time: 2017-10-10
         content:
             1:
                 name: python3 numpy
-                link: https://sunnyshining.github.io/2017/python-numpy/
+                link: https://sunnyshining.github.io/2017/pythonNumpy/
 
 ---

@@ -17,7 +17,7 @@ $ vi ~/.zshrc
 ```
 alias sublime='/Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl'
 alias vscode='/Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin/code'
-~                                                                                            
+~
 "~/.zshrc" 2L, 166C
 ```
 

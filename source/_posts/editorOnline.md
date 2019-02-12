@@ -28,7 +28,8 @@ ACE 是一个开源的、独立的、基于浏览器的代码编辑器，可以�
     <script type="text/javascript" src="./src-noconflict/ace.js"></script>
     <script type="text/javascript" src="./src-noconflict/ext-language_tools.js"></script>
 ```
-**3.调用ace api实现代码编辑功能
+
+**3.调用ace api实现代码编辑功能**
 
 ```html
 <script type="text/javascript">
@@ -98,7 +99,7 @@ ACE 是一个开源的、独立的、基于浏览器的代码编辑器，可以�
     })()
 ```
 
-**4.将写好的代码放入iframe中运行
+**4.将写好的代码放入iframe中运行**
 
 ```js
 document.getElementById('preview').srcdoc = htmlStr;
