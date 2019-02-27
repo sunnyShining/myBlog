@@ -33,60 +33,123 @@ DOMContentLoaded事件是当初始HTML文档完全被加载和解析（即所有
 
 <body>
     <script type="text/javascript">
-    	function Promise (fn) {
-    		var state = 'pending';
-    		var callbacks = []; // 回调函数数组
-    		var val = null;
-    		this.then = function (onFulfilled, onRejected) {
-    			return new Promise (function (resolve, reject) {
-    				// 在pending的时候会加回调函数，fulfilled会去执行
-	    			if (state === 'pending') {
-	    				callbacks.push(onFulfilled)
-	    				return this
-	    			}
-	    			var cb = state === 'fulfilled' ? onFulfilled : onRejected;
-	    			if (cb === null) {
-	    				cb = state === 'fulfilled' ? resolve : reject;
-	    				cb(val);
-	    				return;
-	    			}
-	    			try {
-	    				var ret = cb(val);
-	    				resolve(ret);
-	    			} catch (e) {
-	    				reject(e);
-	    			}
-
-    			})
-    		};
-    		function resolve (newVal) {
-    			if (newVal && (typeof newVal === 'object' || typeof newVal === 'function')) {
-            		var then = newVal.then;
-            		if (typeof then === 'function') {
-                		then.call(newVal, resolve, reject);
-                		return;
-            		}
-        		}
-    			val = newVal;
-    			state = 'fulfilled';
-    			execute();
-    		}
-    		function reject (reason) {
-    			state = 'reject';
-    			val = reason;
-    			execute();
-    		}
-		    function execute() {
-		        setTimeout(function () {
-		            callbacks.forEach(function (callback) {
-		                handle(callback);
-		            });
-		        }, 0);
-		    }
-    		fn(resolve, reject);
-    	}
+        const PENDINGED = 'PENDINGED';
+        const FULFILLED = 'FULFILLED';
+        const REJECTED = 'REJECTED';
+        const isFunction = fn => typeof fn === 'function'
+        class MyPromise {
+            constructor(fn) {
+                if (!isFunction) throw new Error('fn must be a function');
+                this._value = null;
+                this._status = PENDINGED;
+                this._fulfilledQueues = [];
+                this._rejectedQueues = [];
+                try {
+                    fn(this._resolve.bind(this), this._rejected.bind(this));
+                } catch (e) {
+                    this._reject(e);
+                }
+            }
+            _resolve(value) {
+                const run = () => {
+                    if (this._status !== PENDINGED) return;
+                    this._status = FULFILLED;
+                    const runFulfilled = value => {
+                        let cb;
+                        while (cb = this._fulfilledQueues.shift()) {
+                            cb(value);
+                        }
+                    };
+                    const runRejected = error => {
+                        while (cb = this._fulfilledQueues.shift()) {
+                            cb(error);
+                        }
+                    };
+                    if (value instanceof MyPromise) {
+                        value.then(val => {
+                            this._value = value;
+                            runFulfilled(val);
+                        }, error => {
+                            this._value = error;
+                            runRejected(error);
+                        })
+                    } else {
+                        this._value = value;
+                        runFulfilled(value);
+                    }
+                }
+                setTimeout(() => {
+                    run();
+                }, 0);
+            }
+            _rejected(error) {
+                if (this._status !== PENDINGED) return;
+                this._status = REJECTED;
+                const runRejected = error => {
+                    let cb;
+                    while (cb = this._fulfilledQueues.shift()) {
+                        cb(error);
+                    }
+                };
+                setTimeout(() => {
+                    this._value = error;
+                    runRejected()
+                }, 0);
+            }
+            then(onFulfilled, onRejected) {
+                const {_value, _status} = this;
+                return new MyPromise((onNextFulfilled, onNextRejected) => {
+                    const runFulfilled = (val) => {
+                        try {
+                            if (!isFunction(onFulfilled)) {
+                                onNextFulfilled(val);
+                            } else {
+                                const result = onFulfilled(val);
+                                if (result instanceof Mypromise) {
+                                    result.then(onNextFulfilled, onNextRejected);
+                                } else {
+                                    onNextFulfilled(result);
+                                }
+                            }
+                        } catch (e) {
+                            onNextRejected(e);
+                        }
+                    };
+                    const runRejected = (error) => {
+                        try {
+                            if (!isFunction(onFulfilled)) {
+                                onNextRejected(error);
+                            } else {
+                                const result = onRejected(val);
+                                if (result instanceof Mypromise) {
+                                    result.then(onNextFulfilled, onNextRejected);
+                                } else {
+                                    onNextFulfilled(result);
+                                }
+                            }
+                        } catch (e) {
+                            onNextRejected(e);
+                        }
+                    };
+                    switch (_status) {
+                        case PENDINGED:
+                            this._fulfilledQueues.push(runFulfilled);
+                            this._rejectedQueues.push(runRejected);
+                            break;
+                        case FULFILLED:
+                            runFulfilled(_value);
+                            break;
+                        case REJECTED:
+                            runRejected(_value);
+                            break;
+                        default:
+                            break;
+                    }
+                })
+            }
+        }
     	function getUserId () {
-    		return new Promise((resolve, reject) => {
+    		return new MyPromise((resolve, reject) => {
     			resolve(9999)
     		});
     	}
@@ -214,6 +277,40 @@ Array.prototype.testFunc.call(b, 'a', 'b', 'c'); // {a: "a", b: "b"} "a" "b" "c"
 Array.prototype.testFunc.apply(b, ['a', 'b', 'c']); // {a: "a", b: "b"} "a" "b" "c" console打印出的this已经改变, 传参已改变
 var c = Array.prototype.testFunc.bind(b, 'a', 'b', 'c'); // 不会执行
 c(); // {a: "a", b: "b"} "a" "b" "c" console打印出的this已经改变，传参与call相同
+
+// 模拟call
+Function.prototype.myCall = function () {
+    var context = [...arguments].shift();
+    var args = [...arguments].splice(1);
+    var sym = Symbol();
+    context[sym] = this;
+    context[sym](...args);
+    delete context[sym];
+}
+function a () {
+    console.log(this, arguments);
+}
+a.myCall({a: 1}, 1, 2, 3);
+// 模拟apply
+Function.prototype.myApply = function () {
+    var context = [...arguments].shift();
+    var args = [...arguments][1];
+    var sym = Symbol();
+    context[sym] = this;
+    context[sym](...args);
+    delete context[sym];
+}
+a.myApply({a: 1}, 1, 2, 3);
+// 模拟bind
+Function.prototype.myBind = function () {
+    var self = this;
+    var context = [...arguments].shift();
+    var args = [...arguments].splice(1);
+    return function () {
+        self.apply(context, args.concat(Array.prototype.slice.apply(arguments)))
+    }
+}
+a.myBind({a: 1}, 1, 2, 3);
 ```
 #### 6、http常见状态码有哪些？401和403区别？
 
@@ -301,7 +398,7 @@ if (!Function.prototype.bind) {
             args = [].slice.call(arguments); // 剩余的参数转为数组
         return function () { // 返回一个新函数
             // 这里arguments和上一个不一样
-            self.apply(context, [].concat.call(args, [].slice.call(arguments)));
+            return self.apply(context, [].concat.call(args, [].slice.call(arguments)));
         }
     }
 }
@@ -409,6 +506,8 @@ function mockNew (constructor) {
         // 如果result为引用类型则返回false
     }
     var obj = Object.create(constructor.prototype);
+    // var obj = Object.setPrototypeOf({}, constructor.prototype);
+    // obj.__proto__ = constructor.prototype;
     var res = constructor.apply(obj, Array.prototype.slice(arguments, 1));
     return isPrimitive(res) ? obj : result;
 }
@@ -545,6 +644,134 @@ obj3就有c这个属性
 #### 20、304与200读取缓存的区别
 
 协商缓存（304）VS强缓存（200）
+
+|服务器端             |客户端                                  |
+|--------      |-----:                                |
+|ETag: "50b1c1d4f775c61:df3" | If-None-Match: W/"50b1c1d4f775c61:df3"|
+|Last-Modified:Fri, 15 Feb 2013 03:06:18 GMT | If-Modified-Since:Sat, 16 Feb 2013 07:30:07 GMT|
+
+Cache-Control与Expires Cache-Control优先级更高
+
+#### 21、移动端适配1px的问题
+
+屏幕尺寸：指屏幕的对角线的长度，单位是英寸。
+屏幕分辨率：指在横纵上的像素点数。
+屏幕像素密度（dpi或ppi）: 屏幕上每英寸可以显示的像素点的数量。dpi = ppi = 对角线分辨率/屏幕尺寸=屏幕对角线上的像素点数/对角线长度 = √ （屏幕横向像素点^2 + 屏幕纵向像素点^2）/对角线长度。注：对角线长度即屏幕尺寸。手机按屏幕划分，屏幕像素密度(dpi/ppi)越大越清晰。谷歌区分手机屏幕按照：mdpi、hdpi、xhdpi、xxhdpi；苹果区分手机屏幕是按照：非高清屏，高清屏（视网膜屏即retina屏）、超高清屏;
+
+以mix2s为例
+
+![21_1](21_1.png)
+mix2s参数如上屏幕尺寸5.99英寸，屏幕分辨率2160x1080，屏幕密度dpi = √(2160 * 2160 + 1080 * 1080) / 5.99 = 403.16
+
+物理像素(physical pixel)
+物理像素又被称为设备像素、设备物理像素，它是显示器（电脑、手机屏幕）最小的物理显示单位，每个物理像素由颜色值和亮度值组成。所谓的一倍屏、二倍屏(Retina)、三倍屏，指的是设备以多少物理像素来显示一个CSS像素，也就是说，多倍屏以更多更精细的物理像素点来显示一个CSS像素点，在普通屏幕下1个CSS像素对应1个物理像素，而在Retina屏幕下，1个CSS像素对应的却是4个物理像素。
+
+设备独立像素(device-independent pixel)
+设备独立像素又被称为CSS像素，是我们写CSS时所用的像素，它是一个抽像的单位，主要使用在浏览器上，用来精确度量Web页面上的内容。
+
+设备像素比(device pixel ratio)
+设备像素比简称为dpr，定义了物理像素和设备独立像素的对应关系：设备像素比 ＝ 物理像素 / 设备独立像素。可以通过window.devicePixelRatio获取设备的dpr值
+
+解决方案
+
+1、小数值px
+
+```html
+<body>
+    <div id="main" style="border: 1px solid #000000;"></div>
+</body>
+<script type="text/javascript">
+if (window.devicePixelRatio && devicePixelRatio >= 2) {
+    var main = document.getElementById('main');
+    main.style.border = '.5px solid #000000';
+}
+</script>
+```
+
+2、:before:after和transform
+
+缩小
+
+```css
+.scale-1px{
+    position: relative;
+    margin-bottom: 20px; border:none;
+}
+.scale-1px:after{
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    border: 1px solid #000;
+    box-sizing: border-box;
+    width: 200%;
+    height: 200%;
+    transform: scale(0.5);
+    transform-origin: left top;
+}
+```
+
+3、flexible.js
+
+```js
+metaEl = doc.createElement('meta');
+metaEl.setAttribute('name', 'viewport');
+metaEl.setAttribute('content', 'initial-scale=' + scale + ', maximum-scale=' + scale + ', minimum-scale=' + scale + ', user-scalable=no');
+```
+
+#### 22、VO和AO
+
+全局上下文变量对象GlobalContextVO
+(VO === this === global)
+函数上下文变量对象FunctionContextVO
+(VO === AO, 并且添加了<arguments>（形参类数组）和<formal parameters>（形参的值）)即AO = VO + function parameters + arguments
+
+#### 23、从内存来看 null 和 undefined 本质的区别是什么
+
+给一个全局变量赋值为null，相当于将这个变量的指针对象以及值清空，如果是给对象的属性 赋值为null，或者局部变量赋值为null,相当于给这个属性分配了一块空的内存，然后值为null， JS会回收全局变量为null的对象。
+给一个全局变量赋值为undefined，相当于将这个对象的值清空，但是这个对象依旧存在,如果是给对象的属性赋值 为undefined，说明这个值为空值
+扩展下：
+声明了一个变量，但未对其初始化时，这个变量的值就是undefined，它是 JavaScript 基本类型 之一。
+
+```js
+var data;
+console.log(data === undefined); //true
+```
+
+对于尚未声明过的变量，只能执行一项操作，即使用typeof操作符检测其数据类型，使用其他的操作都会报错。
+
+```js
+//data变量未定义
+console.log(typeof data); // "undefined"
+console.log(data === undefined); //报错
+```
+
+值 null 特指对象的值未设置，它是 JavaScript 基本类型 之一。
+值 null 是一个字面量，它不像undefined 是全局对象的一个属性。null 是表示缺少的标识，指示变量未指向任何对象。
+
+```js
+// foo不存在，它从来没有被定义过或者是初始化过：
+foo; // "ReferenceError: foo is not defined"
+
+// foo现在已经是知存在的，但是它没有类型或者是值：
+var foo = null;
+console.log(foo);   // null
+```
+
+#### 24、ES6语法中的 const 声明一个只读的常量，那为什么下面可以修改const的值？
+
+```js
+const foo = {};
+
+// 为 foo 添加一个属性，可以成功
+foo.prop = 123;
+foo.prop // 123
+
+// 将 foo 指向另一个对象，就会报错
+foo = {}; // TypeError: "foo" is read-only
+```
+
+const实际上保证的，并不是变量的值不得改动，而是变量指向的那个内存地址所保存的数据不得改动。对于简单类型的数据（数值、字符串、布尔值），值就保存在变量指向的那个内存地址，因此等同于常量。但对于复合类型的数据（主要是对象和数组），变量指向的内存地址，保存的只是一个指向实际数据的指针，const只能保证这个指针是固定的（即总是指向另一个固定的地址），至于它指向的数据结构是不是可变的，就完全不能控制了。因此，将一个对象声明为常量必须非常小心。
 
 2、手写单链表查找倒数第k个节点
 1、为了找出倒数第k个元素，最容易想到的办法是首先遍历一遍单链表，求出整个单链表的长度n，然后将倒数第k个，转换为正数第n-k个，接下来遍历一次就可以得到结果。但是该方法存在一个问题，即需要对链表进行两次遍历，第一次遍历用于求解单链表的长度，第二次遍历用于查找正数第n-k个元素。 
