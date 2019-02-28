@@ -398,7 +398,7 @@ if (!Function.prototype.bind) {
             args = [].slice.call(arguments); // 剩余的参数转为数组
         return function () { // 返回一个新函数
             // 这里arguments和上一个不一样
-            return self.apply(context, [].concat.call(args, [].slice.call(arguments)));
+            self.apply(context, [].concat.call(args, [].slice.call(arguments)));
         }
     }
 }
@@ -521,15 +521,15 @@ function mockNew (constructor) {
 ```js
 function deepCopy (obj) {
     var result;
-    //判断是否是简单数据类型，
+    // 判断是否是简单数据类型，
     if(typeof obj == "object"){
-        //复杂数据类型
-        result = Object.prototype.toString(obj) === '[object Array]' ? [] : {};
+        // 复杂数据类型
+        result = Object.prototype.toString.call(obj) === '[object Array]' ? [] : {};
         for (let i in obj) {
             result[i] = typeof obj[i] == 'object' ? deepCopy(obj[i]) : obj[i];
         }
     } else {
-        //简单数据类型 直接 == 赋值
+        // 简单数据类型 直接 == 赋值
         result = obj;
     }
     return result;
@@ -774,51 +774,141 @@ foo = {}; // TypeError: "foo" is read-only
 
 const实际上保证的，并不是变量的值不得改动，而是变量指向的那个内存地址所保存的数据不得改动。对于简单类型的数据（数值、字符串、布尔值），值就保存在变量指向的那个内存地址，因此等同于常量。但对于复合类型的数据（主要是对象和数组），变量指向的内存地址，保存的只是一个指向实际数据的指针，const只能保证这个指针是固定的（即总是指向另一个固定的地址），至于它指向的数据结构是不是可变的，就完全不能控制了。因此，将一个对象声明为常量必须非常小心。
 
-2、手写单链表查找倒数第k个节点
+#### 25、写一个左中右布局占满屏幕，其中左右两块是固定宽度200 ，中间自适应宽，要求先加载中间块，请写出结构及样式
+
+```html
+<head>
+    <style>
+    *{
+        margin: 0;
+        padding: 0;
+    }
+    .container{
+        float: left;
+        width: 100%;
+        background-color: red;
+        height: 200px;
+    }
+    .main{
+        margin: 0 300px 0 100px;
+    }
+    .left{
+        width: 100px;
+        height: 200px;
+        float: left;
+        margin-left: -100%;
+        background-color: green;
+    }
+    .right{
+        width: 300px;
+        height: 200px;
+        float: left;
+        margin-left: -300px;
+        background-color: yellow;
+    }
+    </style>
+</head>
+
+<body>
+    <div>
+        <div class="container">
+            <div class="main">中间</div>
+        </div>
+        <div class="left">左边</div>
+        <div class="right">右边</div>
+    </div>
+</body>
+```
+![25_1](25_1.png)
+
+> 负的margin-left和margin-right的值可以做到一个欺骗
+
+#### 26、手写单链表查找倒数第k个节点
+
+链表是一组节点组成的集合，每个节点都使用一个对象的引用来指向它的后一个节点。如图
+![26_1](26_1.png)
+
 1、为了找出倒数第k个元素，最容易想到的办法是首先遍历一遍单链表，求出整个单链表的长度n，然后将倒数第k个，转换为正数第n-k个，接下来遍历一次就可以得到结果。但是该方法存在一个问题，即需要对链表进行两次遍历，第一次遍历用于求解单链表的长度，第二次遍历用于查找正数第n-k个元素。 
 这种思路的时间复杂度是O(n)，但需要遍历链表两次。
 
 2、如果我们在遍历时维持两个指针，第一个指针从链表的头指针开始遍历，在第k-1步之前，第二个指针保持不动；在第k-1步开始，第二个指针也开始从链表的头指针开始遍历。由于两个指针的距离保持在k-1，当第一个（走在前面的）指针到达链表的尾结点时，第二个指针（走在后面的）指针正好是倒数第k个结点。这种思路只需要遍历链表一次。对于很长的链表，只需要把每个结点从硬盘导入到内存一次。因此这一方法的时间效率前面的方法要高。
 
-class Node{
-    Node next=null;
-    int data;
-    public Node(int data){
-        this.data=data;
+实现一个链表
+
+```js
+// 节点类，用于保存数据
+class Node {
+    constructor (data) {
+        this.data = data;
+        this.next = null;
     }
 }
-public class MyLinkedList {
- 
-    Node head=null;//链表头的引用
-    public Node findElem(Node head,int k){
-        if(k<1||k>this.length()){
-            return null;
-        }
-        Node p1=head;
-        Node p2=head;
-        for(int i=0;i<k;i++)
-            p1=p1.next;
-        while(p1!=null){
-            p1=p1.next;
-            p2=p2.next;
-        }
-        return p2;
+class LinkedList {
+    constructor (data) {
+        this.lList = new Node(data || 'header'); // 初始节点
     }
-    public static void main(String[] args) {
- 
-        MyLinkedList list=new MyLinkedList();
-        list.addNode(1);
-        list.addNode(2);
-        list.addNode(3);
-        list.addNode(4);
-        list.addNode(5);
-        MyLinkedList p=new MyLinkedList();
-        p.head=list.findElem(list.head, 3);
-        p.printList();
- 
+    find (item) {
+        let currNode = this.lList;
+        while (currNode.data !== item) {
+            currNode = currNode.next;
+        }
+        return currNode;
     }
- 
+    insert (newElement, item) {
+        const newNode = new Node(newElement);
+        const currNode = this.find(item);
+        newNode.next = currNode.next;
+        currNode.next = newNode;
+    }
+    findPrev (item) {
+        let currNode = this.lList;
+        while(currNode.next && currNode.next.data !== item) {
+            currNode = currNode.next;
+        }
+        return currNode;
+    }
+    remove (item) {
+        const prevItem = this.findPrev(item);
+        if (prevItem.next) {
+            prevItem.next = prevItem.next.next;
+        }
+    }
+    display(){
+        let currNode = this.lList;
+        while(currNode) {
+            console.log(currNode.data);
+            currNode = currNode.next;
+        }
+    }
+    // 查找倒数第k个节点
+    findElem(k) { // 方法2
+        let currNode = this.lList;
+        let p1 = 0;
+        let p2 = 0;
+        let findNode = this.lList;
+        while (currNode) {
+            if (p1 - p2 === k) {
+                p1 += 1;
+                p2 += 1;
+                findNode = findNode.next; // 双指针方法
+            } else {
+                p1 += 1;
+            }
+            currNode = currNode.next;
+        }
+        console.log(findNode);
+    }
 }
+var fruits = new LinkedList('fruits');
+
+fruits.insert('Apple', 'fruits');
+fruits.insert('Banana', 'Apple');
+fruits.insert('Pear', 'Banana');
+console.log(fruits.lList);
+fruits.display();
+fruits.findElem(3);
+```
+
 3、http请求头，请求体，cookie在哪个里面？url在哪里面？
 参考菜鸟教程HTTP专栏：http://www.runoob.com/http/http-tutorial.html 
 人人三面的时候问我http请求头都有哪些值，答不上来。。GG 

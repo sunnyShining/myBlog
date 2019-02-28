@@ -6,7 +6,7 @@ git.branch
 git pull origin ${br/* /}:${br/* /}
 yarn d
 git add -A
-echo -n "enter git message:" ---：
+echo -n "enter git message:" 
 read name
-git commit -m 'deploy $name on '${br/* /}' branch'
+git commit -m 'deploy '${name}' on '${br/* /}' branch'
 git push origin ${br/* /}
