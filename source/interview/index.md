@@ -909,6 +909,76 @@ fruits.display();
 fruits.findElem(3);
 ```
 
+#### 27、对闭包的理解，实现一个暴露内部变量，而且外部可以访问修改的函数
+
+JavaScript 采用的是词法作用域即静态作用域，即函数的作用域在定义的时候就已经决定了。
+
+```js
+var person = function(){    
+    //变量作用域为函数内部，外部无法访问    
+    var name = "default";       
+    return {    
+       getName: function(){    
+           return name;    
+       },    
+       setName: function(newName){    
+           name = newName;    
+       }    
+    }    
+}();    
+print(person.name);//直接访问，结果为undefined    
+print(person.getName());    
+person.setName("a");    
+print(person.getName());    
+//得到结果如下：  
+undefined  
+default  
+a
+```
+#### 27、手写一个类的继承
+
+```js
+function Parent1(name, age){
+    this.name = name;
+    this.age = age;
+}
+Parent1.prototype.getInfo = function () {
+    console.log(this.name, this.age);
+}
+function Parent2 (sex) {
+    this.sex = sex;
+}
+Parent2.prototype.getSex = function () {
+    console.log(this.sex);
+}
+function Child (name, age, sex) {
+    Parent1.call(this, name, age);
+    Parent2.call(this, sex);
+}
+var P1 = new Parent1()
+for (var k in P1) {
+    if (!P1.hasOwnProperty(k)) {
+        Child.prototype[k] = P1[k]
+    }
+}
+var P2 = new Parent2()
+for (var k in P2) {
+    if (!P2.hasOwnProperty(k)) {
+        Child.prototype[k] = P2[k]
+    }
+}
+var c = new Child('sunny', 28, 'man');
+console.log(c);
+c.getInfo();
+function Child2(){
+    var args = [...arguments];
+    Parent1.apply(this, args);
+}
+function F(){}
+F.prototype = new Parent1();
+Child2.prototype = new F();
+```
+
 3、http请求头，请求体，cookie在哪个里面？url在哪里面？
 参考菜鸟教程HTTP专栏：http://www.runoob.com/http/http-tutorial.html 
 人人三面的时候问我http请求头都有哪些值，答不上来。。GG 
@@ -944,32 +1014,6 @@ Hello World! My payload includes a trailing CRLF.
 饿了么面试的时候问到了，用友也问到了。没答好，GG. 
 这里写图片描述
 
-5、对闭包的理解，实现一个暴露内部变量，而且外部可以访问修改的函数
-闭包的作用： 
-匿名自执行函数、缓存、实现封装（主要作用）、实现面向对象中的对象
-
-var person = function(){    
-    //变量作用域为函数内部，外部无法访问    
-    var name = "default";       
-    return {    
-       getName : function(){    
-           return name;    
-       },    
-       setName : function(newName){    
-           name = newName;    
-       }    
-    }    
-}();    
-print(person.name);//直接访问，结果为undefined    
-print(person.getName());    
-person.setName("a");    
-print(person.getName());    
-//得到结果如下：  
-undefined  
-default  
-a
-
-
 7、基本的两列自适应布局
 左定右适应：
 
@@ -985,8 +1029,6 @@ a
     right: 0px;
     background-color: red;
 }
-8、unix中常用的命令行
-虽然上过linux课，但是命令忘得差不多了 尴尬。。。
 
 9、OSI模型，HTTP,TCP,UDP分别在哪些层
 这个可以参考我另一个博客： 
