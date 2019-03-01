@@ -4,7 +4,7 @@ function git.branch {
 }
 git.branch
 git pull origin ${br/* /}:${br/* /}
-yarn d
+npm run d
 git add -A
 echo -n "enter git message: "
 read name
