@@ -1017,6 +1017,54 @@ Child2.prototype = new F();
 ```
 ![28_1](28_1.png)
 
+#### 29、节流和防抖
+
+防抖 (debounce): 将多次高频操作优化为只在最后一次执行，通常使用的场景是：用户输入，只需再输入完成后做一次输入校验即可
+节流(throttle): 每隔一段时间后执行一次，也就是降低频率，将高频操作优化成低频操作，通常使用场景: 滚动条事件 或者 resize 事件，通常每隔 100~500 ms执行一次即可
+
+```js
+// 防抖
+function debounce(fn, wait) {
+    var timer = null;
+    return function () {
+        var context = this;
+        var args = Array.prototype.slice.call(arguments);
+        console.log(args);
+        timer && clearTimeout(timer);
+        timer = setTimeout(() => {
+            fn.apply(context, args);
+        }, wait);
+    }
+}
+var fn = debounce(function (){
+    console.log(12314, arguments);
+}, 500)
+function onInput(e) {
+    fn(e);
+}
+// 节流
+function throttle (fn, wait) {
+    var timer = null;
+    return function () {
+        var context = this;
+        var args = Array.prototype.slice.call(arguments);
+        if (!timer) {
+            timer = setTimeout(() => {
+                fn.apply(context, args);
+                timer = null;
+            }, wait);
+        }
+    }
+}
+var fn = throttle(function (){
+    console.log(12314, arguments);
+}, 500)
+function onInput(e) {
+    fn(e);
+}
+```
+
+
 3、http请求头，请求体，cookie在哪个里面？url在哪里面？
 参考菜鸟教程HTTP专栏：http://www.runoob.com/http/http-tutorial.html 
 人人三面的时候问我http请求头都有哪些值，答不上来。。GG 
