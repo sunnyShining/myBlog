@@ -1064,6 +1064,125 @@ function onInput(e) {
 }
 ```
 
+#### 29、解释平衡二叉树，以及在数据结构中的应用（红黑树）
+
+平衡二叉搜索树（Self-balancing binary search tree）又被称为AVL树（有别于AVL算法），且具有以下性质：它是一 棵空树或它的左右两个子树的高度差的绝对值不超过1，并且左右两个子树都是一棵平衡二叉树，同时，平衡二叉树必定是二叉搜索树，反之则不一定。平衡二叉树的常用实现方法有红黑树、AVL、替罪羊树、Treap、伸展树等。 最小二叉平衡树的节点的公式如下 F(n)=F(n-1)+F(n-2)+1 这个类似于一个递归的数列，可以参考Fibonacci(斐波那契)数列，1是根节点，F(n-1)是左子树的节点数量，F(n-2)是右子树的节点数量
+
+实现一个二叉树
+
+```js
+// 节点
+class Node {
+    constructor (data, left, right) {
+        this.data = data;
+        this.left = left;
+        this.right = right;
+    }
+}
+// 二叉树
+class BST{
+    constructor () {
+        this.root = null;
+    }
+    insert (data) {
+        const n = new Node(data, null, null);
+        if (!this.root) {
+            this.root = n;
+        } else {
+            let current = this.root;
+            let parent;
+            while (current) {
+                parent = current;
+                if (data < current.data) {
+                    current = current.left;
+                    if (!current) {
+                        parent.left = n;
+                    }
+                } else {
+                    current = current.right;
+                    if (!current) {
+                        parent.right = n;
+                    }
+                }
+            }
+        }
+    }
+    show () {
+        console.log(this.root);
+    }
+    // 前序遍历
+    dlr (node) {
+        if (node) {
+            console.log(node.data);
+            this.dlr(node.left);
+            this.dlr(node.right);
+        }
+    }
+    // 中序遍历
+    ldr (node) {
+        if (node) {
+            this.ldr(node.left);
+            console.log(node.data);
+            this.ldr(node.right);
+        }
+    }
+    // 后序遍历
+    lrd (node) {
+        if (node) {
+            this.lrd(node.left);
+            this.lrd(node.right);
+            console.log(node.data);
+        }
+    }
+}
+let list = new BST();
+list.insert(3);
+list.insert(5);
+list.insert(4);
+list.insert(2);
+list.insert(1);
+list.insert(9);
+list.show();
+list.ldr(list.root);
+```
+
+#### 30、手写一个正则表达式，验证邮箱
+
+```js
+var mail = '123123@qq.com'
+var reg = /^\w(\w+)@[A-Za-z0-9]{2,5}\.[A-Za-z]{2,5}(\.[A-Za-z]{2,5})?$/
+reg.test(mail); // true
+```
+
+#### 31、Get和post的区别
+
+GET在浏览器回退时是无害的，而POST会再次提交请求。
+GET产生的URL地址可以被Bookmark，而POST不可以。
+GET请求会被浏览器主动cache，而POST不会，除非手动设置。
+GET请求只能进行url编码，而POST支持多种编码方式。
+GET请求参数会被完整保留在浏览器历史记录里，而POST中的参数不会被保留。
+GET请求在URL中传送的参数是有长度限制的，而POST么有。
+对参数的数据类型，GET只接受ASCII字符，而POST没有限制。
+GET比POST更不安全，因为参数直接暴露在URL上，所以不能用来传递敏感信息。
+GET参数通过URL传递，POST放在Request body中。
+其实GET和POST本质上没有区别，GET和POST的底层也是TCP/IP，也就是说，GET/POST都是TCP链接。GET和POST能做的事情是一样一样的。你要给GET加上request body，给POST带上url参数，技术上是完全行的通的。GET和POST只是个HTTP行为准则；
+（大多数）浏览器通常都会限制url长度在2K个字节，而（大多数）服务器最多处理64K大小的url。超过的部分，恕不处理，所以get请求url长度是有限制的；
+对于GET方式的请求，浏览器会把http header和data一并发送出去，服务器响应200（返回数据）；而对于POST，浏览器先发送header，服务器响应100 continue，浏览器再发送data，服务器响应200 ok。
+
+[参考链接](https://www.cnblogs.com/logsharing/p/8448446.html)
+
+#### 34、前端性能优化
+
+减少浏览器的重排和重绘的发生。
+•	不要使用table布局。
+•	css动画中尽量只使用transform和opacity，这不会发生重排和重绘。
+•	尽可能地只使用css做动画。
+•	避免浏览器的隐式合成。
+•	改变复合层的尺寸。
+减少DNS查找
+CDN缓存
+删除多余的插件
+压缩、合并文件
 
 3、http请求头，请求体，cookie在哪个里面？url在哪里面？
 参考菜鸟教程HTTP专栏：http://www.runoob.com/http/http-tutorial.html 
@@ -1106,7 +1225,6 @@ http://blog.csdn.net/qq_22944825/article/details/78160659
 OSI：物理层-数据链路层-网络层-传输层-会话层-表现层-应用层 
 这里写图片描述
 
-10、解释平衡二叉树，以及在数据结构中的应用（红黑树）
 11、快排的时间复杂度和空间复杂度
 一个特别好的总结的博客： 
 http://web.jobbole.com/87968/ 
@@ -1141,33 +1259,6 @@ attr(key,value)
 $("#myphoto").attr("src","/pic/1.jpg");
 jQuery对象是一个特殊的集合对象。即使只有一个元素，jQuery对象仍然是一个集合。说其特殊是因为实际上jQuery对象是包含一个集合对象和各种函数的类。
 
-14、手写一个递归函数
- function fact(num) {
-    if (num <= 1) {
-        return 1;             
-    } else {
-        return num * fact(num - 1);            
-    }
-} 
-以下代码可导致出错：
-
-var anotherFact = fact; 
- fact = null; 
- alert(antherFact(4)); //出错 
-由于fact已经不是函数了，所以出错。 
-用arguments.callee可解决问题，这是一个指向正在执行的函数的指针,arguments.callee返回正在被执行的对现象。 
-新的函数为：
-
-function fact(num) {
-            if (num <= 1) {
-                return 1;
-            } else {
-                return num * arguments.callee(num - 1); //此处更改了。 
-            }
-}
-var anotherFact = fact;
-fact = null;
-alert(antherFact(4)); //结果为24.
 15、对前端路由的理解？前后端路由的区别？
 前端的路由和后端的路由在实现技术上不一样，但是原理都是一样的。在 HTML5 的 history API 出现之前，前端的路由都是通过 hash 来实现的，hash 能兼容低版本的浏览器。
 
@@ -1202,9 +1293,6 @@ https://yyywwwqqq.coding.me/schedule/dist/
 
 源码地址： 
 https://coding.net/u/yyywwwqqq/p/schedule/git
-
-19、关于平衡二叉树
-平衡二叉搜索树（Self-balancing binary search tree）又被称为AVL树（有别于AVL算法），且具有以下性质：它是一 棵空树或它的左右两个子树的高度差的绝对值不超过1，并且左右两个子树都是一棵平衡二叉树，同时，平衡二叉树必定是二叉搜索树，反之则不一定。平衡二叉树的常用实现方法有红黑树、AVL、替罪羊树、Treap、伸展树等。 最小二叉平衡树的节点的公式如下 F(n)=F(n-1)+F(n-2)+1 这个类似于一个递归的数列，可以参考Fibonacci(斐波那契)数列，1是根节点，F(n-1)是左子树的节点数量，F(n-2)是右子树的节点数量。
 
 20、前后端分离的意义以及对前端工程化的理解
 
@@ -1287,7 +1375,6 @@ cat.eat();
 33、手写一个简单遍历算法
 34、解释一下react和vue，以及区别
 37、介绍node.js，并且介绍你用它做的项目
-
 39、for函数里面setTimeout异步问题
 40、手写归并排序
 <1>.长度为n(n>1),把该输入序列分成两个长度为n/2的子序列； 
@@ -1326,8 +1413,6 @@ function merge(left, right) {
 42、实现两个排序数组的合并
 参考42题中的merge函数。
 
-44、手写一个promise版的ajax
-
 46、手写实现requireJS模块实现
 47、手写实现jquery里面的insertAfter
 48、react和vue的介绍以及异同
@@ -1352,8 +1437,6 @@ function merge(left, right) {
 60、常用的排序算法有哪些，介绍一下选择排序
 
 61、了解navigator对象吗？
-
-62、手写一个正则表达式，验证邮箱
 
 63、link和@import引入CSS的区别？
 
@@ -1412,8 +1495,6 @@ function merge(left, right) {
 95、介绍一下做过的项目
 
 96、问到了多个服务器怎么弄，架构之类的
-
-97、angular的渲染流程
 
 98、脏检查
 
@@ -1492,8 +1573,6 @@ function merge(left, right) {
 138、为什么要用translate3d？
 
 139、对象中key-value的value怎么再放一个对象？
-
-140、Get和post的区别？
 
 145、Post一个file的时候file放在哪的？
 
@@ -1708,8 +1787,6 @@ function merge(left, right) {
 281、用4个颜色给一个六面体上色有多少种情况
 
 282、amd和cmd区别
-
-283、为什么选择前端，移动端性能优化
 
 286、算法题：数组去重，去除重复两次以上的元素，代码题：嵌套的ul-li结构，根据input中输入的内容，去除相应的li节点，且如果某个嵌套的ul下面的li都被移除，则该ul的父li节点也要被移除
 
