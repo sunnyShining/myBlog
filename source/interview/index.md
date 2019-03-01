@@ -828,7 +828,7 @@ const实际上保证的，并不是变量的值不得改动，而是变量指向
 链表是一组节点组成的集合，每个节点都使用一个对象的引用来指向它的后一个节点。如图
 ![26_1](26_1.png)
 
-1、为了找出倒数第k个元素，最容易想到的办法是首先遍历一遍单链表，求出整个单链表的长度n，然后将倒数第k个，转换为正数第n-k个，接下来遍历一次就可以得到结果。但是该方法存在一个问题，即需要对链表进行两次遍历，第一次遍历用于求解单链表的长度，第二次遍历用于查找正数第n-k个元素。 
+1、为了找出倒数第k个元素，最容易想到的办法是首先遍历一遍单链表，求出整个单链表的长度n，然后将倒数第k个，转换为正数第n-k个，接下来遍历一次就可以得到结果。但是该方法存在一个问题，即需要对链表进行两次遍历，第一次遍历用于求解单链表的长度，第二次遍历用于查找正数第n-k个元素。
 这种思路的时间复杂度是O(n)，但需要遍历链表两次。
 
 2、如果我们在遍历时维持两个指针，第一个指针从链表的头指针开始遍历，在第k-1步之前，第二个指针保持不动；在第k-1步开始，第二个指针也开始从链表的头指针开始遍历。由于两个指针的距离保持在k-1，当第一个（走在前面的）指针到达链表的尾结点时，第二个指针（走在后面的）指针正好是倒数第k个结点。这种思路只需要遍历链表一次。对于很长的链表，只需要把每个结点从硬盘导入到内存一次。因此这一方法的时间效率前面的方法要高。
@@ -914,25 +914,25 @@ fruits.findElem(3);
 JavaScript 采用的是词法作用域即静态作用域，即函数的作用域在定义的时候就已经决定了。
 
 ```js
-var person = function(){    
-    //变量作用域为函数内部，外部无法访问    
-    var name = "default";       
-    return {    
-       getName: function(){    
-           return name;    
-       },    
-       setName: function(newName){    
-           name = newName;    
-       }    
-    }    
-}();    
-print(person.name);//直接访问，结果为undefined    
-print(person.getName());    
-person.setName("a");    
-print(person.getName());    
-//得到结果如下：  
-undefined  
-default  
+var person = function(){
+    //变量作用域为函数内部，外部无法访问
+    var name = "default";
+    return {
+       getName: function(){
+           return name;
+       },
+       setName: function(newName){
+           name = newName;
+       }
+    }
+}();
+print(person.name);//直接访问，结果为undefined
+print(person.getName());
+person.setName("a");
+print(person.getName());
+//得到结果如下：
+undefined
+default
 a
 ```
 #### 27、手写一个类的继承
@@ -979,6 +979,44 @@ F.prototype = new Parent1();
 Child2.prototype = new F();
 ```
 
+#### 28、基本的两列自适应布局
+左定右适应：margin-left margin-right负值做到一个欺骗其他元素的作用
+
+```html
+<head>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        .left{
+            background-color: aqua;
+            width: 200px;
+            float: left;
+            margin-left: -100%;
+        }
+        .container{
+            width: 100%;
+            float: left;
+            background-color: red;
+        }
+        .main{
+            margin: 0 0 0 200px;
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        <div class="container">
+            <div class="main">内容。。。。</div>
+        </div>
+        <div class="left">左边</div>
+    </div>
+</body>
+```
+![28_1](28_1.png)
+
 3、http请求头，请求体，cookie在哪个里面？url在哪里面？
 参考菜鸟教程HTTP专栏：http://www.runoob.com/http/http-tutorial.html 
 人人三面的时候问我http请求头都有哪些值，答不上来。。GG 
@@ -1013,22 +1051,6 @@ Hello World! My payload includes a trailing CRLF.
 4、原型链的解释
 饿了么面试的时候问到了，用友也问到了。没答好，GG. 
 这里写图片描述
-
-7、基本的两列自适应布局
-左定右适应：
-
-#div1{
-    width: 100px;
-    display: inline-block;
-    background-color: black;
-}
-#div2{
-    display: inline-block;
-    position: absolute;
-    left: 100px;
-    right: 0px;
-    background-color: red;
-}
 
 9、OSI模型，HTTP,TCP,UDP分别在哪些层
 这个可以参考我另一个博客： 
