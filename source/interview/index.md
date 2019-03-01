@@ -1240,3 +1240,65 @@ attachment --> Render Tree
 
 layout: 布局
 GPU painting: 像素绘制页面
+
+#### 40、Object.create模拟
+
+```js
+if (typeof Object.create === undefined) {
+    Object.create = function (o) { // o为对象
+        function F(){};
+        F.prototype = o;
+        return new F;
+    }
+}
+```
+
+#### 41、如何统计当前的页面，有多少种HTML标签
+
+```js
+new Set([...document.querySelectorAll('*')].map(val => val.nodeName)).size
+```
+
+#### 42、Vue的数组响应式，就是.push数据后，能通知到页面修改dom，这个机制怎么实现的
+
+[vue源码](https://github.com/vuejs/vue/blob/dev/src/core/observer/array.js#L42)
+
+vue将push方法重写了
+
+```js
+const methodsToPatch = [
+  'push',
+  'pop',
+  'shift',
+  'unshift',
+  'splice',
+  'sort',
+  'reverse'
+]
+
+/**
+ * Intercept mutating methods and emit events
+ */
+methodsToPatch.forEach(function (method) {
+    // cache original method
+    const original = arrayProto[method]
+    def(arrayMethods, method, function mutator (...args) {
+        const result = original.apply(this, args)
+        const ob = this.__ob__
+        let inserted
+        switch (method) {
+            case 'push':
+            case 'unshift':
+                inserted = args
+                break
+            case 'splice':
+                inserted = args.slice(2)
+                break
+        }
+        if (inserted) ob.observeArray(inserted)
+        // notify change
+        ob.dep.notify()
+        return result
+    })
+})
+```
