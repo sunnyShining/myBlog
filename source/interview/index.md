@@ -1019,8 +1019,8 @@ Child2.prototype = new F();
 
 #### 29、节流和防抖
 
-防抖 (debounce): 将多次高频操作优化为只在最后一次执行，通常使用的场景是：用户输入，只需再输入完成后做一次输入校验即可
-节流(throttle): 每隔一段时间后执行一次，也就是降低频率，将高频操作优化成低频操作，通常使用场景: 滚动条事件 或者 resize 事件，通常每隔 100~500 ms执行一次即可
+防抖(debounce): 将多次高频操作优化为只在最后一次执行，通常使用的场景是: 用户输入，只需再输入完成后做一次输入校验即可
+节流(throttle): 每隔一段时间后执行一次，也就是降低频率，将高频操作优化成低频操作，通常使用场景: 滚动条事件 或者 resize 事件，通常每隔 100-500 ms执行一次即可
 
 ```js
 // 防抖
@@ -1302,3 +1302,27 @@ methodsToPatch.forEach(function (method) {
     })
 })
 ```
+
+#### 43、了解react高阶组件吗？属性代理高阶组件生命周期类似于？
+
+属性代理(props proxy)。高阶组件通过被包裹的 React 组件来操作 props
+
+```js
+import React, { Component } from 'React';
+const MyContainer = (WrappedComponent) => class extends Component {
+    render() {
+        return <WrappedComponent {...this.props} />;
+    }
+}
+
+...
+
+import React, { Component } from 'React';
+class MyComponent extends Component { // ...
+}
+export default MyContainer(MyComponent);
+```
+
+生命周期类似于堆栈调用
+
+didmount → HOC didmount → (HOCs didmount) → (HOCs will unmount) → HOC will unmount → unmount
