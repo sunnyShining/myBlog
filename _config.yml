@@ -14,7 +14,7 @@ timezone:
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
-url: https://www.sunnyshining.xyz/
+url: https://sunnyShining.github.io/
 root: /
 permalink: :year/:title/
 permalink_defaults:
@@ -98,7 +98,11 @@ theme: hexo-theme-sunny
 
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
+# deploy:
+#   type: git
+#   repo: root@120.78.132.167:/root/nodeProject/wwwBlog
+#   branch: master
 deploy:
   type: git
-  repo: root@120.78.132.167:/root/nodeProject/wwwBlog
+  repo: https://github.com/sunnyShining/sunnyShining.github.io
   branch: master

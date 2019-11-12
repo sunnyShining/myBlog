@@ -13,6 +13,9 @@
     "d": "rimraf public && rimraf .deploy_git && hexo generate --deploy",
     "g": "hexo generate"
   },
+  "pre-commit": [
+    "d"
+  ],
   "dependencies": {
     "hexo": "^3.2.0",
     "hexo-asset-image": "^0.0.3",
@@ -30,6 +33,7 @@
   },
   "devDependencies": {
     "hexo-deployer-git": "^0.3.1",
+    "pre-commit": "^1.2.2",
     "rimraf": "^2.6.2"
   }
 }
